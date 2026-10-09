@@ -1,0 +1,163 @@
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #142925;
+  color: #d6dfcb;
+  font: 13px system-ui;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+header {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 0 20px;
+  border-bottom: 1px solid #52675a;
+}
+header strong {
+  letter-spacing: 3px;
+  font-size: 14px;
+}
+header span {
+  color: #9aac9d;
+  font-size: 10px;
+  flex: 1;
+}
+a {
+  color: #cae5c4;
+  text-decoration: none;
+  padding: 14px 8px;
+}
+main {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+#game {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  touch-action: none;
+}
+canvas {
+  display: block;
+}
+aside {
+  width: 310px;
+  overflow: auto;
+  padding: 12px;
+  background: #192d29;
+  border-left: 1px solid #52675a;
+}
+aside[hidden] {
+  display: none;
+}
+#pane {
+  margin-bottom: 12px;
+}
+select {
+  width: 100%;
+  background: #263c34;
+  color: #e1e9d9;
+  padding: 10px;
+  border: 1px solid #587360;
+}
+pre {
+  font-size: 11px;
+  white-space: pre-wrap;
+  line-height: 1.4;
+}
+button,
+.import {
+  border: 1px solid #83977c;
+  border-radius: 5px;
+  background: #334d40;
+  color: #e9edd7;
+  padding: 12px;
+  min-height: 44px;
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.5;
+}
+.import {
+  display: block;
+  margin-top: 8px;
+}
+input[type="file"] {
+  width: 100%;
+  margin-top: 8px;
+}
+footer {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 5px 16px;
+  border-top: 1px solid #52675a;
+}
+#status {
+  flex: 1;
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  color: #b8cbb3;
+}
+#help {
+  font-size: 11px;
+  color: #b1c2ac;
+}
+#error {
+  color: #ffbb93;
+}
+@media (max-width: 900px) {
+  header {
+    height: 44px;
+    padding: 0 10px;
+    gap: 10px;
+  }
+  header span {
+    display: none;
+  }
+  header strong {
+    flex: 1;
+    font-size: 12px;
+  }
+  #help {
+    display: none;
+  }
+  aside {
+    width: 270px;
+  }
+  footer {
+    min-height: 50px;
+  }
+  #status {
+    font-size: 10px;
+  }
+}
+@media (max-width: 540px) {
+  .lab main {
+    flex-direction: column;
+  }
+  .lab #game {
+    min-height: 42vh;
+  }
+  .lab aside {
+    width: 100%;
+    flex: 1;
+  }
+  header strong {
+    letter-spacing: 1px;
+  }
+}

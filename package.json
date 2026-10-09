@@ -1,0 +1,44 @@
+{
+  "name": "the-wild-above",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:browser": "playwright test",
+    "capture": "node scripts/capture.mjs",
+    "check": "npm run typecheck && npm run lint && npm test && npm run build",
+    "format": "prettier --write src tests scripts *.ts *.js *.json *.html *.md docs .github",
+    "notices": "node scripts/notices.mjs",
+    "capture:motion": "node scripts/capture-motion.mjs"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "dependencies": {
+    "phaser": "4.2.1",
+    "phaser3-rex-plugins": "1.80.20",
+    "tweakpane": "4.0.5",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.58.2",
+    "@tweakpane/core": "2.0.5",
+    "@types/node": "26.6.4",
+    "eslint": "10.12.0",
+    "fast-check": "4.10.2",
+    "pixelmatch": "8.0.0",
+    "pngjs": "7.0.0",
+    "prettier": "3.9.9",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.1",
+    "vite": "8.3.4",
+    "vitest": "5.0.3"
+  }
+}
