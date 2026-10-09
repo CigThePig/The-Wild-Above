@@ -177,3 +177,32 @@ it("boards from reachable positions around the near-edge footprint", () => {
         expect(s.world.control).toBe("mech");
       }
 }, 30000);
+
+it("replays a different input on each of more than 3,600 consecutive frames", () => {
+  const live = new Simulation({ ...defaultConfig, animation: "idle" });
+  for (let frame = 0; frame < 3601; frame++)
+    live.step(1, { x: frame % 2 ? 1 : -1 });
+  const captured = live.recording();
+  expect(captured.commands).toHaveLength(3601);
+  const restored = new Simulation();
+  restored.replay(captured);
+  expect(restored.snapshot()).toEqual(live.snapshot());
+});
+
+it("never exports an over-budget session as an invalid recording", () => {
+  const sim = new Simulation({ ...defaultConfig, animation: "idle" });
+  for (let i = 0; i < 10; i++) sim.step(3600, {});
+  expect(() => sim.recording()).not.toThrow();
+  sim.step(1, {});
+  expect(() => sim.recording()).toThrow(/36,000-frame replay limit/);
+  // The live world is still allowed to continue advancing.
+  expect(sim.tick).toBe(36001);
+  expect(sim.commands.length).toBeLessThanOrEqual(36001);
+});
+
+it("does not record zero-frame no-ops", () => {
+  const sim = new Simulation();
+  for (let i = 0; i < 100; i++) sim.step(0, { x: i % 2 ? 1 : -1 });
+  expect(sim.recording().commands).toEqual([]);
+  expect(sim.tick).toBe(0);
+});

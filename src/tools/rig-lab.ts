@@ -53,9 +53,11 @@ export function installLab(scene: FieldScene) {
     pause: () => {
       scene.paused = true;
       scene.accumulator = 0;
+      syncUI();
     },
     resume: () => {
       scene.paused = false;
+      syncUI();
     },
     step: (frames = 1) => {
       scene.sim.step(frames);
@@ -124,6 +126,7 @@ export function installLab(scene: FieldScene) {
     guides: true,
     isolated: true,
     time: 0,
+    elapsed: 0,
   };
   const pane = new Pane({
     container: document.getElementById("pane")!,
@@ -147,9 +150,15 @@ export function installLab(scene: FieldScene) {
   pane
     .addBinding(state, "playbackSpeed", { min: 0.1, max: 2 })
     .on("change", (e) => (scene.rate = e.value));
+  // Scrubbing is capped at the deterministic 60 s seek horizon; the read-only
+  // elapsed monitor continues to show the actual clock during longer playback.
   pane
-    .addBinding(state, "time", { min: 0, max: 10, step: 1 / 60 })
+    .addBinding(state, "time", { min: 0, max: 60, step: 1 / 60 })
     .on("change", (e) => api.setAnimationTime(e.value));
+  pane.addBinding(state, "elapsed", {
+    label: "Elapsed (s)",
+    readonly: true,
+  });
   pane.addButton({ title: "Step 1 frame" }).on("click", () => {
     api.pause();
     state.paused = true;
@@ -187,18 +196,36 @@ export function installLab(scene: FieldScene) {
     .on("change", (e) => api.configure({ color: e.value }));
   syncUI = () => {
     syncing = true;
-    Object.assign(state, scene.sim.config, {
-      paused: scene.paused,
-      time: scene.sim.tick / 60,
-      guides: scene.guides,
-      isolated: scene.isolated,
-    });
-    pane.refresh();
-    syncing = false;
+    try {
+      Object.assign(state, scene.sim.config, {
+        paused: scene.paused,
+        time: Math.min(scene.sim.tick / 60, 60),
+        elapsed: scene.sim.tick / 60,
+        guides: scene.guides,
+        isolated: scene.isolated,
+      });
+      pane.refresh();
+    } finally {
+      syncing = false;
+    }
   };
   const select = document.getElementById("components") as HTMLSelectElement;
   let signature = "";
+  let lastSyncedTick = -Infinity;
+  let lastSyncedPaused = scene.paused;
   scene.onFrame = () => {
+    // Updating all pane bindings each draw is costly; 10 Hz is enough for
+    // readable timing while pause/resume and seeks synchronize immediately.
+    const tick = scene.sim.tick;
+    if (
+      scene.paused !== lastSyncedPaused ||
+      tick < lastSyncedTick ||
+      tick - lastSyncedTick >= 6
+    ) {
+      syncUI();
+      lastSyncedTick = tick;
+      lastSyncedPaused = scene.paused;
+    }
     const next = scene.rig.components.map((c) => c.id).join();
     if (signature !== next) {
       signature = next;

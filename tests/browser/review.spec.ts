@@ -88,3 +88,40 @@ test("review failures are reproducible and fixed through the public automation A
   ).toEqual([]);
   expect(errors).toEqual([]);
 });
+
+test("holding F cannot cause an automatic reboard after exiting", async ({ page }) => {
+  await page.goto("/");
+  await page.waitForFunction(() => !!window.rigLab);
+  await page.evaluate(() => window.rigLab.pause());
+  await page.keyboard.down("f");
+  expect(await page.evaluate(() => window.rigLab.inspect().transition?.exiting)).toBe(true);
+  await page.evaluate(() => window.rigLab.advance(1200, {}));
+  expect(await page.evaluate(() => window.rigLab.inspect().control)).toBe("foot");
+  expect(await page.evaluate(() => window.rigLab.inspect().transition)).toBeNull();
+  // Playwright marks another keydown as repeat while that key is held.
+  await page.keyboard.down("f");
+  expect(await page.evaluate(() => window.rigLab.inspect().transition)).toBeNull();
+  await page.keyboard.up("f");
+  await page.keyboard.down("f");
+  expect(await page.evaluate(() => window.rigLab.inspect().transition?.exiting)).toBe(false);
+  await page.keyboard.up("f");
+});
+
+test("live Rig Lab timing and pause controls follow the simulation", async ({ page }) => {
+  await page.goto("/?lab");
+  await page.waitForFunction(() => !!window.rigLab);
+  const paused = page.locator(".tp-lblv").filter({ has: page.getByText("paused", { exact: true }) }).locator('input[type="checkbox"]');
+  const elapsed = page.locator(".tp-lblv").filter({ has: page.getByText("Elapsed (s)", { exact: true }) }).locator("input");
+  await expect(paused).toBeChecked();
+  await page.evaluate(() => window.rigLab.resume());
+  await expect(paused).not.toBeChecked();
+  await page.waitForFunction(() => window.rigLab.inspect().tick >= 12);
+  await expect.poll(async () => Number(await elapsed.inputValue())).toBeGreaterThan(0);
+  await page.evaluate(() => {
+    window.rigLab.pause();
+    window.rigLab.advance(3600, {});
+    window.rigLab.advance(60, {});
+  });
+  await expect(paused).toBeChecked();
+  await expect.poll(async () => Number(await elapsed.inputValue())).toBeGreaterThan(60);
+});

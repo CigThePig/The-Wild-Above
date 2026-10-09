@@ -4,6 +4,10 @@ import { PilotWorld } from "./motion/world";
 import type { Input } from "./types";
 import { configSchema, defaultConfig, type RigConfig } from "./config";
 export const DT = 1 / 60;
+const MAX_REPLAY_FRAMES = 36_000;
+// Each recorded step consumes at least one frame. Successful interactions
+// require an intervening update, allowing at most one extra command.
+const MAX_REPLAY_COMMANDS = MAX_REPLAY_FRAMES + 1;
 const movementSchema = z.object({
   x: z.number().finite().min(-1).max(1).optional(),
   y: z.number().finite().min(-1).max(1).optional(),
@@ -50,7 +54,7 @@ const recordingSchema = z.object({
         z.object({ kind: z.literal("interact") }),
       ]),
     )
-    .max(3600),
+    .max(MAX_REPLAY_COMMANDS),
 });
 type Recording = z.infer<typeof recordingSchema>;
 export class Simulation {
@@ -111,14 +115,19 @@ export class Simulation {
     if (!Number.isInteger(frames) || frames < 0 || frames > 3600)
       throw Error("frames must be an integer from 0 to 3600");
     const checked = inputSchema.parse(input ?? this.input());
-    const last = this.commands.at(-1);
-    if (
-      last?.kind === "step" &&
-      last.frames + frames <= 3600 &&
-      JSON.stringify(last.input) === JSON.stringify(checked)
-    )
-      last.frames += frames;
-    else this.commands.push({ kind: "step", frames, input: checked });
+    if (frames === 0) return; // No-op calls must not exhaust command capacity.
+    // The live game may run indefinitely; only the first ten minutes are
+    // recordable. Do not grow an unusable command log without bound.
+    if (this.tick + frames <= MAX_REPLAY_FRAMES) {
+      const last = this.commands.at(-1);
+      if (
+        last?.kind === "step" &&
+        last.frames + frames <= 3600 &&
+        JSON.stringify(last.input) === JSON.stringify(checked)
+      )
+        last.frames += frames;
+      else this.commands.push({ kind: "step", frames, input: checked });
+    }
     for (let i = 0; i < frames; i++) {
       this.world.update(DT, checked);
       this.tick++;
@@ -144,15 +153,21 @@ export class Simulation {
 
   interact() {
     const accepted = this.world.interact();
-    if (accepted) this.commands.push({ kind: "interact" });
+    if (accepted && this.tick <= MAX_REPLAY_FRAMES)
+      this.commands.push({ kind: "interact" });
     return accepted;
   }
   recording(): Recording {
-    return structuredClone({
-      config: this.config,
-      placement: this.placement,
-      commands: this.commands,
-    });
+    if (this.tick > MAX_REPLAY_FRAMES)
+      throw Error("Recording exceeds the 36,000-frame replay limit; reset to capture a shorter session");
+    // Never return a recording that replay() itself would reject.
+    return recordingSchema.parse(
+      structuredClone({
+        config: this.config,
+        placement: this.placement,
+        commands: this.commands,
+      }),
+    );
   }
   replay(value: unknown) {
     const recording = recordingSchema.parse(value);
@@ -160,7 +175,7 @@ export class Simulation {
       recording.commands.reduce(
         (n, c) => n + (c.kind === "step" ? c.frames : 0),
         0,
-      ) > 36000
+      ) > MAX_REPLAY_FRAMES
     )
       throw Error("Recording too long");
     this.config = recording.config;

@@ -40,8 +40,9 @@ export class FieldScene extends Phaser.Scene {
     this.keys = this.input.keyboard!.addKeys(
       "W,A,S,D,UP,DOWN,LEFT,RIGHT,SHIFT,Q,E,F",
     ) as typeof this.keys;
-    this.input.keyboard!.on("keydown-F", () => {
-      if (!this.lab) this.sim.interact();
+    this.input.keyboard!.on("keydown-F", (event: KeyboardEvent) => {
+      // One interaction per physical press, even when an exit finishes while F is held.
+      if (!this.lab && !event.repeat) this.sim.interact();
     });
     this.input.addPointer(2);
     this.joystick = new VirtualJoystick(this, {
