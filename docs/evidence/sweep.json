@@ -1,0 +1,127 @@
+{
+  "angles": [
+    0,
+    45,
+    90,
+    180,
+    270,
+    359,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66
+  ],
+  "report": [
+    {
+      "heading": 0,
+      "tick": 21,
+      "changedPixels": null,
+      "orderChanges": 0,
+      "visibilityChanges": [],
+      "diagnostics": []
+    },
+    {
+      "heading": 45,
+      "tick": 21,
+      "changedPixels": 21465,
+      "orderChanges": 82,
+      "visibilityChanges": [],
+      "diagnostics": []
+    },
+    {
+      "heading": 90,
+      "tick": 21,
+      "changedPixels": 21510,
+      "orderChanges": 70,
+      "visibilityChanges": [],
+      "diagnostics": []
+    },
+    {
+      "heading": 180,
+      "tick": 21,
+      "changedPixels": 22763,
+      "orderChanges": 83,
+      "visibilityChanges": [
+        "mech.cockpit.hatch"
+      ],
+      "diagnostics": []
+    },
+    {
+      "heading": 270,
+      "tick": 21,
+      "changedPixels": 23273,
+      "orderChanges": 80,
+      "visibilityChanges": [],
+      "diagnostics": []
+    },
+    {
+      "heading": 359,
+      "tick": 21,
+      "changedPixels": 23830,
+      "orderChanges": 82,
+      "visibilityChanges": [
+        "mech.cockpit.hatch"
+      ],
+      "diagnostics": []
+    },
+    {
+      "heading": 60,
+      "tick": 21,
+      "changedPixels": 24462,
+      "orderChanges": 81,
+      "visibilityChanges": [],
+      "diagnostics": []
+    },
+    {
+      "heading": 61,
+      "tick": 21,
+      "changedPixels": 312,
+      "orderChanges": 0,
+      "visibilityChanges": [],
+      "diagnostics": []
+    },
+    {
+      "heading": 62,
+      "tick": 21,
+      "changedPixels": 306,
+      "orderChanges": 10,
+      "visibilityChanges": [],
+      "diagnostics": []
+    },
+    {
+      "heading": 63,
+      "tick": 21,
+      "changedPixels": 340,
+      "orderChanges": 18,
+      "visibilityChanges": [],
+      "diagnostics": []
+    },
+    {
+      "heading": 64,
+      "tick": 21,
+      "changedPixels": 315,
+      "orderChanges": 9,
+      "visibilityChanges": [],
+      "diagnostics": []
+    },
+    {
+      "heading": 65,
+      "tick": 21,
+      "changedPixels": 292,
+      "orderChanges": 4,
+      "visibilityChanges": [],
+      "diagnostics": []
+    },
+    {
+      "heading": 66,
+      "tick": 21,
+      "changedPixels": 322,
+      "orderChanges": 8,
+      "visibilityChanges": [],
+      "diagnostics": []
+    }
+  ]
+}
