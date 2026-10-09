@@ -1,0 +1,179 @@
+import { expect, it } from "vitest";
+import { Simulation } from "../../src/animation/simulation";
+import { defaultConfig } from "../../src/animation/config";
+import { buildRig } from "../../src/animation/rig";
+it("exits at the west-facing northwest corner", () => {
+  const s = new Simulation({ ...defaultConfig, animation: "idle" });
+  const g = s.world.mech;
+  g.x = -435;
+  g.y = -330;
+  g.yaw = g.turret = -Math.PI / 2;
+  g.feet.forEach((f) => {
+    f.p.x -= 435;
+    f.p.y -= 330;
+  });
+  expect(s.interact()).toBe(true);
+  const ground = s.world.transition!.ground;
+  expect(Math.abs(ground.x)).toBeLessThanOrEqual(435);
+  expect(Math.abs(ground.y)).toBeLessThanOrEqual(330);
+  s.step(1800, {});
+  expect(s.world.transition).toBeNull();
+  expect(s.world.control).toBe("foot");
+  expect(Math.abs(s.world.pilot.x)).toBeLessThanOrEqual(435);
+  expect(Math.abs(s.world.pilot.y)).toBeLessThanOrEqual(330);
+});
+it("boards from west of a north-facing mech near the northwest edge", () => {
+  const s = new Simulation({ ...defaultConfig, animation: "idle" });
+  const g = s.world.mech;
+  g.x = -400;
+  g.y = -300;
+  g.yaw = g.turret = 0;
+  g.feet.forEach((f) => {
+    f.p.x -= 400;
+    f.p.y -= 300;
+  });
+  s.world.control = "foot";
+  s.world.pilot.place(-434, -300, 0);
+  expect(s.interact()).toBe(true);
+  s.step(1800, {});
+  expect(s.world.transition).toBeNull();
+  expect(s.world.control).toBe("mech");
+});
+it("configuration edits work after 61 seconds", () => {
+  const s = new Simulation();
+  s.step(3600);
+  s.step(60);
+  expect(() => s.configure({ speed: 0.75 })).not.toThrow();
+  expect(s.world.mech.tuning.speed).toBe(0.75);
+});
+it("invalid aiming is rejected before changing simulation", () => {
+  const s = new Simulation(),
+    before = s.snapshot();
+  expect(() => Reflect.apply(s.step, s, [1, { aim: true }])).toThrow();
+  expect(s.snapshot()).toEqual(before);
+});
+it("pilot fade opacity is exposed in the component contract", () => {
+  const s = new Simulation({
+    ...defaultConfig,
+    actor: "pilot",
+    animation: "idle",
+  });
+  s.world.pilot.visible = 0.25;
+  const rig = buildRig(s.world, s.config, true);
+  expect(
+    rig.components
+      .filter((c) => c.id.startsWith("pilot"))
+      .every((c) => "opacity" in c && c.opacity === 0.25),
+  ).toBe(true);
+});
+
+it("configuration edits beyond the horizon leave a coherent, reproducible state", () => {
+  const s = new Simulation();
+  s.step(3600);
+  s.step(60);
+  s.configure({ actor: "pilot", heading: 359, speed: 0.75 });
+  expect(s.tick).toBe(3600);
+  const fresh = new Simulation(s.config);
+  fresh.seek(60);
+  expect(s.snapshot()).toEqual(fresh.snapshot());
+  const before = s.snapshot();
+  expect(() => s.configure({ speed: -1 })).toThrow();
+  expect(s.snapshot()).toEqual(before);
+});
+
+it("hidden and partially faded pilot components agree with shape opacity", () => {
+  for (const opacity of [0, 0.001, 0.25, 0.75, 1]) {
+    const s = new Simulation({
+      ...defaultConfig,
+      actor: "pilot",
+      animation: "idle",
+    });
+    s.world.pilot.visible = opacity;
+    const rig = buildRig(s.world, s.config, true);
+    expect(
+      rig.components.every(
+        (c) => c.opacity === opacity && c.visible === opacity > 0,
+      ),
+    ).toBe(true);
+    expect(rig.shapes.every((s) => s.alpha === opacity)).toBe(true);
+  }
+});
+
+it("exits and reboards all four field corners with cardinal headings", () => {
+  for (const [x, y] of [
+    [-435, -330],
+    [-435, 330],
+    [435, -330],
+    [435, 330],
+  ])
+    for (const heading of [0, 90, 180, 270]) {
+      const s = new Simulation({
+          ...defaultConfig,
+          heading,
+          animation: "idle",
+        }),
+        g = s.world.mech;
+      g.x = x;
+      g.y = y;
+      g.feet.forEach((f) => {
+        f.p.x += x;
+        f.p.y += y;
+      });
+      expect(s.interact()).toBe(true);
+      s.step(1200, {});
+      expect(s.world.transition, `${x},${y},${heading} exit`).toBeNull();
+      expect(s.world.control).toBe("foot");
+      expect(Math.abs(s.world.pilot.x)).toBeLessThanOrEqual(435);
+      expect(Math.abs(s.world.pilot.y)).toBeLessThanOrEqual(330);
+      expect(s.interact()).toBe(true);
+      s.step(1200, {});
+      expect(s.world.transition, `${x},${y},${heading} board`).toBeNull();
+      expect(s.world.control).toBe("mech");
+    }
+});
+
+it("pilot collision response stays inside the field wall", () => {
+  const s = new Simulation({
+    ...defaultConfig,
+    actor: "pilot",
+    animation: "idle",
+  });
+  s.world.mech.x = -400;
+  s.world.mech.y = -300;
+  s.world.pilot.place(-435, -300, 0);
+  for (let i = 0; i < 300; i++) {
+    s.step(1, { x: 1 });
+    expect(s.world.pilot.x).toBeGreaterThanOrEqual(-435);
+    expect(s.world.pilot.y).toBeGreaterThanOrEqual(-330);
+    expect(
+      Math.hypot(s.world.pilot.x + 400, s.world.pilot.y + 300),
+    ).toBeGreaterThanOrEqual(34 - 1e-7);
+  }
+});
+
+it("boards from reachable positions around the near-edge footprint", () => {
+  for (const [x, y] of [
+    [-400, -300],
+    [-400, 300],
+    [400, -300],
+    [400, 300],
+  ])
+    for (const heading of [0, 180])
+      for (let i = 0; i < 16; i++) {
+        const a = (i * Math.PI) / 8,
+          px = x + Math.cos(a) * 34,
+          py = y + Math.sin(a) * 34;
+        if (Math.abs(px) > 435 || Math.abs(py) > 330) continue;
+        const s = new Simulation(
+          { ...defaultConfig, heading, actor: "pilot", animation: "idle" },
+          { mech: { x, y }, pilot: { x: px, y: py } },
+        );
+        expect(s.interact(), `start ${x},${y},${heading},${i}`).toBe(true);
+        s.step(1800, {});
+        expect(
+          s.world.transition,
+          `finish ${x},${y},${heading},${i}`,
+        ).toBeNull();
+        expect(s.world.control).toBe("mech");
+      }
+}, 30000);

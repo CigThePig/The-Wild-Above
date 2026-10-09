@@ -12,6 +12,24 @@ export function installLab(scene: FieldScene) {
     syncUI();
   };
   const api = {
+    setIsolation: (value: boolean) => {
+      if (syncing) return;
+      scene.isolated = value;
+      scene.refresh();
+      syncUI();
+    },
+    setGuides: (value: boolean) => {
+      if (syncing) return;
+      scene.guides = value;
+      scene.refresh();
+      syncUI();
+    },
+    selectComponent: (id: string) => {
+      if (id && !scene.rig.components.some((c) => c.id === id))
+        throw Error(`Unknown component: ${id}`);
+      scene.selected = id;
+      scene.refresh();
+    },
     selectActor: (actor: ActorId) => {
       if (syncing) return;
       scene.sim.configure({ actor });
@@ -59,7 +77,9 @@ export function installLab(scene: FieldScene) {
       tick: scene.sim.tick,
       config: { ...scene.sim.config },
       control: scene.sim.world.control,
-      transition: scene.sim.world.transition,
+      selected: scene.selected,
+      transition: structuredClone(scene.sim.world.transition),
+      interactionFailure: scene.sim.world.interactionFailure,
       components: structuredClone(scene.rig.components),
       drawOrder: scene.rig.shapes.map((s) => s.id),
       diagnostics: scene.rig.components.flatMap((c) =>
@@ -102,6 +122,7 @@ export function installLab(scene: FieldScene) {
     paused: scene.paused,
     playbackSpeed: 1,
     guides: true,
+    isolated: true,
     time: 0,
   };
   const pane = new Pane({
@@ -138,6 +159,9 @@ export function installLab(scene: FieldScene) {
   pane
     .addBinding(state, "guides")
     .on("change", (e) => (scene.guides = e.value));
+  pane
+    .addBinding(state, "isolated", { label: "Isolate actor" })
+    .on("change", (e) => api.setIsolation(e.value));
   const motion = pane.addFolder({
     title: "Motion parameters",
     expanded: false,
@@ -166,6 +190,8 @@ export function installLab(scene: FieldScene) {
     Object.assign(state, scene.sim.config, {
       paused: scene.paused,
       time: scene.sim.tick / 60,
+      guides: scene.guides,
+      isolated: scene.isolated,
     });
     pane.refresh();
     syncing = false;
@@ -176,7 +202,11 @@ export function installLab(scene: FieldScene) {
     const next = scene.rig.components.map((c) => c.id).join();
     if (signature !== next) {
       signature = next;
+      const none = document.createElement("option");
+      none.value = "";
+      none.textContent = "None / no highlight";
       select.replaceChildren(
+        none,
         ...scene.rig.components.map((c) => {
           const o = document.createElement("option");
           o.value = c.id;
@@ -184,10 +214,14 @@ export function installLab(scene: FieldScene) {
           return o;
         }),
       );
-      if (!scene.rig.components.some((c) => c.id === scene.selected))
+      if (
+        scene.selected &&
+        !scene.rig.components.some((c) => c.id === scene.selected)
+      )
         scene.selected = scene.rig.components[0].id;
       select.value = scene.selected;
     }
+    select.value = scene.selected;
     const c = scene.rig.components.find((c) => c.id === scene.selected);
     document.getElementById("details")!.textContent = JSON.stringify(
       c,

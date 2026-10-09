@@ -11,6 +11,6 @@
 
 Environment limitation: Playwright's normal browser CDN returned invalid archives here. Local browser execution used a separately extracted Chromium 133 executable, selected by PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH. That browser is not a project dependency or required end-user workaround. CI installs Playwright 1.58.2's pinned Chromium normally. Browser/platform rasterization differences can affect baselines; investigate differences, do not automatically accept them.
 
-No physical Android device, thermal test, native Capacitor package or multi-actor load test was available. No real-device 60 FPS claim is made. Broad-body occlusion and the temporarily untyped migrated motion module remain known limits.
+No physical Android device, thermal test, native Capacitor package or multi-actor load test was available. No real-device 60 FPS claim is made. Broad-body occlusion remains a known limit. The motion module was subsequently fully typed; see [review follow-up evidence](motion-review.md).
 
 Evidence files are repository review artifacts, not golden performance benchmarks. The contact sheet order and diagnostic changes are in sweep.json.

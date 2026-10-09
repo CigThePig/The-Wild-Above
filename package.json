@@ -14,7 +14,8 @@
     "capture": "node scripts/capture.mjs",
     "check": "npm run typecheck && npm run lint && npm test && npm run build",
     "format": "prettier --write src tests scripts *.ts *.js *.json *.html *.md docs .github",
-    "notices": "node scripts/notices.mjs"
+    "notices": "node scripts/notices.mjs",
+    "capture:motion": "node scripts/capture-motion.mjs"
   },
   "engines": {
     "node": ">=22.12"

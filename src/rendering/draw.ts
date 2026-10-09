@@ -16,7 +16,9 @@ export function drawRig(
     g.fillPath();
   }
   if (guides)
-    for (const c of rig.components.filter((c) => c.kind === "joint")) {
+    for (const c of rig.components.filter(
+      (c) => c.kind === "joint" && c.visible,
+    )) {
       const p = project(c.world),
         parent = rig.components.find((r) => r.id === c.parent);
       if (parent?.kind === "joint") {

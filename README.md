@@ -25,6 +25,7 @@ npx playwright install --with-deps chromium
 npm run test:browser
 # With npm run dev running in a second terminal:
 npm run capture -- 60,61,62,63,64,65,66
+npm run capture:motion
 npm run build
 npm run preview
 ```
@@ -41,7 +42,7 @@ Captures, contact sheets and diagnostic JSON go in `artifacts/`. Screenshot base
 
 ## Scope and limits
 
-This is a working development foundation, not a finished engine or game. Existing motion remains in one documented JS module behind TypeScript interfaces. Rendering follows the minimal prototype; subdivided limbs reduce coarse depth swaps but broad-body occlusion still needs work. World collision is the inherited range clamp and pilot/Mech separation, not a navigation system. The rig schema is reusable; motion controllers are currently biped-specific. There is no full rig editor, combat migration, quadruped, native mobile package or save system.
+This is a working development foundation, not a finished engine or game. Motion is fully typed, with a fixture protecting the migrated walk/run poses. Rendering follows the minimal prototype; subdivided limbs reduce coarse depth swaps but broad-body occlusion still needs work. World collision remains a field clamp and pilot/Mech separation; bounded boarding routes avoid the parked footprint. The rig schema is reusable; motion controllers are currently biped-specific. There is no full rig editor, combat migration, quadruped, native mobile package or save system.
 
 Mobile layout/input is browser-tested; real Android performance and thermal behavior are unverified. Production excludes Rig Lab automation. No project license has been chosen; dependency licenses remain applicable.
 

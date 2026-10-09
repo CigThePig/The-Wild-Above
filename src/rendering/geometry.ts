@@ -1,13 +1,6 @@
 import type { Vec, Point, Shape, Component } from "../animation/types";
-export const vec = (x = 0, y = 0, z = 0): Vec => ({ x, y, z });
-export const add = (a: Vec, b: Vec): Vec =>
-  vec(a.x + b.x, a.y + b.y, a.z + b.z);
-export const rotate = (p: Vec, a: number): Vec =>
-  vec(
-    p.x * Math.cos(a) - p.y * Math.sin(a),
-    p.x * Math.sin(a) + p.y * Math.cos(a),
-    p.z,
-  );
+import { vec, add, rotate } from "../animation/motion/math";
+export { vec, add, rotate };
 export const project = (p: Vec) => ({
   x: p.x,
   y: p.y * 0.72 - p.z * 0.694,
@@ -51,6 +44,7 @@ export class Geometry {
       local: vec(world.x - origin.x, world.y - origin.y, world.z - origin.z),
       contact,
       visible: true,
+      opacity: 1,
       drawOrder: [],
       issues: [],
     };

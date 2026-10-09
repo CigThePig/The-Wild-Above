@@ -1,6 +1,6 @@
 # Next milestones
 
-1. **Animation parity and occlusion:** compare longer runs/turns and each boarding stage against the supplied prototype; fix broad torso/shoulder overlaps using explicit geometry splitting where the captures justify it. Fully type the retained motion classes and remove unused range combat code.
+1. **Animation parity and occlusion:** motion typing, unused code removal, longer replay/turn checks and boarding review fixes are complete. Next, correct broad torso/shoulder overlaps with explicit geometry splitting where the captured largest-delta pairs justify it; validate visually at multiple gait phases.
 2. **Real Android validation:** profile a representative midrange phone, touch cancellation/multitouch, heat, orientation and cutouts. Canvas runs at CSS-pixel resolution as a deliberate GPU budget cap; measure whether selective high-DPI scaling is worth it. FPS shown in emulation is not device certification.
 3. **Stronger rig data:** full local transforms, geometric constraints, configurable dimensions and a second mech variant. Human-approved silhouettes; retain named joints and independent geometry.
 4. **Boarding robustness:** interruption/cancel states, obstructed approach paths and world collisions. Consider XState when branching complexity warrants it.

@@ -4,7 +4,7 @@ Minimalist top-down 2D action RPG: underground human settlements, hostile surfac
 
 Use simple silhouettes, restrained palettes and flat geometric art. Animation supplies sophistication. Do not add detailed textures, sprite pipelines or 3D assets to solve a rig problem.
 
-Stack: Phaser 4.2.1, TypeScript, Vite; Tweakpane lab; Zod data boundaries; Vitest/fast-check and Playwright. Phaser owns loop, input, scenes, camera and rendering. The temporary migrated JS motion island is explicitly documented; new code must be typed. Motion cannot depend on DOM/Phaser. Pose/component data and geometry stay independent of Graphics.
+Stack: Phaser 4.2.1, TypeScript, Vite; Tweakpane lab; Zod data boundaries; Vitest/fast-check and Playwright. Phaser owns loop, input, scenes, camera and rendering. All motion and new runtime code must compile as strict TypeScript; do not reintroduce an unchecked motion island. Motion cannot depend on DOM/Phaser. Pose/component data and geometry stay independent of Graphics.
 
 ## Commands
 
@@ -12,6 +12,7 @@ Stack: Phaser 4.2.1, TypeScript, Vite; Tweakpane lab; Zod data boundaries; Vites
 - `npm run check`: typecheck, lint, unit tests and production build.
 - `npx playwright install --with-deps chromium`, then `npm run test:browser`.
 - With dev server running, `npm run capture -- 60,61,62,63,64,65,66`.
+- With the dev server running, `npm run capture:motion` checks longer locomotion, turns, multiple gait phases and full boarding stages. Inspect largest-delta pairs; pixel counts are not artistic verdicts.
 - `npm run format`; `npm run notices` to refresh third-party license notices after dependency changes.
 
 **Agents must inspect the rendered output of visual changes. Successful compilation is not sufficient evidence that an animation works.**

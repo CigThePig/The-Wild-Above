@@ -1,21 +1,44 @@
 import { z } from "zod";
-import { PilotWorld } from "./legacy/motion.js";
-import type { World, Input } from "./types";
+import { FIELD } from "./motion/boarding";
+import { PilotWorld } from "./motion/world";
+import type { Input } from "./types";
 import { configSchema, defaultConfig, type RigConfig } from "./config";
 export const DT = 1 / 60;
-const inputSchema = z
+const movementSchema = z.object({
+  x: z.number().finite().min(-1).max(1).optional(),
+  y: z.number().finite().min(-1).max(1).optional(),
+  fast: z.boolean().optional(),
+  turn: z.number().finite().min(-1).max(1).optional(),
+  fire: z.boolean().optional(),
+});
+export const inputSchema = z.union([
+  movementSchema
+    .extend({ aim: z.literal(true), aimYaw: z.number().finite() })
+    .strict(),
+  movementSchema
+    .extend({
+      aim: z.literal(false).optional(),
+      aimYaw: z.number().finite().optional(),
+    })
+    .strict(),
+]);
+const positionSchema = z
   .object({
-    x: z.number().finite().min(-1).max(1).optional(),
-    y: z.number().finite().min(-1).max(1).optional(),
-    fast: z.boolean().optional(),
-    turn: z.number().min(-1).max(1).optional(),
-    aim: z.boolean().optional(),
-    aimYaw: z.number().finite().optional(),
-    fire: z.boolean().optional(),
+    x: z.number().finite().min(FIELD.minX).max(FIELD.maxX),
+    y: z.number().finite().min(FIELD.minY).max(FIELD.maxY),
   })
   .strict();
+export const placementSchema = z
+  .object({ mech: positionSchema, pilot: positionSchema })
+  .strict();
+export type Placement = z.infer<typeof placementSchema>;
+const defaultPlacement: Placement = {
+  mech: { x: 0, y: 0 },
+  pilot: { x: 100, y: 0 },
+};
 const recordingSchema = z.object({
   config: configSchema,
+  placement: placementSchema.optional(),
   commands: z
     .array(
       z.discriminatedUnion("kind", [
@@ -31,35 +54,38 @@ const recordingSchema = z.object({
 });
 type Recording = z.infer<typeof recordingSchema>;
 export class Simulation {
-  world!: World;
+  world!: PilotWorld;
   tick = 0;
   commands: Recording["commands"] = [];
   config: RigConfig;
   readonly seed = 197;
-  constructor(config: RigConfig = defaultConfig) {
+  placement: Placement;
+  constructor(
+    config: RigConfig = defaultConfig,
+    placement: Placement = defaultPlacement,
+  ) {
+    this.placement = placementSchema.parse(placement);
     this.config = configSchema.parse(config);
     this.reset();
   }
   reset() {
     this.commands = [];
-    this.world = new PilotWorld() as unknown as World;
-    this.world.targets = [];
-    this.world.rocks = [];
+    this.world = new PilotWorld();
     this.tick = 0;
     const a = (this.config.heading * Math.PI) / 180,
       g = this.world.mech;
     g.yaw = g.turret = a;
-    g.x = 0;
-    g.y = 0;
+    g.x = this.placement.mech.x;
+    g.y = this.placement.mech.y;
     for (const f of g.feet) {
       f.p = {
-        x: f.side * 17 * Math.cos(a) - Math.sin(a),
-        y: f.side * 17 * Math.sin(a) + Math.cos(a),
+        x: g.x + f.side * 17 * Math.cos(a) - Math.sin(a),
+        y: g.y + f.side * 17 * Math.sin(a) + Math.cos(a),
         z: 3,
       };
       f.yaw = a;
     }
-    this.world.pilot.place(100, 0, a);
+    this.world.pilot.place(this.placement.pilot.x, this.placement.pilot.y, a);
     this.world.control = this.config.actor === "pilot" ? "foot" : "mech";
     this.applyTuning();
   }
@@ -106,17 +132,27 @@ export class Simulation {
   }
   configure(patch: Partial<RigConfig>) {
     const c = configSchema.parse({ ...this.config, ...patch });
-    const time = this.tick * DT;
-    this.config = c;
-    this.seek(time);
+    // Build the replacement before committing; long playback edits restart at
+    // the seek horizon rather than leaving config and motion half-applied.
+    const replacement = new Simulation(c, this.placement);
+    replacement.step(Math.min(this.tick, 3600));
+    this.config = replacement.config;
+    this.world = replacement.world;
+    this.tick = replacement.tick;
+    this.commands = replacement.commands;
   }
+
   interact() {
     const accepted = this.world.interact();
     if (accepted) this.commands.push({ kind: "interact" });
     return accepted;
   }
   recording(): Recording {
-    return structuredClone({ config: this.config, commands: this.commands });
+    return structuredClone({
+      config: this.config,
+      placement: this.placement,
+      commands: this.commands,
+    });
   }
   replay(value: unknown) {
     const recording = recordingSchema.parse(value);
@@ -128,6 +164,8 @@ export class Simulation {
     )
       throw Error("Recording too long");
     this.config = recording.config;
+    this.placement =
+      recording.placement ?? placementSchema.parse(defaultPlacement);
     this.reset();
     for (const command of recording.commands) {
       if (command.kind === "interact") this.interact();
@@ -140,8 +178,15 @@ export class Simulation {
         seed: this.seed,
         tick: this.tick,
         config: this.config,
+        placement: this.placement,
         world: this.world,
       }),
-    ) as { seed: number; tick: number; config: RigConfig; world: unknown };
+    ) as {
+      seed: number;
+      tick: number;
+      config: RigConfig;
+      placement: Placement;
+      world: unknown;
+    };
   }
 }

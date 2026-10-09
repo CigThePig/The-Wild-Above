@@ -148,8 +148,9 @@ export function buildRig(world: World, config: RigConfig, isolated: boolean) {
         "shape",
         L(0, -18, 1),
       );
-      hatch.visible = facing > 0;
-      geo.polygon(hatch.id, points, 0x76c5b4, 15);
+      hatch.visible = facing > 1e-8;
+      hatch.opacity = hatch.visible ? 1 : 0;
+      geo.polygon(hatch.id, points, 0x76c5b4, 15, hatch.opacity);
       for (const side of [-1, 1]) {
         const s = side < 0 ? "left" : "right",
           shoulder = L(side * 24, 1, 5),
@@ -259,20 +260,23 @@ export function buildRig(world: World, config: RigConfig, isolated: boolean) {
       block("pilot.pack", L(0, 4, 5), 7, 3, 8, p.yaw, dark);
       block("pilot.head", L(0, -0.4, 15), 8, 7, 9, p.yaw, skin);
       block("pilot.hair", L(0, 0, 19), 8.5, 7.5, 3.5, p.yaw, dark);
+      const suppressed =
+        world.transition?.exiting &&
+        ["park", "open"].includes(world.transition.stage);
+      const opacity = suppressed ? 0 : p.visible;
+      for (const c of geo.components.filter((c) => c.id.startsWith("pilot"))) {
+        c.opacity = opacity;
+        c.visible = opacity > 0;
+      }
       for (const s of geo.shapes.filter((s) => s.component.startsWith("pilot")))
-        s.alpha = p.visible;
+        s.alpha = opacity;
     }
   };
   if (!isolated || config.actor === "mech") actor("mech", world.mech);
   if (
     isolated
       ? config.actor === "pilot"
-      : (world.control === "foot" || !!world.transition) &&
-        world.pilot.visible > 0.01 &&
-        !(
-          world.transition?.exiting &&
-          ["park", "open"].includes(world.transition.stage)
-        )
+      : world.control === "foot" || !!world.transition
   )
     actor("pilot", world.pilot);
   return geo.finish();

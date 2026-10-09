@@ -9,6 +9,7 @@ import type { Input } from "../animation/types";
 export class FieldScene extends Phaser.Scene {
   sim = new Simulation();
   lab = false;
+  isolated = true;
   paused = false;
   rate = 1;
   guides = true;
@@ -130,7 +131,11 @@ export class FieldScene extends Phaser.Scene {
   refresh() {
     if (!this.graphics) return;
     const start = performance.now();
-    this.rig = buildRig(this.sim.world, this.sim.config, this.lab);
+    this.rig = buildRig(
+      this.sim.world,
+      this.sim.config,
+      this.lab && this.isolated,
+    );
     drawRig(
       this.graphics,
       this.rig,

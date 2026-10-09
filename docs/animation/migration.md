@@ -6,7 +6,16 @@ The creator's supplied `PLUME_Running_and_Boarding_Source(1).zip` contained a pl
 
 Retained: acceleration damping, bounded turning, planted mech feet, predictive foot targets, alternating swing, analytic two-link IK, near-extended human legs, running cadence/arm swing, approach routing, staged hatch/climb/seating and reverse exit. The new renderer follows the chosen minimal B silhouette design. Weapon firing/range targets, style A/C and old DOM/event loop were not migrated as features.
 
-`src/animation/legacy/motion.js` is the deliberate temporary JavaScript island, behind `types.ts` and `Simulation`. Its classes were converted from global wrappers to ESM, names migrated, tuning hooks added and a zero-length division guarded. It still contains unused range simulation inherited from its World superclass; removal is a small follow-up once parity is captured. New simulation control, inspection, geometry, rendering, game and tooling are strict TypeScript. Do not mistake the facade cast for proof that every old field is type checked.
+Motion now lives in strict TypeScript modules in `src/animation/motion/`: math/IK, Mech gait, Pilot gait, boarding geometry and the world/transfer controller. The unchecked JS module and its unused range-combat/scenery superclass were removed. No facade cast, `allowJs`, lint exemption or `any` is needed for motion. A 48-state fixture captured from the previous implementation verifies exact walk/run root, knee and foot pose parity for both actors, three headings, two speeds and four timestamps.
+
+Review corrections:
+
+- Hatch-side ground positions retain preferred cardinal directions and use a bounded inward diagonal at corners. The previous out-of-bounds fallback is gone.
+- Boarding approaches use a small visibility graph around the single circular footprint. Every segment stays in the convex field and outside radius 34. Ring/wall intersection nodes preserve paths from wall-adjacent starts. Unreachable approaches are rejected before a transition owns input; there is no straight-through fallback. This is a bounded approach solver, not a world pathfinding engine.
+- Pilot collision response retains the previous valid position when radial separation would push through a field wall.
+- Pilot components expose effective `opacity` as well as `visible`, including zero-opacity stages. Hidden components remain inspectable during transfer; opaque depth coverage by other shapes is not modeled as component visibility.
+- Aim input is a typed and validated union: `aim: true` requires a finite `aimYaw`.
+- Configuration edits are transactional. Playback beyond 60 seconds is rebuilt at tick 3600 on edit, with the new configuration. The bounded restart is explicit; edits never leave old world tuning paired with a new config.
 
 ## Separation
 

@@ -3,7 +3,7 @@ import fc from "fast-check";
 import { Simulation } from "../../src/animation/simulation";
 import { defaultConfig, configSchema } from "../../src/animation/config";
 import { buildRig } from "../../src/animation/rig";
-import { solveLeg } from "../../src/animation/legacy/motion.js";
+import { solveLeg } from "../../src/animation/motion/math";
 
 describe("configuration", () => {
   it("rejects invalid and unknown values", () => {

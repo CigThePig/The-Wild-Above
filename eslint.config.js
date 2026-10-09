@@ -5,7 +5,6 @@ export default ts.config(
     ignores: [
       "dist/**",
       "node_modules/**",
-      "src/animation/legacy/**",
       "test-results/**",
       "playwright-report/**",
       "artifacts/**",
