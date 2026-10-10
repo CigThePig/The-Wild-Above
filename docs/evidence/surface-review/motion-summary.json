@@ -1,0 +1,827 @@
+{
+  "locomotion": [
+    {
+      "actor": "mech",
+      "seconds": 5,
+      "tick": 300,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "seconds": 15,
+      "tick": 900,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "seconds": 30,
+      "tick": 1800,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "seconds": 60,
+      "tick": 3600,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "seconds": 90,
+      "tick": 5400,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "seconds": 120,
+      "tick": 7200,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "seconds": 5,
+      "tick": 300,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "seconds": 15,
+      "tick": 900,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "seconds": 30,
+      "tick": 1800,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "seconds": 60,
+      "tick": 3600,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "seconds": 90,
+      "tick": 5400,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "seconds": 120,
+      "tick": 7200,
+      "diagnostics": []
+    }
+  ],
+  "rotation": [
+    {
+      "actor": "mech",
+      "tick": 12,
+      "heading": 168.33464944418645,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "tick": 84,
+      "heading": 278.3425461093044,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "tick": 156,
+      "heading": 388.35044277442137,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "tick": 228,
+      "heading": 498.3583394395397,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "tick": 300,
+      "heading": 608.3662361046603,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "tick": 372,
+      "heading": 718.3741327697808,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "tick": 444,
+      "heading": 828.3820294349015,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "tick": 516,
+      "heading": 938.3899261000221,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "tick": 588,
+      "heading": 1048.3978227651428,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "tick": 660,
+      "heading": 1158.4057194302632,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "tick": 732,
+      "heading": 1268.4136160953838,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "tick": 804,
+      "heading": 1378.4215127605046,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "tick": 876,
+      "heading": 1488.429409425625,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "tick": 948,
+      "heading": 1598.4373060907458,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "tick": 1020,
+      "heading": 1708.4452027558661,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "tick": 1092,
+      "heading": 1818.4530994209867,
+      "diagnostics": []
+    },
+    {
+      "actor": "mech",
+      "tick": 1164,
+      "heading": 1928.4609960860948,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "tick": 12,
+      "heading": 190.10704565915748,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "tick": 84,
+      "heading": 430.74931961410397,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "tick": 156,
+      "heading": 671.3915935690508,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "tick": 228,
+      "heading": 912.0338675239974,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "tick": 300,
+      "heading": 1152.6761414789441,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "tick": 372,
+      "heading": 1393.318415433891,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "tick": 444,
+      "heading": 1633.9606893888374,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "tick": 516,
+      "heading": 1874.6029633437818,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "tick": 588,
+      "heading": 2115.2452372987136,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "tick": 660,
+      "heading": 2355.8875112536457,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "tick": 732,
+      "heading": 2596.529785208578,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "tick": 804,
+      "heading": 2837.1720591635103,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "tick": 876,
+      "heading": 3077.814333118442,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "tick": 948,
+      "heading": 3318.4566070733745,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "tick": 1020,
+      "heading": 3559.098881028306,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "tick": 1092,
+      "heading": 3799.7411549832545,
+      "diagnostics": []
+    },
+    {
+      "actor": "pilot",
+      "tick": 1164,
+      "heading": 4040.3834289382157,
+      "diagnostics": []
+    }
+  ],
+  "boarding": [
+    {
+      "name": "center",
+      "samples": [
+        {
+          "key": "0-open",
+          "tick": 3,
+          "stage": "open",
+          "pilotOpacity": 0,
+          "pilotVisible": false
+        },
+        {
+          "key": "0-emerge",
+          "tick": 27,
+          "stage": "emerge",
+          "pilotOpacity": 0.00010493359752072884,
+          "pilotVisible": true
+        },
+        {
+          "key": "0-emerge-fade",
+          "tick": 33,
+          "stage": "emerge",
+          "pilotOpacity": 0.15712211076043636,
+          "pilotVisible": true
+        },
+        {
+          "key": "0-descend",
+          "tick": 57,
+          "stage": "descend",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "0-land",
+          "tick": 156,
+          "stage": "land",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "0-close",
+          "tick": 174,
+          "stage": "close",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "0-done",
+          "tick": 198,
+          "stage": "done",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "1-open",
+          "tick": 201,
+          "stage": "open",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "1-step",
+          "tick": 225,
+          "stage": "step",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "1-climb",
+          "tick": 246,
+          "stage": "climb",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "1-seat",
+          "tick": 342,
+          "stage": "seat",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "1-seat-fade",
+          "tick": 357,
+          "stage": "seat",
+          "pilotOpacity": 0.9129676588301743,
+          "pilotVisible": true
+        },
+        {
+          "key": "1-close",
+          "tick": 372,
+          "stage": "close",
+          "pilotOpacity": 0,
+          "pilotVisible": false
+        },
+        {
+          "key": "1-done",
+          "tick": 399,
+          "stage": "done"
+        }
+      ],
+      "recording": {
+        "config": {
+          "version": 1,
+          "actor": "mech",
+          "heading": 180,
+          "animation": "idle",
+          "speed": 1,
+          "stride": 1,
+          "stepHeight": 1,
+          "bob": 1,
+          "kneeLimit": 175,
+          "color": "#a5a082"
+        },
+        "placement": {
+          "mech": {
+            "x": 0,
+            "y": 0
+          },
+          "pilot": {
+            "x": 100,
+            "y": 0
+          }
+        },
+        "commands": [
+          {
+            "kind": "interact"
+          },
+          {
+            "kind": "step",
+            "frames": 198,
+            "input": {}
+          },
+          {
+            "kind": "interact"
+          },
+          {
+            "kind": "step",
+            "frames": 201,
+            "input": {}
+          }
+        ]
+      }
+    },
+    {
+      "name": "corner",
+      "samples": [
+        {
+          "key": "0-park",
+          "tick": 3,
+          "stage": "park",
+          "pilotOpacity": 0,
+          "pilotVisible": false
+        },
+        {
+          "key": "0-open",
+          "tick": 81,
+          "stage": "open",
+          "pilotOpacity": 0,
+          "pilotVisible": false
+        },
+        {
+          "key": "0-emerge",
+          "tick": 105,
+          "stage": "emerge",
+          "pilotOpacity": 0,
+          "pilotVisible": false
+        },
+        {
+          "key": "0-emerge-fade",
+          "tick": 111,
+          "stage": "emerge",
+          "pilotOpacity": 0.09374408414725766,
+          "pilotVisible": true
+        },
+        {
+          "key": "0-descend",
+          "tick": 138,
+          "stage": "descend",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "0-land",
+          "tick": 234,
+          "stage": "land",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "0-close",
+          "tick": 252,
+          "stage": "close",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "0-done",
+          "tick": 279,
+          "stage": "done",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "1-open",
+          "tick": 282,
+          "stage": "open",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "1-step",
+          "tick": 306,
+          "stage": "step",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "1-climb",
+          "tick": 327,
+          "stage": "climb",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "1-seat",
+          "tick": 423,
+          "stage": "seat",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "1-seat-fade",
+          "tick": 438,
+          "stage": "seat",
+          "pilotOpacity": 0.9129676588301743,
+          "pilotVisible": true
+        },
+        {
+          "key": "1-close",
+          "tick": 453,
+          "stage": "close",
+          "pilotOpacity": 0,
+          "pilotVisible": false
+        },
+        {
+          "key": "1-done",
+          "tick": 480,
+          "stage": "done"
+        }
+      ],
+      "recording": {
+        "config": {
+          "version": 1,
+          "actor": "mech",
+          "heading": 270,
+          "animation": "idle",
+          "speed": 1,
+          "stride": 1,
+          "stepHeight": 1,
+          "bob": 1,
+          "kneeLimit": 175,
+          "color": "#a5a082"
+        },
+        "placement": {
+          "mech": {
+            "x": -435,
+            "y": -330
+          },
+          "pilot": {
+            "x": -383,
+            "y": -300
+          }
+        },
+        "commands": [
+          {
+            "kind": "interact"
+          },
+          {
+            "kind": "step",
+            "frames": 279,
+            "input": {}
+          },
+          {
+            "kind": "interact"
+          },
+          {
+            "kind": "step",
+            "frames": 201,
+            "input": {}
+          }
+        ]
+      }
+    },
+    {
+      "name": "edge-approach",
+      "samples": [
+        {
+          "key": "0-park",
+          "tick": 3,
+          "stage": "park",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "0-approach",
+          "tick": 51,
+          "stage": "approach",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "0-open",
+          "tick": 204,
+          "stage": "open",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "0-step",
+          "tick": 228,
+          "stage": "step",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "0-climb",
+          "tick": 249,
+          "stage": "climb",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "0-seat",
+          "tick": 345,
+          "stage": "seat",
+          "pilotOpacity": 1,
+          "pilotVisible": true
+        },
+        {
+          "key": "0-seat-fade",
+          "tick": 360,
+          "stage": "seat",
+          "pilotOpacity": 0.9129676588301743,
+          "pilotVisible": true
+        },
+        {
+          "key": "0-close",
+          "tick": 375,
+          "stage": "close",
+          "pilotOpacity": 0,
+          "pilotVisible": false
+        },
+        {
+          "key": "0-done",
+          "tick": 402,
+          "stage": "done"
+        }
+      ],
+      "recording": {
+        "config": {
+          "version": 1,
+          "actor": "pilot",
+          "heading": 0,
+          "animation": "idle",
+          "speed": 1,
+          "stride": 1,
+          "stepHeight": 1,
+          "bob": 1,
+          "kneeLimit": 175,
+          "color": "#a5a082"
+        },
+        "placement": {
+          "mech": {
+            "x": -400,
+            "y": -300
+          },
+          "pilot": {
+            "x": -434,
+            "y": -300
+          }
+        },
+        "commands": [
+          {
+            "kind": "interact"
+          },
+          {
+            "kind": "step",
+            "frames": 402,
+            "input": {}
+          }
+        ]
+      }
+    }
+  ],
+  "sweeps": [
+    {
+      "actor": "mech",
+      "time": 0.35,
+      "step": 2,
+      "largest": [
+        {
+          "from": 160,
+          "to": 162,
+          "changedPixels": 1099,
+          "visibilityChanges": [],
+          "orderChanges": 62
+        },
+        {
+          "from": 90,
+          "to": 92,
+          "changedPixels": 1079,
+          "visibilityChanges": ["mech.cockpit.hatch"],
+          "orderChanges": 90
+        },
+        {
+          "from": 142,
+          "to": 144,
+          "changedPixels": 1072,
+          "visibilityChanges": [],
+          "orderChanges": 83
+        }
+      ],
+      "maxWorkload": {
+        "sourceSurfaces": 70,
+        "legacyPrimitives": 72,
+        "fragments": 171,
+        "comparisons": 17903,
+        "maxFragments": 8,
+        "drawVertices": 1132
+      },
+      "methods": ["geometric-order"]
+    },
+    {
+      "actor": "mech",
+      "time": 1.5,
+      "step": 2,
+      "largest": [
+        {
+          "from": 162,
+          "to": 164,
+          "changedPixels": 1124,
+          "visibilityChanges": [],
+          "orderChanges": 86
+        },
+        {
+          "from": 164,
+          "to": 166,
+          "changedPixels": 1110,
+          "visibilityChanges": [],
+          "orderChanges": 61
+        },
+        {
+          "from": 160,
+          "to": 162,
+          "changedPixels": 1086,
+          "visibilityChanges": [],
+          "orderChanges": 54
+        }
+      ],
+      "maxWorkload": {
+        "sourceSurfaces": 70,
+        "legacyPrimitives": 72,
+        "fragments": 171,
+        "comparisons": 17903,
+        "maxFragments": 8,
+        "drawVertices": 1132
+      },
+      "methods": ["geometric-order"]
+    },
+    {
+      "actor": "pilot",
+      "time": 0.35,
+      "step": 2,
+      "largest": [
+        {
+          "from": 254,
+          "to": 256,
+          "changedPixels": 322,
+          "visibilityChanges": [],
+          "orderChanges": 10
+        },
+        {
+          "from": 104,
+          "to": 106,
+          "changedPixels": 182,
+          "visibilityChanges": [],
+          "orderChanges": 12
+        },
+        {
+          "from": 92,
+          "to": 94,
+          "changedPixels": 83,
+          "visibilityChanges": [],
+          "orderChanges": 7
+        }
+      ],
+      "maxWorkload": {
+        "sourceSurfaces": 0,
+        "legacyPrimitives": 73,
+        "fragments": 73,
+        "comparisons": 2628,
+        "maxFragments": 1,
+        "drawVertices": 728
+      },
+      "methods": ["geometric-order"]
+    },
+    {
+      "actor": "pilot",
+      "time": 1.5,
+      "step": 2,
+      "largest": [
+        {
+          "from": 104,
+          "to": 106,
+          "changedPixels": 302,
+          "visibilityChanges": [],
+          "orderChanges": 10
+        },
+        {
+          "from": 254,
+          "to": 256,
+          "changedPixels": 179,
+          "visibilityChanges": [],
+          "orderChanges": 20
+        },
+        {
+          "from": 358,
+          "to": 360,
+          "changedPixels": 90,
+          "visibilityChanges": [],
+          "orderChanges": 22
+        }
+      ],
+      "maxWorkload": {
+        "sourceSurfaces": 0,
+        "legacyPrimitives": 73,
+        "fragments": 73,
+        "comparisons": 2628,
+        "maxFragments": 1,
+        "drawVertices": 728
+      },
+      "methods": ["geometric-order"]
+    }
+  ]
+}

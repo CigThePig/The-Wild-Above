@@ -1,0 +1,1366 @@
+{
+  "browser": "153.0.8010.0",
+  "baseline": "http://127.0.0.1:5174",
+  "states": [
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 0,
+      "stats": {
+        "drawVertices": 1008,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 142,
+        "comparisons": 12280,
+        "overlaps": 309,
+        "maxFragments": 6,
+        "resolutionMs": 15.299999999813735
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 45,
+      "stats": {
+        "drawVertices": 1092,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 161,
+        "comparisons": 16053,
+        "overlaps": 432,
+        "maxFragments": 7,
+        "resolutionMs": 19.899999999906868
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 60,
+      "stats": {
+        "drawVertices": 1072,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 156,
+        "comparisons": 15167,
+        "overlaps": 439,
+        "maxFragments": 7,
+        "resolutionMs": 5.100000000093132
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 61,
+      "stats": {
+        "drawVertices": 1072,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 156,
+        "comparisons": 15167,
+        "overlaps": 445,
+        "maxFragments": 7,
+        "resolutionMs": 2.699999999953434
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 62,
+      "stats": {
+        "drawVertices": 1072,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 156,
+        "comparisons": 15167,
+        "overlaps": 445,
+        "maxFragments": 7,
+        "resolutionMs": 3.1000000000931323
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 63,
+      "stats": {
+        "drawVertices": 1072,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 156,
+        "comparisons": 15167,
+        "overlaps": 442,
+        "maxFragments": 7,
+        "resolutionMs": 3
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 64,
+      "stats": {
+        "drawVertices": 1072,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 156,
+        "comparisons": 15167,
+        "overlaps": 437,
+        "maxFragments": 7,
+        "resolutionMs": 5.800000000046566
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 65,
+      "stats": {
+        "drawVertices": 1076,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 157,
+        "comparisons": 15430,
+        "overlaps": 438,
+        "maxFragments": 7,
+        "resolutionMs": 8.099999999860302
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 66,
+      "stats": {
+        "drawVertices": 1076,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 157,
+        "comparisons": 15430,
+        "overlaps": 439,
+        "maxFragments": 7,
+        "resolutionMs": 3.9000000001396984
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 86,
+      "stats": {
+        "drawVertices": 1036,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 147,
+        "comparisons": 13721,
+        "overlaps": 383,
+        "maxFragments": 7,
+        "resolutionMs": 2.8999999999068677
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 87,
+      "stats": {
+        "drawVertices": 1036,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 147,
+        "comparisons": 13721,
+        "overlaps": 391,
+        "maxFragments": 7,
+        "resolutionMs": 2.800000000046566
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 88,
+      "stats": {
+        "drawVertices": 1036,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 147,
+        "comparisons": 13721,
+        "overlaps": 398,
+        "maxFragments": 7,
+        "resolutionMs": 19
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 89,
+      "stats": {
+        "drawVertices": 1036,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 147,
+        "comparisons": 13721,
+        "overlaps": 398,
+        "maxFragments": 7,
+        "resolutionMs": 3.0999999998603016
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 90,
+      "stats": {
+        "drawVertices": 932,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 123,
+        "comparisons": 9821,
+        "overlaps": 361,
+        "maxFragments": 7,
+        "resolutionMs": 6.099999999860302
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 91,
+      "stats": {
+        "drawVertices": 992,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 136,
+        "comparisons": 12239,
+        "overlaps": 416,
+        "maxFragments": 7,
+        "resolutionMs": 4.099999999860302
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 92,
+      "stats": {
+        "drawVertices": 984,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 134,
+        "comparisons": 11972,
+        "overlaps": 424,
+        "maxFragments": 7,
+        "resolutionMs": 2.2999999998137355
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 93,
+      "stats": {
+        "drawVertices": 984,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 134,
+        "comparisons": 11972,
+        "overlaps": 435,
+        "maxFragments": 7,
+        "resolutionMs": 2.4000000001396984
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 94,
+      "stats": {
+        "drawVertices": 984,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 134,
+        "comparisons": 11972,
+        "overlaps": 437,
+        "maxFragments": 7,
+        "resolutionMs": 4.300000000046566
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 180,
+      "stats": {
+        "drawVertices": 888,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 112,
+        "comparisons": 8591,
+        "overlaps": 246,
+        "maxFragments": 4,
+        "resolutionMs": 4.399999999906868
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 268,
+      "stats": {
+        "drawVertices": 960,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 128,
+        "comparisons": 11201,
+        "overlaps": 380,
+        "maxFragments": 7,
+        "resolutionMs": 12.199999999953434
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 269,
+      "stats": {
+        "drawVertices": 960,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 128,
+        "comparisons": 11201,
+        "overlaps": 368,
+        "maxFragments": 7,
+        "resolutionMs": 4.300000000046566
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 270,
+      "stats": {
+        "drawVertices": 902,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 115,
+        "comparisons": 8887,
+        "overlaps": 334,
+        "maxFragments": 7,
+        "resolutionMs": 1.8000000000465661
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 271,
+      "stats": {
+        "drawVertices": 988,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 135,
+        "comparisons": 12065,
+        "overlaps": 367,
+        "maxFragments": 7,
+        "resolutionMs": 2.1000000000931323
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 272,
+      "stats": {
+        "drawVertices": 988,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 135,
+        "comparisons": 12065,
+        "overlaps": 366,
+        "maxFragments": 7,
+        "resolutionMs": 2.0999999998603016
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 273,
+      "stats": {
+        "drawVertices": 988,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 135,
+        "comparisons": 12065,
+        "overlaps": 360,
+        "maxFragments": 7,
+        "resolutionMs": 4.699999999953434
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 274,
+      "stats": {
+        "drawVertices": 988,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 135,
+        "comparisons": 12065,
+        "overlaps": 360,
+        "maxFragments": 7,
+        "resolutionMs": 2.5
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 0.35,
+      "heading": 359,
+      "stats": {
+        "drawVertices": 1072,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 156,
+        "comparisons": 15060,
+        "overlaps": 361,
+        "maxFragments": 6,
+        "resolutionMs": 3.8999999999068677
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 0,
+      "stats": {
+        "drawVertices": 1008,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 142,
+        "comparisons": 12280,
+        "overlaps": 338,
+        "maxFragments": 6,
+        "resolutionMs": 2.6000000000931323
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 45,
+      "stats": {
+        "drawVertices": 1080,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 158,
+        "comparisons": 15583,
+        "overlaps": 486,
+        "maxFragments": 7,
+        "resolutionMs": 3.2000000001862645
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 60,
+      "stats": {
+        "drawVertices": 1072,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 156,
+        "comparisons": 15167,
+        "overlaps": 470,
+        "maxFragments": 7,
+        "resolutionMs": 2.9000000001396984
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 61,
+      "stats": {
+        "drawVertices": 1072,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 156,
+        "comparisons": 15167,
+        "overlaps": 462,
+        "maxFragments": 7,
+        "resolutionMs": 3.300000000046566
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 62,
+      "stats": {
+        "drawVertices": 1072,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 156,
+        "comparisons": 15167,
+        "overlaps": 458,
+        "maxFragments": 7,
+        "resolutionMs": 4.300000000046566
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 63,
+      "stats": {
+        "drawVertices": 1072,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 156,
+        "comparisons": 15167,
+        "overlaps": 457,
+        "maxFragments": 7,
+        "resolutionMs": 3.3999999999068677
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 64,
+      "stats": {
+        "drawVertices": 1072,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 156,
+        "comparisons": 15167,
+        "overlaps": 458,
+        "maxFragments": 7,
+        "resolutionMs": 3.3999999999068677
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 65,
+      "stats": {
+        "drawVertices": 1076,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 157,
+        "comparisons": 15430,
+        "overlaps": 456,
+        "maxFragments": 7,
+        "resolutionMs": 13.199999999953434
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 66,
+      "stats": {
+        "drawVertices": 1076,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 157,
+        "comparisons": 15430,
+        "overlaps": 453,
+        "maxFragments": 7,
+        "resolutionMs": 4.300000000046566
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 86,
+      "stats": {
+        "drawVertices": 1036,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 147,
+        "comparisons": 13721,
+        "overlaps": 433,
+        "maxFragments": 7,
+        "resolutionMs": 4
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 87,
+      "stats": {
+        "drawVertices": 1036,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 147,
+        "comparisons": 13721,
+        "overlaps": 430,
+        "maxFragments": 7,
+        "resolutionMs": 8.199999999953434
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 88,
+      "stats": {
+        "drawVertices": 1036,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 147,
+        "comparisons": 13721,
+        "overlaps": 422,
+        "maxFragments": 7,
+        "resolutionMs": 3.3999999999068677
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 89,
+      "stats": {
+        "drawVertices": 1036,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 147,
+        "comparisons": 13721,
+        "overlaps": 415,
+        "maxFragments": 7,
+        "resolutionMs": 3.8999999999068677
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 90,
+      "stats": {
+        "drawVertices": 932,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 123,
+        "comparisons": 9821,
+        "overlaps": 373,
+        "maxFragments": 7,
+        "resolutionMs": 4.300000000046566
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 91,
+      "stats": {
+        "drawVertices": 992,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 136,
+        "comparisons": 12239,
+        "overlaps": 451,
+        "maxFragments": 7,
+        "resolutionMs": 2.5999999998603016
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 92,
+      "stats": {
+        "drawVertices": 992,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 136,
+        "comparisons": 12239,
+        "overlaps": 460,
+        "maxFragments": 7,
+        "resolutionMs": 3.300000000046566
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 93,
+      "stats": {
+        "drawVertices": 992,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 136,
+        "comparisons": 12239,
+        "overlaps": 466,
+        "maxFragments": 7,
+        "resolutionMs": 2.699999999953434
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 94,
+      "stats": {
+        "drawVertices": 984,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 134,
+        "comparisons": 11972,
+        "overlaps": 465,
+        "maxFragments": 7,
+        "resolutionMs": 31.600000000093132
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 180,
+      "stats": {
+        "drawVertices": 888,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 112,
+        "comparisons": 8591,
+        "overlaps": 222,
+        "maxFragments": 4,
+        "resolutionMs": 2.800000000046566
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 268,
+      "stats": {
+        "drawVertices": 976,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 132,
+        "comparisons": 11714,
+        "overlaps": 396,
+        "maxFragments": 7,
+        "resolutionMs": 4.2999999998137355
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 269,
+      "stats": {
+        "drawVertices": 976,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 132,
+        "comparisons": 11714,
+        "overlaps": 384,
+        "maxFragments": 7,
+        "resolutionMs": 6.699999999953434
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 270,
+      "stats": {
+        "drawVertices": 908,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 117,
+        "comparisons": 9115,
+        "overlaps": 342,
+        "maxFragments": 7,
+        "resolutionMs": 3.300000000046566
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 271,
+      "stats": {
+        "drawVertices": 996,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 137,
+        "comparisons": 12333,
+        "overlaps": 372,
+        "maxFragments": 7,
+        "resolutionMs": 3.9000000001396984
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 272,
+      "stats": {
+        "drawVertices": 996,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 137,
+        "comparisons": 12333,
+        "overlaps": 379,
+        "maxFragments": 7,
+        "resolutionMs": 3.5999999998603016
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 273,
+      "stats": {
+        "drawVertices": 996,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 137,
+        "comparisons": 12333,
+        "overlaps": 379,
+        "maxFragments": 7,
+        "resolutionMs": 4
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 274,
+      "stats": {
+        "drawVertices": 996,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 137,
+        "comparisons": 12333,
+        "overlaps": 372,
+        "maxFragments": 7,
+        "resolutionMs": 4.5
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "after",
+      "time": 1.5,
+      "heading": 359,
+      "stats": {
+        "drawVertices": 1072,
+        "legacyPrimitives": 72,
+        "sourceSurfaces": 70,
+        "fragments": 156,
+        "comparisons": 15060,
+        "overlaps": 399,
+        "maxFragments": 6,
+        "resolutionMs": 3.8999999999068677
+      },
+      "method": "geometric-order",
+      "diagnostics": []
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 0
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 45
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 60
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 61
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 62
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 63
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 64
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 65
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 66
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 86
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 87
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 88
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 89
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 90
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 91
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 92
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 93
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 94
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 180
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 268
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 269
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 270
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 271
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 272
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 273
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 274
+    },
+    {
+      "label": "before",
+      "time": 0.35,
+      "heading": 359
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 0
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 45
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 60
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 61
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 62
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 63
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 64
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 65
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 66
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 86
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 87
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 88
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 89
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 90
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 91
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 92
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 93
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 94
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 180
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 268
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 269
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 270
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 271
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 272
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 273
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 274
+    },
+    {
+      "label": "before",
+      "time": 1.5,
+      "heading": 359
+    }
+  ],
+  "performance": [
+    {
+      "label": "after",
+      "heading": 0,
+      "renderMs": {
+        "median": 3.3999999999068677,
+        "p95": 7.599999999860302,
+        "max": 12
+      },
+      "generationMs": {
+        "median": 0.30000000004656613,
+        "p95": 1.4000000001396984,
+        "max": 6
+      },
+      "resolutionMs": {
+        "median": 2.5999999998603016,
+        "p95": 6.100000000093132,
+        "max": 10.600000000093132
+      }
+    },
+    {
+      "label": "after",
+      "heading": 45,
+      "renderMs": {
+        "median": 3.5,
+        "p95": 6.400000000139698,
+        "max": 14.600000000093132
+      },
+      "generationMs": {
+        "median": 0.30000000004656613,
+        "p95": 0.5999999998603016,
+        "max": 2.7000000001862645
+      },
+      "resolutionMs": {
+        "median": 3,
+        "p95": 5.899999999906868,
+        "max": 14.099999999860302
+      }
+    },
+    {
+      "label": "after",
+      "heading": 63,
+      "renderMs": {
+        "median": 3.5999999998603016,
+        "p95": 9.5,
+        "max": 127
+      },
+      "generationMs": {
+        "median": 0.30000000004656613,
+        "p95": 0.6999999999534339,
+        "max": 9.5
+      },
+      "resolutionMs": {
+        "median": 3,
+        "p95": 8.300000000046566,
+        "max": 125.5
+      }
+    },
+    {
+      "label": "after",
+      "heading": 90,
+      "renderMs": {
+        "median": 2.4000000001396984,
+        "p95": 3.5999999998603016,
+        "max": 9.300000000046566
+      },
+      "generationMs": {
+        "median": 0.30000000004656613,
+        "p95": 0.5,
+        "max": 2.5
+      },
+      "resolutionMs": {
+        "median": 1.9000000001396984,
+        "p95": 3,
+        "max": 8.399999999906868
+      }
+    },
+    {
+      "label": "after",
+      "heading": 180,
+      "renderMs": {
+        "median": 1.9000000001396984,
+        "p95": 3,
+        "max": 5.099999999860302
+      },
+      "generationMs": {
+        "median": 0.30000000004656613,
+        "p95": 0.6000000000931323,
+        "max": 1.3999999999068677
+      },
+      "resolutionMs": {
+        "median": 1.4000000001396984,
+        "p95": 2.5,
+        "max": 4.5
+      }
+    },
+    {
+      "label": "after",
+      "heading": 270,
+      "renderMs": {
+        "median": 2.2000000001862645,
+        "p95": 4,
+        "max": 10.5
+      },
+      "generationMs": {
+        "median": 0.30000000004656613,
+        "p95": 0.5999999998603016,
+        "max": 1.8000000000465661
+      },
+      "resolutionMs": {
+        "median": 1.7999999998137355,
+        "p95": 3.4000000001396984,
+        "max": 9
+      }
+    },
+    {
+      "label": "before",
+      "heading": 0,
+      "renderMs": {
+        "median": 0.4000000001396984,
+        "p95": 4.899999999906868,
+        "max": 30.199999999953434
+      }
+    },
+    {
+      "label": "before",
+      "heading": 45,
+      "renderMs": {
+        "median": 0.4000000001396984,
+        "p95": 6.699999999953434,
+        "max": 15.800000000046566
+      }
+    },
+    {
+      "label": "before",
+      "heading": 63,
+      "renderMs": {
+        "median": 0.39999999990686774,
+        "p95": 4.699999999953434,
+        "max": 11.099999999860302
+      }
+    },
+    {
+      "label": "before",
+      "heading": 90,
+      "renderMs": {
+        "median": 0.30000000004656613,
+        "p95": 1.3000000000465661,
+        "max": 7.399999999906868
+      }
+    },
+    {
+      "label": "before",
+      "heading": 180,
+      "renderMs": {
+        "median": 0.30000000004656613,
+        "p95": 0.5999999998603016,
+        "max": 1.1000000000931323
+      }
+    },
+    {
+      "label": "before",
+      "heading": 270,
+      "renderMs": {
+        "median": 0.4000000001396984,
+        "p95": 1,
+        "max": 2.199999999953434
+      }
+    }
+  ],
+  "baselineCommit": "56ce35a8111ccbb154ecc3d0fb010bfd036f2139",
+  "measurement": "Warmed synchronous CPU rig submission; same pose; 300 samples per heading, 80 warmups. Baseline renderer unchanged; minimal inspectPerformance sampling shim only. Chromium standalone 153 software graphics, not physical Android; timings include wall-clock scheduling/GC and exclude deferred GPU execution."
+}
