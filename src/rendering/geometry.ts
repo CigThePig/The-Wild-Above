@@ -1,5 +1,7 @@
 import type { Vec, Point, Shape, Component } from "../animation/types";
 import { vec, add, rotate } from "../animation/motion/math";
+import { makeSurface, type Surface } from "./surfaces";
+import { resolveOcclusion, type OcclusionResult } from "./occlusion";
 export { vec, add, rotate };
 export const project = (p: Vec) => ({
   x: p.x,
@@ -25,9 +27,28 @@ export function hull(points: Point[]): Point[] {
   }
   return lo.slice(0, -1).concat(hi.slice(0, -1));
 }
+function blockRings(p: Vec, w: number, d: number, h: number, yaw: number) {
+  const plan = [
+    [-w * 0.38, -d / 2],
+    [w * 0.38, -d / 2],
+    [w / 2, -d * 0.22],
+    [w / 2, d * 0.32],
+    [w * 0.32, d / 2],
+    [-w * 0.32, d / 2],
+    [-w / 2, d * 0.32],
+    [-w / 2, -d * 0.22],
+  ];
+  return [-h / 2, h / 2].map((z) =>
+    plan.map(([x, y]) => add(p, rotate(vec(x, y, z), yaw))),
+  );
+}
 export class Geometry {
   shapes: Shape[] = [];
   components: Component[] = [];
+  surfaces: Surface[] = [];
+  occlusion!: OcclusionResult;
+  generationMs = 0;
+  private started = performance.now();
   component(
     id: string,
     parent: string | null,
@@ -72,19 +93,7 @@ export class Geometry {
     color: number,
     cap?: number,
   ) {
-    const plan = [
-      [-w * 0.38, -d / 2],
-      [w * 0.38, -d / 2],
-      [w / 2, -d * 0.22],
-      [w / 2, d * 0.32],
-      [w * 0.32, d / 2],
-      [-w * 0.32, d / 2],
-      [-w / 2, d * 0.32],
-      [-w / 2, -d * 0.22],
-    ];
-    const rings = [-h / 2, h / 2].map((z) =>
-      plan.map(([x, y]) => add(p, rotate(vec(x, y, z), yaw))),
-    );
+    const rings = blockRings(p, w, d, h, yaw);
     this.shapes.push({
       id,
       component: id,
@@ -96,6 +105,40 @@ export class Geometry {
     if (cap !== undefined) {
       this.polygon(id + ".cap", rings[1], cap, 2);
       this.shapes.at(-1)!.component = id;
+    }
+  }
+  surfaceBlock(
+    id: string,
+    p: Vec,
+    w: number,
+    d: number,
+    h: number,
+    yaw: number,
+    color: number,
+    cap = color,
+  ) {
+    const rings = blockRings(p, w, d, h, yaw);
+    const face = (name: string, points: Vec[], fill: number) =>
+      this.surfaces.push(makeSurface(`${id}.${name}`, id, points, fill));
+    face("top", rings[1], cap);
+    face("bottom", rings[0].slice().reverse(), color);
+    const names = [
+      "front",
+      "bevel.0",
+      "right",
+      "bevel.1",
+      "rear",
+      "bevel.2",
+      "left",
+      "bevel.3",
+    ];
+    for (let i = 0; i < 8; i++) {
+      const j = (i + 1) % 8;
+      face(
+        names[i],
+        [rings[0][i], rings[0][j], rings[1][j], rings[1][i]],
+        color,
+      );
     }
   }
   limb(id: string, a: Vec, b: Vec, wa: number, wb: number, color: number) {
@@ -128,7 +171,9 @@ export class Geometry {
     }
   }
   finish() {
-    this.shapes.sort((a, b) => a.depth - b.depth || a.id.localeCompare(b.id));
+    this.generationMs = performance.now() - this.started;
+    this.occlusion = resolveOcclusion(this.shapes, this.surfaces);
+    this.shapes = this.occlusion.shapes;
     this.shapes.forEach((s, i) => {
       const c = this.components.find((c) => c.id === s.component);
       c?.drawOrder.push(i);

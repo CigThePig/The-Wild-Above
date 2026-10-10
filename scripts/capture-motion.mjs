@@ -91,6 +91,7 @@ try {
       });
       const state = await page.evaluate(() => window.rigLab.inspect());
       assert.deepEqual(state.diagnostics, []);
+      assert.deepEqual(state.occlusionDiagnostics, []);
       if ([24, 74, 149, 299, 449, 599].includes(group)) {
         const seconds = (group + 1) * 0.2;
         frames.push(await capture(`${actor}-run-${seconds}`));
@@ -121,6 +122,7 @@ try {
       await page.evaluate(() => window.rigLab.advance(12, { turn: 1 }));
       const state = await page.evaluate(() => window.rigLab.inspect());
       assert.deepEqual(state.diagnostics, []);
+      assert.deepEqual(state.occlusionDiagnostics, []);
       if (i % 6 === 0) {
         rotation.push(await capture(`${actor}-turn-${i}`));
         report.rotation.push({
@@ -144,7 +146,9 @@ try {
       await load({ ...base, actor, animation: "run" }, placement);
       let previous;
       const deltas = [],
-        largest = [];
+        largest = [],
+        overview = [],
+        surfaceStats = [];
       for (let heading = 0; heading <= 360; heading += 2) {
         const h = heading === 360 ? 0 : heading;
         await page.evaluate(
@@ -156,7 +160,14 @@ try {
         );
         const state = await page.evaluate(() => window.rigLab.inspect());
         assert.deepEqual(state.diagnostics, []);
+        assert.deepEqual(state.occlusionDiagnostics, []);
         const image = await capture();
+        if (heading % 30 === 0 && heading < 360) overview.push(image);
+        surfaceStats.push({
+          heading,
+          method: state.occlusionMethod,
+          ...state.surfaceStats,
+        });
         if (previous) {
           const changed = pixelmatch(
             previous.image.data,
@@ -188,6 +199,7 @@ try {
         }
         previous = { heading, image, state };
       }
+      await sheet(`${actor}-phase-${time}-overview`, overview);
       const frames = [];
       for (const item of largest) {
         frames.push(item.before, item.after);
@@ -195,7 +207,14 @@ try {
         delete item.after;
       }
       await sheet(`${actor}-phase-${time}-largest-deltas`, frames);
-      report.sweeps.push({ actor, time, step: 2, deltas, largest });
+      report.sweeps.push({
+        actor,
+        time,
+        step: 2,
+        deltas,
+        largest,
+        surfaceStats,
+      });
       await writeFile(
         `${output}/${actor}-phase-${time}-deltas.json`,
         JSON.stringify({ actor, time, deltas, largest }, null, 2),
@@ -232,6 +251,7 @@ try {
         await page.evaluate(() => window.rigLab.advance(3, {}));
         const state = await page.evaluate(() => window.rigLab.inspect());
         assert.deepEqual(state.diagnostics, []);
+        assert.deepEqual(state.occlusionDiagnostics, []);
         const stage = state.transition?.stage ?? "done",
           pilot = state.components.find((c) => c.id === "pilot");
         const key = `${transfer}-${stage}${pilot && pilot.opacity > 0.05 && pilot.opacity < 0.95 ? "-fade" : ""}`;

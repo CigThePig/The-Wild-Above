@@ -22,7 +22,7 @@ Review corrections:
 - Motion knows world coordinates and contacts, not Phaser, DOM or rendering.
 - `Simulation` owns the 60 Hz step, validated configuration and reset/replay.
 - `buildRig` translates actor poses into named components and renderer-independent polygons.
-- `Geometry` projects and sorts primitives; `drawRig` submits them to Phaser Graphics.
+- `Geometry` creates semantic faces and legacy primitives; the occlusion resolver splits/orders their projected geometry; `drawRig` submits resolved polygons to Phaser Graphics.
 - `FieldScene` owns game input, camera, lifecycle and performance timing.
 - Development-only Rig Lab reads the same state as gameplay.
 
@@ -34,8 +34,7 @@ Old minimal rendering collapsed every entire limb/solid to one average-depth sil
 
 New limbs use eight overlapping opaque slices with stable IDs and per-slice depth. Equal-depth ties sort by stable ID. This localizes depth changes. Cockpit width goes continuously to zero at its tangent rather than switching a full-width plate. The pilot nose threshold was removed. Shapes remain flat filled and minimal; no cross-fade is used to hide occlusion errors.
 
-Remaining limitations: broad torso, shoulder and foot silhouettes still use mean depth; intersecting silhouettes can therefore have incorrect overlap. The canopy tangent treatment is a 2D art approximation, not a physically correct surface. Limb slices do not solve cyclic occlusion or interpenetration. Joint markers deliberately draw on top for diagnosis. A general depth buffer, BSP engine or Boolean clipping system was not justified for two actors.
-
+Phase 1 replaces broad torso and shoulder silhouettes with semantic block surfaces and geometric overlap resolution; pack, cockpit housing, pelvis and barrel are included for coherent integration. See [semantic surfaces](semantic-surfaces.md) for plane comparison, local splitting, cycle handling, tolerances and limits. Boots/knees and limb slices remain approximations; the canopy retains its explicit artistic tangent treatment. Joint markers deliberately draw on top for diagnosis.
 Use the 60–66° sweep, cardinal views and boarding captures before changing this. Order changes alone are not errors: disjoint polygons can reorder harmlessly. Inspect the pixels and component data together. Do not describe all turning glitches as solved.
 
 ## Extending actors

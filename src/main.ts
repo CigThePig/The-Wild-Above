@@ -18,7 +18,9 @@ const game = new Phaser.Game({
   scale: { mode: Phaser.Scale.RESIZE, width: 800, height: 500 },
   scene: [scene],
   input: { activePointers: 3 },
-  render: { antialias: true },
+  // Clipped fragments share exact edges; Phaser's default 1px path
+  // simplification can independently discard their boundary vertices.
+  render: { antialias: true, pathDetailThreshold: 0 },
   fps: { target: 60 },
 });
 

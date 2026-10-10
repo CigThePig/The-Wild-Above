@@ -47,3 +47,18 @@ This is a working development foundation, not a finished engine or game. Motion 
 Mobile layout/input is browser-tested; real Android performance and thermal behavior are unverified. Production excludes Rig Lab automation. No project license has been chosen; dependency licenses remain applicable.
 
 Start with [AGENTS.md](AGENTS.md), [automation workflow](docs/ai-workflow/rig-lab.md), [migration and rendering limits](docs/animation/migration.md), [dependency decisions](docs/decisions/001-stack.md), and [roadmap](docs/roadmap.md).
+
+## GitHub Pages
+
+The [Publish GitHub Pages](.github/workflows/deploy-pages.yml) workflow checks the Pages-specific build on pull requests, then automatically deploys the production game after changes land on `main`. PR builds never replace the live site. The expected URL is https://cigthepig.github.io/The-Wild-Above/.
+
+Before the first deployment, select **Settings → Pages → Build and deployment → Source: GitHub Actions** for this repository. Afterward, merging to `main` publishes automatically. The workflow also supports manually redeploying `main` using **Actions → Publish GitHub Pages → Run workflow**.
+
+GitHub Pages serves this repository beneath `/The-Wild-Above/`, so the workflow uses the Vite base-path flag. To reproduce its build locally:
+
+```sh
+npm ci
+npm run build -- --base=/The-Wild-Above/
+```
+
+The hosted build is the playable demo only. Rig Lab and its inspection automation are intentionally development-only.

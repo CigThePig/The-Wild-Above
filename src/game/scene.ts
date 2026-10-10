@@ -13,6 +13,8 @@ export class FieldScene extends Phaser.Scene {
   paused = false;
   rate = 1;
   guides = true;
+  surfaceGuides = false;
+  selectedSurface = "";
   selected = "mech.leg.right.knee";
   accumulator = 0;
   droppedSeconds = 0;
@@ -142,6 +144,8 @@ export class FieldScene extends Phaser.Scene {
       this.rig,
       this.lab && this.guides,
       this.lab ? this.selected : "",
+      this.lab && this.surfaceGuides,
+      this.lab ? this.selectedSurface : "",
     );
     const actor = this.sim.world.actor,
       p = project({
@@ -153,7 +157,7 @@ export class FieldScene extends Phaser.Scene {
     this.renderMs = performance.now() - start;
     const w = this.sim.world;
     document.getElementById("status")!.textContent =
-      `${this.lab ? "RIG LAB" : w.control === "foot" ? "PILOT" : "MECH"} · ${w.transition?.stage ?? this.sim.config.animation} · ${Math.round(this.game.loop.actualFps)} FPS · ${this.renderMs.toFixed(1)} ms rig`;
+      `${this.lab && this.surfaceGuides && this.rig.occlusion.diagnostics.length ? "OCCLUSION WARNING · " : ""}${this.lab ? "RIG LAB" : w.control === "foot" ? "PILOT" : "MECH"} · ${w.transition?.stage ?? this.sim.config.animation} · ${Math.round(this.game.loop.actualFps)} FPS · ${this.renderMs.toFixed(1)} ms rig`;
     const button = document.getElementById("interact") as HTMLButtonElement;
     button.hidden = this.lab;
     button.disabled = !!w.transition || (w.control === "foot" && !w.nearby);
