@@ -23,9 +23,23 @@ test("surfaces expose real geometry, geometric order and deterministic replay", 
   await page.locator("#surfaces").selectOption("mech.torso.top");
   await expect(page.locator("#details")).toContainText("mech.torso.top");
   await page.evaluate(() => window.rigLab.setSurfaceGuides(true));
+  const boundaries = page
+    .locator(".tp-lblv")
+    .filter({ has: page.getByText("Surface boundaries", { exact: true }) })
+    .locator('input[type="checkbox"]');
+  await expect(boundaries).toBeChecked();
   await page
     .locator("#game canvas")
     .screenshot({ path: "artifacts/surface-guides.png" });
+  await boundaries.locator("..").click();
+  await expect(boundaries).not.toBeChecked();
+  await page
+    .locator("#game canvas")
+    .screenshot({ path: "artifacts/surface-guides-off.png" });
+  await page.evaluate(() => window.rigLab.setSurfaceGuides(true));
+  await expect(boundaries).toBeChecked();
+  await page.evaluate(() => window.rigLab.setSurfaceGuides(false));
+  await expect(boundaries).not.toBeChecked();
   await page.evaluate(() => {
     window.rigLab.setSurfaceGuides(false);
     window.rigLab.selectSurface("");

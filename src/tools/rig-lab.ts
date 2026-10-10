@@ -156,8 +156,10 @@ export function installLab(scene: FieldScene) {
       scene.refresh();
     },
     setSurfaceGuides: (value: boolean) => {
+      if (syncing) return;
       scene.surfaceGuides = value;
       scene.refresh();
+      syncUI();
     },
     recording: () => scene.sim.recording(),
     replay: (recording: unknown) => {
@@ -262,6 +264,7 @@ export function installLab(scene: FieldScene) {
         time: Math.min(scene.sim.tick / 60, 60),
         elapsed: scene.sim.tick / 60,
         guides: scene.guides,
+        surfaces: scene.surfaceGuides,
         isolated: scene.isolated,
       });
       pane.refresh();
