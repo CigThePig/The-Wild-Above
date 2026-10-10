@@ -217,6 +217,20 @@ export function checkMech(
   const cockpitZ =
       spec.turret.height + base.z - legs.hipHeight + spec.cockpit.position.z,
     cockpitFront = spec.cockpit.position.y - spec.cockpit.size.d / 2;
+  // The canopy is part of the interface: the pilot climbs through it.
+  const { canopy } = spec;
+  if (
+    Math.abs(canopy.front - cockpitFront) > COCKPIT_INTERFACE.lateral ||
+    canopy.halfWidth < 6 ||
+    canopy.open.y > 0 ||
+    canopy.bottom + canopy.open.z < canopy.top
+  )
+    report(
+      "error",
+      "boarding",
+      "canopy must sit on the cockpit face (within 3), be at least 12 wide, and open forward far enough that its lower edge rises to its closed top edge; otherwise the pilot climbs through a closed canopy",
+      "mech.cockpit.hatch",
+    );
   if (Math.abs(spec.cockpit.position.x) > COCKPIT_INTERFACE.lateral)
     report(
       "error",
@@ -240,11 +254,16 @@ export function checkMech(
   // Legs must reach every foot target; past thigh + shin the IK clamps and the
   // drawn shin stretches to the foot.
   const legLength = legs.thigh + legs.shin;
-  let reachMargin = Infinity;
+  // Below |thigh − shin| the knee collapses onto the leg line (no lower clamp).
+  const foldLength = Math.abs(legs.thigh - legs.shin);
+  let reachMargin = Infinity,
+    foldMargin = Infinity;
   const reachOf = (s: Simulation) => {
     let worst = Infinity;
-    for (const l of s.world.mech.pose().legs)
+    for (const l of s.world.mech.pose().legs) {
       worst = Math.min(worst, legLength - (l.reach ?? 0));
+      foldMargin = Math.min(foldMargin, (l.reach ?? 0) - foldLength);
+    }
     return worst;
   };
 
@@ -280,6 +299,12 @@ export function checkMech(
           inspect(s, `${animation} ${heading}°`);
       }
     }
+  if (foldMargin < 0.001)
+    report(
+      "error",
+      "legs.overfold",
+      `an ankle comes ${(-foldMargin).toFixed(1)} closer to the hip than the folded leg allows (|thigh − shin| = ${foldLength.toFixed(1)}); balance thigh and shin or reduce stepLift/ankleHeight`,
+    );
   if (reachMargin < 0.001)
     report(
       "error",

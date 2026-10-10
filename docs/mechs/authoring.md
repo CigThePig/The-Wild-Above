@@ -49,10 +49,11 @@ Errors block approval; warnings need a human look. The standard Mech has no find
 
 - **legs.reach**: standing must leave the knee room to bend (warning), and must not be shorter than the folded leg (error).
 - **legs.overreach**: while walking and running, every foot target must stay within thigh + shin (error); past it the IK clamps and the drawn shin stretches. Overreach only at Rig Lab's maximum speed/stride tuning (1.25) is a warning.
+- **legs.overfold**: no ankle may come closer to the hip than |thigh − shin| (error); the solver has no lower clamp, so the knee would collapse onto the leg line.
 - **connectivity**: every part must chain back to the pelvis through touching parts at rest; floating parts and clusters are errors.
 - **ground**: solid parts must not sink below the ground at rest. Limbs are checked on their centre line, and on bounds below half their width (their cylinder bounds are approximate).
 - **footprint**: radius ≤ 50. The pilot's route ring and collision radius are fixed, so wider bodies clip the pilot.
-- **boarding**: the cockpit centre must stay within 6 of height 60, its front within 6 of y −17.5, and within 3 of the centre line. The ladder and seat choreography in `motion/world.ts` is authored for that cockpit and is not yet parameterised.
+- **boarding**: the cockpit centre must stay within 6 of height 60, its front within 6 of y −17.5, and within 3 of the centre line. The canopy must sit on the cockpit face, be at least 12 wide, and open forward until its lower edge reaches its closed top edge. The ladder and seat choreography in `motion/world.ts` is authored for that cockpit and is not yet parameterised.
 - **rig / occlusion / gait**: walk and run sweeps at eight headings plus turning in place, with finite geometry, no occlusion diagnostics or unresolved surfaces, and planted feet that never slide.
 - A full exit and reboard must finish.
 - **performance**: fragments ≤ 260 and occlusion pair checks ≤ 30,000 for the Mech alone. The standard peaks at 171 / 17,904. Each semantic block adds ten faces; use `"surfaces": false` on small parts.

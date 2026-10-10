@@ -295,6 +295,24 @@ describe("mech specs", () => {
         }),
       ),
     ).toContain("error:ground");
+    // A canopy that never opens while the pilot climbs through it.
+    expect(
+      checks(
+        variant((s) => {
+          s.canopy.open = { y: 0, z: 0 };
+        }),
+      ),
+    ).toContain("error:boarding");
+    // Asymmetric legs with a high step fold past |thigh − shin|.
+    expect(
+      checks(
+        variant((s) => {
+          s.legs.thigh = 30;
+          s.legs.shin = 16;
+          s.legs.stepLift = 30;
+        }),
+      ),
+    ).toContain("error:legs.overfold");
     // Short legs at high speed: foot targets beyond thigh + shin.
     expect(
       checks(

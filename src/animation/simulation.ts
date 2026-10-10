@@ -182,14 +182,22 @@ export class Simulation {
     const replacement = new Simulation(c, this.placement, this.spec),
       horizon = Math.min(this.tick, CONFIGURE_HORIZON);
     if (this.manual) {
+      // `recorded` is the session's original tick at each command, so an
+      // interaction made exactly at the horizon (e.g. while paused) is kept
+      // and one made after it is not.
+      let recorded = 0;
       for (const command of this.commands) {
-        if (replacement.tick >= horizon) break;
-        if (command.kind === "interact") replacement.interact();
-        else
-          replacement.step(
-            Math.min(command.frames, horizon - replacement.tick),
-            command.input,
-          );
+        if (command.kind === "interact") {
+          if (recorded > horizon) break;
+          replacement.interact();
+          continue;
+        }
+        if (recorded >= horizon) break;
+        replacement.step(
+          Math.min(command.frames, horizon - recorded),
+          command.input,
+        );
+        recorded += command.frames;
       }
       replacement.manual = true;
     } else replacement.step(horizon);

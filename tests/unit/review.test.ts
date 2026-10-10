@@ -261,3 +261,13 @@ it("production sessions can skip the unused command log", () => {
   expect(s.commands).toEqual([]);
   expect(() => s.recording()).toThrow(/disabled/);
 });
+
+it("motion edits keep an interaction made at the current tick", () => {
+  const s = new Simulation({ ...defaultConfig, animation: "idle" });
+  s.step(30, { x: 1 });
+  s.interact(); // e.g. rigLab.interact() while paused
+  s.configure({ heading: 90 });
+  expect(s.tick).toBe(30);
+  expect(s.world.transition?.exiting).toBe(true);
+  expect(s.recording().commands.at(-1)).toEqual({ kind: "interact" });
+});
