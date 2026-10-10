@@ -84,6 +84,8 @@ export function installLab(scene: FieldScene) {
       interactionFailure: scene.sim.world.interactionFailure,
       components: structuredClone(scene.rig.components),
       drawOrder: scene.rig.shapes.map((s) => s.id),
+      surfaceStats: scene.rig.occlusion.stats,
+      occlusionMethod: scene.rig.occlusion.method,
       occlusionDiagnostics: scene.rig.occlusion.diagnostics,
       diagnostics: scene.rig.components.flatMap((c) =>
         c.issues.map((issue) => ({ component: c.id, issue })),
@@ -104,6 +106,14 @@ export function installLab(scene: FieldScene) {
         ),
       };
     },
+    inspectPerformance: () => ({
+      renderMs: scene.renderMs,
+      generationMs: scene.rig.generationMs,
+      resolutionMs: scene.rig.occlusion.stats.resolutionMs,
+      fragments: scene.rig.occlusion.stats.fragments,
+      comparisons: scene.rig.occlusion.stats.comparisons,
+      drawVertices: scene.rig.occlusion.stats.drawVertices,
+    }),
     inspectSurface: (id: string) => {
       const surface = scene.rig.surfaces.find((s) => s.id === id);
       if (!surface) throw Error(`Unknown surface: ${id}`);
@@ -113,10 +123,16 @@ export function installLab(scene: FieldScene) {
           scene.rig.occlusion.fragments.filter((f) => f.source === id),
         ),
         exception: null,
+        resolution: scene.rig.occlusion.method,
+        decisions: structuredClone(
+          scene.rig.occlusion.decisions.filter((d) => d.a === id || d.b === id),
+        ),
       };
     },
     inspectOcclusion: () =>
       structuredClone({
+        method: scene.rig.occlusion.method,
+        fallbackReason: scene.rig.occlusion.fallbackReason,
         surfaces: scene.rig.surfaces,
         decisions: scene.rig.occlusion.decisions,
         diagnostics: scene.rig.occlusion.diagnostics,

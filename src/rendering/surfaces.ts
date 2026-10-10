@@ -16,6 +16,7 @@ export interface Surface {
   color: number;
   alpha: number;
   facing: number;
+  doubleSided: boolean;
   culled: boolean;
   status: "visible" | "hidden" | "culled" | "unresolved";
   overlaps: string[];
@@ -47,6 +48,7 @@ export function makeSurface(
   world: Vec[],
   color: number,
   alpha = 1,
+  doubleSided = false,
 ): Surface {
   const project = (p: Vec) => ({
     x: p.x,
@@ -83,8 +85,20 @@ export function makeSurface(
   const invalid =
     world.length < 3 ||
     world.some((p) => !Object.values(p).every(Number.isFinite)) ||
-    len < 1e-12;
-  const culled = invalid || facing <= 0 || Math.abs(area(points)) <= AREA_EPS;
+    len < 1e-12 ||
+    world.some(
+      (p) =>
+        Math.abs(
+          normal.x * (p.x - a.x) +
+            normal.y * (p.y - a.y) +
+            normal.z * (p.z - a.z),
+        ) > 1e-7,
+    );
+  const diagnostics = invalid ? ["invalid or nonplanar surface geometry"] : [];
+  const culled =
+    invalid ||
+    (!doubleSided && facing <= 0) ||
+    Math.abs(area(points)) <= AREA_EPS;
   return {
     id,
     component,
@@ -92,15 +106,16 @@ export function makeSurface(
     points,
     normal,
     plane,
-    depth: points.reduce((s, p) => s + p.d, 0) / points.length,
+    depth: points.reduce((s, p) => s + p.d, 0) / (points.length || 1),
     color,
     alpha,
     facing,
+    doubleSided,
     culled,
     status: culled ? "culled" : "visible",
     overlaps: [],
     occluders: [],
     fragments: [],
-    diagnostics: invalid ? ["invalid surface geometry"] : [],
+    diagnostics,
   };
 }

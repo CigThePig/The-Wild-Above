@@ -157,7 +157,7 @@ export class FieldScene extends Phaser.Scene {
     this.renderMs = performance.now() - start;
     const w = this.sim.world;
     document.getElementById("status")!.textContent =
-      `${this.lab ? "RIG LAB" : w.control === "foot" ? "PILOT" : "MECH"} · ${w.transition?.stage ?? this.sim.config.animation} · ${Math.round(this.game.loop.actualFps)} FPS · ${this.renderMs.toFixed(1)} ms rig`;
+      `${this.lab && this.surfaceGuides && this.rig.occlusion.diagnostics.length ? "OCCLUSION WARNING · " : ""}${this.lab ? "RIG LAB" : w.control === "foot" ? "PILOT" : "MECH"} · ${w.transition?.stage ?? this.sim.config.animation} · ${Math.round(this.game.loop.actualFps)} FPS · ${this.renderMs.toFixed(1)} ms rig`;
     const button = document.getElementById("interact") as HTMLButtonElement;
     button.hidden = this.lab;
     button.disabled = !!w.transition || (w.control === "foot" && !w.nearby);

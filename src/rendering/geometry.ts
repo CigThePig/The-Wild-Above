@@ -27,6 +27,21 @@ export function hull(points: Point[]): Point[] {
   }
   return lo.slice(0, -1).concat(hi.slice(0, -1));
 }
+function blockRings(p: Vec, w: number, d: number, h: number, yaw: number) {
+  const plan = [
+    [-w * 0.38, -d / 2],
+    [w * 0.38, -d / 2],
+    [w / 2, -d * 0.22],
+    [w / 2, d * 0.32],
+    [w * 0.32, d / 2],
+    [-w * 0.32, d / 2],
+    [-w / 2, d * 0.32],
+    [-w / 2, -d * 0.22],
+  ];
+  return [-h / 2, h / 2].map((z) =>
+    plan.map(([x, y]) => add(p, rotate(vec(x, y, z), yaw))),
+  );
+}
 export class Geometry {
   shapes: Shape[] = [];
   components: Component[] = [];
@@ -78,19 +93,7 @@ export class Geometry {
     color: number,
     cap?: number,
   ) {
-    const plan = [
-      [-w * 0.38, -d / 2],
-      [w * 0.38, -d / 2],
-      [w / 2, -d * 0.22],
-      [w / 2, d * 0.32],
-      [w * 0.32, d / 2],
-      [-w * 0.32, d / 2],
-      [-w / 2, d * 0.32],
-      [-w / 2, -d * 0.22],
-    ];
-    const rings = [-h / 2, h / 2].map((z) =>
-      plan.map(([x, y]) => add(p, rotate(vec(x, y, z), yaw))),
-    );
+    const rings = blockRings(p, w, d, h, yaw);
     this.shapes.push({
       id,
       component: id,
@@ -114,19 +117,7 @@ export class Geometry {
     color: number,
     cap = color,
   ) {
-    const plan = [
-      [-w * 0.38, -d / 2],
-      [w * 0.38, -d / 2],
-      [w / 2, -d * 0.22],
-      [w / 2, d * 0.32],
-      [w * 0.32, d / 2],
-      [-w * 0.32, d / 2],
-      [-w / 2, d * 0.32],
-      [-w / 2, -d * 0.22],
-    ];
-    const rings = [-h / 2, h / 2].map((z) =>
-      plan.map(([x, y]) => add(p, rotate(vec(x, y, z), yaw))),
-    );
+    const rings = blockRings(p, w, d, h, yaw);
     const face = (name: string, points: Vec[], fill: number) =>
       this.surfaces.push(makeSurface(`${id}.${name}`, id, points, fill));
     face("top", rings[1], cap);
