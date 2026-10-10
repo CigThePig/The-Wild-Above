@@ -9,8 +9,10 @@ Stack: Phaser 4.2.1, TypeScript, Vite; Tweakpane lab; Zod data boundaries; Vites
 ## Commands
 
 - Node >=22.12; `npm ci`; `npm run dev` (localhost:5173); play at `/`, Rig Lab at `/?lab`.
-- `npm run check`: typecheck, lint, unit tests and production build.
-- `npx playwright install --with-deps chromium`, then `npm run test:browser`.
+- `npm run check`: typecheck, lint, format check, unit tests and production build.
+- `npm run look` renders labelled PNG sheets of every Mech to `artifacts/look/<id>/` in about two seconds, no browser or dev server. Open the PNGs. `--compare main` (or `HEAD`) adds before/after/difference images.
+- `npm run mech:check` runs automated design checks; `npm run mech:schema` regenerates `schemas/mech-spec.schema.json` after editing `src/mechs/schema.ts`.
+- `npx playwright install --with-deps chromium`, then `npm run test:browser`. Claude Code cloud sessions: the SessionStart hook exports `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` when the pinned browser is missing.
 - With dev server running, `npm run capture -- 60,61,62,63,64,65,66`.
 - With the dev server running, `npm run capture:motion` checks longer locomotion, turns, multiple gait phases and full boarding stages. Inspect largest-delta pairs; pixel counts are not artistic verdicts.
 - `npm run format`; `npm run notices` to refresh third-party license notices after dependency changes.
@@ -18,6 +20,10 @@ Stack: Phaser 4.2.1, TypeScript, Vite; Tweakpane lab; Zod data boundaries; Vites
 **Agents must inspect the rendered output of visual changes. Successful compilation is not sufficient evidence that an animation works.**
 
 Read docs/animation/migration.md and docs/ai-workflow/rig-lab.md before changing motion. Use window.rigLab pause/selectActor/setHeading/setAnimationTime/inspectComponent and screenshots. Reproduce a bug before changing algorithms. Include a finite-geometry/continuity or replay check alongside rendered evidence. Never blindly regenerate visual baselines.
+
+## Designing Mechs
+
+Mechs are JSON specs in `src/mechs/specs/`, validated by Zod (`src/mechs/schema.ts`) and documented in docs/mechs/authoring.md. Loop: copy a spec with `status: "draft"` → `npm run mech:check -- path.json` → `npm run look -- path.json` and inspect the sheet (use `--focus/--zoom/--guides` for close-ups, `--boarding` for transfers, `--compare HEAD` for edits) → register it in `src/mechs/index.ts` → confirm in the Rig Lab or a browser MCP server. Use palette tokens only; a new colour is a visual-direction change. Only a human sets `status: "approved"`; gameplay must not use drafts. Do not edit `standard.json` in place: it is guarded byte-for-byte by tests/fixtures/rig-geometry.json and motion-parity.json. Boarding choreography is fixed to the standard cockpit; mech:check enforces the interface. `.mcp.json` provides Playwright MCP and Chrome DevTools MCP on the test Chromium for interactive checks (`window.rigLab.previewMech/selectMech/checkMech`).
 
 Add new actors through pose adapters and shared Geometry/Component interfaces; prove a real new anatomy before generalizing gait. Preserve stable component IDs. Changes to schema or projection must document migration/reproduction implications. Full parent rotation transforms are not implemented: local positions are world-aligned offsets.
 

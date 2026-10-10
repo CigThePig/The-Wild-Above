@@ -21,6 +21,8 @@ Open http://127.0.0.1:5173/ to play, or http://127.0.0.1:5173/?lab for Rig Lab. 
 
 ```sh
 npm run check
+npm run mech:check
+npm run look            # browserless Mech sheets in artifacts/look/
 npx playwright install --with-deps chromium
 npm run test:browser
 # With npm run dev running in a second terminal:
@@ -32,11 +34,18 @@ npm run preview
 
 Captures, contact sheets and diagnostic JSON go in `artifacts/`. Screenshot baselines are committed and must be visually reviewed before updates. If using an already installed compatible Chromium, set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to its executable. CI installs Playwright's pinned Chromium normally.
 
+## Designing Mechs
+
+Mechs are validated JSON specs (`src/mechs/specs/`) that coding agents can author. `npm run mech:check` reviews a design, and `npm run look` renders labelled turnaround, gait and boarding sheets (plus `--compare <git-ref>` before/after images) without a browser. The Rig Lab design selector and `window.rigLab.previewMech` show designs live. Drafts need human approval before gameplay use. See [authoring Mechs](docs/mechs/authoring.md).
+
+For agents: `.mcp.json` provides Playwright MCP and Chrome DevTools MCP on the test Chromium. In Claude Code cloud sessions a SessionStart hook installs dependencies and points Playwright at the image's Chromium.
+
 ## What is here
 
 - Phaser loop, cameras, Graphics, responsive field scene and Rex touch joystick.
 - Retained world-space mech foot placement, human run gait, two-link IK and staged boarding/exiting.
 - Typed component/geometry interfaces; stable names such as `mech.leg.right.knee`.
+- Data-driven Mech specs with a palette, extra parts on body/turret/joint/bone frames, automated design checks and browserless previews.
 - Fixed-step replay, configuration/recording validation, dev-only `window.rigLab` automation.
 - Tweakpane controls, Vitest property/unit tests, Playwright UI/visual tests and GitHub Actions.
 
@@ -46,7 +55,7 @@ This is a working development foundation, not a finished engine or game. Motion 
 
 Mobile layout/input is browser-tested; real Android performance and thermal behavior are unverified. Production excludes Rig Lab automation. No project license has been chosen; dependency licenses remain applicable.
 
-Start with [AGENTS.md](AGENTS.md), [automation workflow](docs/ai-workflow/rig-lab.md), [migration and rendering limits](docs/animation/migration.md), [dependency decisions](docs/decisions/001-stack.md), and [roadmap](docs/roadmap.md).
+Start with [AGENTS.md](AGENTS.md), [authoring Mechs](docs/mechs/authoring.md), [automation workflow](docs/ai-workflow/rig-lab.md), [migration and rendering limits](docs/animation/migration.md), [dependency decisions](docs/decisions/001-stack.md), and [roadmap](docs/roadmap.md).
 
 ## GitHub Pages
 
