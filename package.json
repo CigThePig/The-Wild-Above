@@ -17,7 +17,8 @@
     "notices": "node scripts/notices.mjs",
     "capture:motion": "node scripts/capture-motion.mjs",
     "format:check": "prettier --check src tests scripts schemas *.ts *.js *.json *.html *.md docs .github .claude",
-    "mech:schema": "tsx scripts/mech-schema.ts"
+    "mech:schema": "tsx scripts/mech-schema.ts",
+    "mech:check": "tsx scripts/mech-check.ts"
   },
   "engines": {
     "node": ">=22.12"

@@ -4,6 +4,7 @@ import { PilotWorld } from "./motion/world";
 import type { Input } from "./types";
 import { configSchema, defaultConfig, type RigConfig } from "./config";
 import { getMech } from "../mechs";
+import type { MechSpec } from "../mechs/schema";
 export const DT = 1 / 60;
 const MAX_REPLAY_FRAMES = 36_000;
 // Each recorded step consumes at least one frame. Successful interactions
@@ -65,17 +66,21 @@ export class Simulation {
   config: RigConfig;
   readonly seed = 197;
   placement: Placement;
+  /** Unregistered design under review (tooling); otherwise config.mech. */
+  readonly spec: MechSpec | undefined;
   constructor(
     config: RigConfig = defaultConfig,
     placement: Placement = defaultPlacement,
+    spec?: MechSpec,
   ) {
+    this.spec = spec;
     this.placement = placementSchema.parse(placement);
     this.config = configSchema.parse(config);
     this.reset();
   }
   reset() {
     this.commands = [];
-    this.world = new PilotWorld(getMech(this.config.mech));
+    this.world = new PilotWorld(this.spec ?? getMech(this.config.mech));
     this.tick = 0;
     const a = (this.config.heading * Math.PI) / 180,
       g = this.world.mech,
@@ -151,7 +156,7 @@ export class Simulation {
     const c = configSchema.parse({ ...this.config, ...patch });
     // Build the replacement before committing; long playback edits restart at
     // the seek horizon rather than leaving config and motion half-applied.
-    const replacement = new Simulation(c, this.placement);
+    const replacement = new Simulation(c, this.placement, this.spec);
     replacement.step(Math.min(this.tick, 3600));
     this.config = replacement.config;
     this.world = replacement.world;

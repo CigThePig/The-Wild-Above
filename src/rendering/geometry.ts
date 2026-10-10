@@ -38,14 +38,45 @@ function blockRings(p: Vec, w: number, d: number, h: number, yaw: number) {
     plan.map(([x, y]) => add(p, rotate(vec(x, y, z), yaw))),
   );
 }
+export interface Volume {
+  min: Vec;
+  max: Vec;
+  /** Limbs are drawn as projected strokes; their bounds are approximate. */
+  limb: boolean;
+}
 export class Geometry {
   shapes: Shape[] = [];
   components: Component[] = [];
   surfaces: Surface[] = [];
   occlusion!: OcclusionResult;
   generationMs = 0;
+  /** World-space bounds per shape ID, recorded only for tooling (mech:check). */
+  volumes?: Map<string, Volume>;
   private started = performance.now();
   private byId = new Map<string, Component>();
+  constructor(options: { volumes?: boolean } = {}) {
+    if (options.volumes) this.volumes = new Map();
+  }
+  private extend(
+    id: string,
+    points: Vec[],
+    pad: Vec | number = 0,
+    limb = false,
+  ) {
+    if (!this.volumes) return;
+    const r = typeof pad === "number" ? vec(pad, pad, pad) : pad;
+    const v = this.volumes.get(id) ?? {
+      min: vec(Infinity, Infinity, Infinity),
+      max: vec(-Infinity, -Infinity, -Infinity),
+      limb,
+    };
+    for (const p of points)
+      for (const k of ["x", "y", "z"] as const) {
+        v.min[k] = Math.min(v.min[k], p[k] - r[k]);
+        v.max[k] = Math.max(v.max[k], p[k] + r[k]);
+      }
+    this.volumes.set(id, v);
+  }
   component(
     id: string,
     parent: string | null,
@@ -72,6 +103,7 @@ export class Geometry {
     return c;
   }
   polygon(id: string, points: Vec[], color: number, bias = 0, alpha = 1) {
+    this.extend(id, points);
     this.shapes.push({
       id,
       component: id,
@@ -93,6 +125,7 @@ export class Geometry {
     cap?: number,
   ) {
     const rings = blockRings(p, w, d, h, yaw);
+    this.extend(id, rings.flat());
     this.shapes.push({
       id,
       component: id,
@@ -117,6 +150,7 @@ export class Geometry {
     cap = color,
   ) {
     const rings = blockRings(p, w, d, h, yaw);
+    this.extend(id, rings.flat());
     const face = (name: string, points: Vec[], fill: number) =>
       this.surfaces.push(makeSurface(`${id}.${name}`, id, points, fill));
     face("top", rings[1], cap);
@@ -141,6 +175,18 @@ export class Geometry {
     }
   }
   limb(id: string, a: Vec, b: Vec, wa: number, wb: number, color: number) {
+    if (this.volumes) {
+      // Cylinder bounds: radius r spreads only across the limb's direction.
+      const r = Math.max(wa, wb) / 2,
+        l = Math.hypot(b.x - a.x, b.y - a.y, b.z - a.z) || 1,
+        across = (d: number) => r * Math.sqrt(Math.max(0, 1 - (d / l) ** 2));
+      this.extend(
+        id,
+        [a, b],
+        vec(across(b.x - a.x), across(b.y - a.y), across(b.z - a.z)),
+        true,
+      );
+    }
     // Small opaque slices localize depth crossings; stable IDs break exact depth ties.
     for (let i = 0; i < 8; i++) {
       const t = i / 8,

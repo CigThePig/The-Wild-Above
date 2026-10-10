@@ -20,8 +20,13 @@ interface Anchor {
   yaw: number;
   parent: string;
 }
-export function buildRig(world: World, config: RigConfig, isolated: boolean) {
-  const geo = new Geometry();
+export function buildRig(
+  world: World,
+  config: RigConfig,
+  isolated: boolean,
+  options: { volumes?: boolean } = {},
+) {
+  const geo = new Geometry(options);
   const paint = parseInt(config.color.slice(1), 16);
   const tone = (c: ColorRef) => (c === "paint" ? paint : PALETTE[c]);
   const toneOf = (c: ColorRef | undefined) => (c === undefined ? c : tone(c));
