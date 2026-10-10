@@ -30,6 +30,7 @@
     "walkSpeed": 64,
     "runSpeed": 96,
     "turnRate": 2.6,
+    "turnInPlaceRate": 2.2,
     "stepDuration": 0.2,
     "runStepDuration": 0.16,
     "runStepAbove": 78,

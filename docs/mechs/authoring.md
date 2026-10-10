@@ -21,7 +21,7 @@ Open `sheet.png` (and `report.json`) after every change. Successful checks are n
 3. Run `npm run check`.
 4. Leave `status: "draft"`. A human reviews `look --gif --boarding` output and sets `approved`.
 
-Never edit `standard.json` in place. It is guarded byte-for-byte by `tests/fixtures/rig-geometry.json` and `motion-parity.json`; changing it is a reviewed visual change, not an authoring step.
+Never edit `standard.json` in place. Its content is pinned by a hash in `tests/unit/mechs.test.ts` (formatting may change, fields and values may not), and its geometry and motion byte-for-byte by `tests/fixtures/rig-geometry.json` and `motion-parity.json`. Changing it is a reviewed visual change, not an authoring step.
 
 ## Coordinates and frames
 
@@ -37,7 +37,7 @@ Mech units; +x right, +y back (south at heading 0), +z up. **Front is −y.** Ea
 
 Per-side and mirrored parts use x as "outward". Offsets rotate with yaw only. They do not tilt with a bone: there are no parent rotation transforms (AGENTS.md). Blocks are always upright octagonal prisms. For plates that follow a sloped limb, use a `limb` part on a bone frame with `along` for `from` and `alongTo` for `to`.
 
-Core sections: `legs` (IK lengths, stance, widths, boots, optional kneecaps), `gait` (speeds, turn rate, step timing, bob), `pelvis` (body frame), `turret.height`, `torso`, optional `pack`, `cockpit`, `canopy` (continuous width collapse; hatch travel), `arms` (right arm; left mirrors), `tools` (optional `barrel` and concave `hook` outline), and `parts` (up to 24 extra blocks/limbs). Component IDs are stable: core parts keep their existing names, and extras are `mech.part.<id>[.left|.right]`.
+Core sections: `legs` (IK lengths, stance, widths, boots, optional kneecaps), `gait` (speeds, maximum turn rate and the slower turn-in-place rate, step timing, bob), `pelvis` (body frame), `turret.height`, `torso`, optional `pack`, `cockpit`, `canopy` (continuous width collapse; hatch travel), `arms` (right arm; left mirrors), `tools` (optional `barrel` and concave `hook` outline), and `parts` (up to 24 extra blocks/limbs). Component IDs are stable: core parts keep their existing names, and extras are `mech.part.<id>[.left|.right]`.
 
 ## Colours
 
@@ -48,7 +48,7 @@ Specs use palette tokens (`src/mechs/palette.ts`): `sand`, `bone`, `slate`, `gla
 Errors block approval; warnings need a human look. The standard Mech has no findings.
 
 - **legs.reach**: standing must leave the knee room to bend (warning), and must not be shorter than the folded leg (error).
-- **connectivity**: every part must touch another at rest; floating parts are errors.
+- **connectivity**: every part must chain back to the pelvis through touching parts at rest; floating parts and clusters are errors.
 - **ground**: solid parts must not sink below the ground at rest.
 - **footprint**: radius ≤ 50. The pilot's route ring and collision radius are fixed, so wider bodies clip the pilot.
 - **boarding**: the cockpit centre must stay within 6 of height 60 and its front within 6 of y −17.5. The ladder and seat choreography in `motion/world.ts` is authored for that cockpit and is not yet parameterised.

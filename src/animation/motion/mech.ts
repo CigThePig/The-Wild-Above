@@ -96,7 +96,7 @@ export class Mech implements MechActor {
     this.speed = Math.hypot(this.vx, this.vy);
     let desired = this.yaw;
     if (this.speed > 2) desired = Math.atan2(this.vx, -this.vy);
-    else if (input.turn) desired += input.turn * dt * 1.6;
+    else if (input.turn) desired += input.turn * dt * gait.turnInPlaceRate;
     else if (input.aim && Math.abs(angle(this.yaw, input.aimYaw)) > 0.95)
       desired = input.aimYaw - clamp(angle(this.yaw, input.aimYaw), -0.7, 0.7);
     this.yaw += clamp(

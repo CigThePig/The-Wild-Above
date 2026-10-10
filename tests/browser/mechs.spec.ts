@@ -50,6 +50,15 @@ test("Rig Lab previews, selects and checks Mech specs live", async ({
   expect(await page.evaluate(() => window.rigLab.inspect().mech.id)).toBe(
     "lab-preview",
   );
+  // Re-submitting the selected design must redraw it, not the old one.
+  await page.evaluate((spec) => window.rigLab.previewMech(spec), {
+    ...draft,
+    torso: { ...standard.torso, size: { w: 44, d: 29, h: 26 } },
+  });
+  const torso = (s: ReturnType<typeof window.rigLab.inspect>) =>
+    s.components.find((c) => c.id === "mech.torso")!.bounds!.width;
+  const widened = await page.evaluate(() => window.rigLab.inspect());
+  expect(torso(widened)).toBeGreaterThan(torso(state));
   await page
     .locator("#game canvas")
     .screenshot({ path: "artifacts/mech-preview.png" });
@@ -57,5 +66,12 @@ test("Rig Lab previews, selects and checks Mech specs live", async ({
   expect(await page.evaluate(() => window.rigLab.inspect().config.color)).toBe(
     "#a5a082",
   );
+  // Interactions through the API redraw even while paused.
+  const pilotShown = await page.evaluate(() => {
+    window.rigLab.setIsolation(false);
+    window.rigLab.interact();
+    return window.rigLab.inspect().components.some((c) => c.id === "pilot");
+  });
+  expect(pilotShown).toBe(true);
   expect(errors).toEqual([]);
 });

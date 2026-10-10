@@ -102,7 +102,11 @@ export function installLab(scene: FieldScene) {
       scene.sim.step(frames, input);
       refresh();
     },
-    interact: () => scene.sim.interact(),
+    interact: () => {
+      const accepted = scene.sim.interact();
+      refresh(); // Paused frames no longer rebuild on their own.
+      return accepted;
+    },
     configure: (config: Partial<RigConfig>) => {
       if (syncing) return;
       scene.sim.configure(config);

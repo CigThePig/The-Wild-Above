@@ -297,7 +297,13 @@
           "type": "number",
           "minimum": 0.2,
           "maximum": 8,
-          "description": "Body turn rate in radians per second."
+          "description": "Maximum body turn rate in radians per second: steering while moving, aim turns and boarding alignment. Also caps turnInPlaceRate."
+        },
+        "turnInPlaceRate": {
+          "type": "number",
+          "minimum": 0.2,
+          "maximum": 8,
+          "description": "Q/E turning speed while standing, in radians per second (capped by turnRate)."
         },
         "stepDuration": {
           "type": "number",
@@ -334,6 +340,7 @@
         "walkSpeed",
         "runSpeed",
         "turnRate",
+        "turnInPlaceRate",
         "stepDuration",
         "runStepDuration",
         "runStepAbove",

@@ -167,7 +167,11 @@ export class Simulation {
     const changed = (Object.keys(c) as (keyof RigConfig)[]).filter(
       (k) => c[k] !== this.config[k],
     );
-    if (changed.every((k) => RENDER_ONLY.has(k))) {
+    // A re-registered design (rigLab.previewMech) under the same ID must
+    // rebuild even when the config itself is unchanged.
+    const replacedDesign =
+      this.spec === undefined && getMech(c.mech) !== this.world.mech.spec;
+    if (!replacedDesign && changed.every((k) => RENDER_ONLY.has(k))) {
       this.config = c; // Paint and diagnostics only: keep the live session.
       return;
     }

@@ -176,7 +176,16 @@ export const mechSpecSchema = z
       .object({
         walkSpeed: range(10, 200, "Walking speed in units per second."),
         runSpeed: range(10, 300, "Running speed in units per second."),
-        turnRate: range(0.2, 8, "Body turn rate in radians per second."),
+        turnRate: range(
+          0.2,
+          8,
+          "Maximum body turn rate in radians per second: steering while moving, aim turns and boarding alignment. Also caps turnInPlaceRate.",
+        ),
+        turnInPlaceRate: range(
+          0.2,
+          8,
+          "Q/E turning speed while standing, in radians per second (capped by turnRate).",
+        ),
         stepDuration: range(0.05, 1, "Walking swing duration in seconds."),
         runStepDuration: range(0.05, 1, "Running swing duration in seconds."),
         runStepAbove: range(

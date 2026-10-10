@@ -167,18 +167,34 @@ export function checkMech(
         Math.max(Math.abs(v.min.y - base.y), Math.abs(v.max.y - base.y)),
       ),
     );
-    if (
-      !volumes.some(
-        ([other, w]) => other !== id && overlaps(v, w, CONTACT_TOLERANCE),
-      )
-    )
+  }
+  // Every part must chain back to the pelvis through touching parts; a
+  // cluster of parts touching only each other still floats.
+  const attached = new Set(
+    volumes.filter(([id]) => id === "mech.pelvis").map(([id]) => id),
+  );
+  for (let grew = true; grew;) {
+    grew = false;
+    for (const [id, v] of volumes)
+      if (
+        !attached.has(id) &&
+        volumes.some(
+          ([other, w]) =>
+            attached.has(other) && overlaps(v, w, CONTACT_TOLERANCE),
+        )
+      ) {
+        attached.add(id);
+        grew = true;
+      }
+  }
+  for (const [id] of volumes)
+    if (!attached.has(id))
       report(
         "error",
         "connectivity",
-        "floats free of every other part at rest; attach it or move it into contact",
+        "is not connected to the pelvis at rest, directly or through touching parts; attach it or move it into contact",
         id,
       );
-  }
   if (footprint > FOOTPRINT_LIMIT)
     report(
       "warning",
