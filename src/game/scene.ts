@@ -3,7 +3,7 @@ import Phaser from "phaser";
 import VirtualJoystick from "phaser3-rex-plugins/plugins/virtualjoystick.js";
 import { Simulation, DT } from "../animation/simulation";
 import { buildRig } from "../animation/rig";
-import { drawRig } from "../rendering/draw";
+import { drawGround, drawRig } from "../rendering/draw";
 import { project } from "../rendering/geometry";
 import type { Input } from "../animation/types";
 export class FieldScene extends Phaser.Scene {
@@ -34,11 +34,7 @@ export class FieldScene extends Phaser.Scene {
     this.paused = this.lab;
     this.graphics = this.add.graphics();
     const ground = this.add.graphics().setDepth(-1);
-    ground.lineStyle(0.5, 0x79978b, 0.14);
-    for (let x = -500; x <= 500; x += 48) ground.lineBetween(x, -300, x, 300);
-    for (let y = -300; y <= 300; y += 48) ground.lineBetween(-500, y, 500, y);
-    ground.lineStyle(2, 0x79978b, 0.5);
-    ground.strokeRect(-450, -252, 900, 504);
+    drawGround(ground);
     this.keys = this.input.keyboard!.addKeys(
       "W,A,S,D,UP,DOWN,LEFT,RIGHT,SHIFT,Q,E,F",
     ) as typeof this.keys;

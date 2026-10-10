@@ -18,7 +18,8 @@
     "capture:motion": "node scripts/capture-motion.mjs",
     "format:check": "prettier --check src tests scripts schemas *.ts *.js *.json *.html *.md docs .github .claude",
     "mech:schema": "tsx scripts/mech-schema.ts",
-    "mech:check": "tsx scripts/mech-check.ts"
+    "mech:check": "tsx scripts/mech-check.ts",
+    "look": "tsx scripts/look.ts"
   },
   "engines": {
     "node": ">=22.12"

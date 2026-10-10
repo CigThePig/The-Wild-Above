@@ -1,8 +1,37 @@
-import type Phaser from "phaser";
 import type { Geometry } from "./geometry";
 import { project } from "./geometry";
+import { FIELD } from "../animation/motion/boarding";
+
+/** The Phaser Graphics calls rigs use, so Node tooling can draw identically. */
+export interface RigCanvas {
+  clear(): unknown;
+  fillStyle(color: number, alpha?: number): unknown;
+  lineStyle(width: number, color: number, alpha?: number): unknown;
+  beginPath(): unknown;
+  moveTo(x: number, y: number): unknown;
+  lineTo(x: number, y: number): unknown;
+  closePath(): unknown;
+  fillPath(): unknown;
+  strokePath(): unknown;
+  lineBetween(x1: number, y1: number, x2: number, y2: number): unknown;
+  fillCircle(x: number, y: number, radius: number): unknown;
+  strokeCircle(x: number, y: number, radius: number): unknown;
+  strokeRect(x: number, y: number, width: number, height: number): unknown;
+}
+
+/** Ground grid and the projected walkable field boundary. */
+export function drawGround(g: RigCanvas) {
+  g.lineStyle(0.5, 0x79978b, 0.14);
+  for (let x = -500; x <= 500; x += 48) g.lineBetween(x, -300, x, 300);
+  for (let y = -300; y <= 300; y += 48) g.lineBetween(-500, y, 500, y);
+  const top = project({ x: 0, y: FIELD.minY, z: 0 }).y,
+    bottom = project({ x: 0, y: FIELD.maxY, z: 0 }).y;
+  g.lineStyle(2, 0x79978b, 0.5);
+  g.strokeRect(FIELD.minX, top, FIELD.maxX - FIELD.minX, bottom - top);
+}
+
 export function drawRig(
-  g: Phaser.GameObjects.Graphics,
+  g: RigCanvas,
   rig: Geometry,
   guides: boolean,
   selected: string,
