@@ -118,7 +118,7 @@ export class FieldScene extends Phaser.Scene {
     input.y /= length;
     return input;
   }
-  update(_time: number, delta: number) {
+  override update(_time: number, delta: number) {
     if (!this.graphics) return;
     if (!this.paused) {
       const seconds = (delta / 1000) * this.rate;

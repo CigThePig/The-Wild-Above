@@ -2,6 +2,7 @@ import { expect, it } from "vitest";
 import { Simulation } from "../../src/animation/simulation";
 import { defaultConfig } from "../../src/animation/config";
 import { buildRig } from "../../src/animation/rig";
+import type { Input } from "../../src/animation/types";
 it("exits at the west-facing northwest corner", () => {
   const s = new Simulation({ ...defaultConfig, animation: "idle" });
   const g = s.world.mech;
@@ -49,7 +50,7 @@ it("configuration edits work after 61 seconds", () => {
 it("invalid aiming is rejected before changing simulation", () => {
   const s = new Simulation(),
     before = s.snapshot();
-  expect(() => Reflect.apply(s.step, s, [1, { aim: true }])).toThrow();
+  expect(() => s.step(1, { aim: true } as unknown as Input)).toThrow();
   expect(s.snapshot()).toEqual(before);
 });
 it("pilot fade opacity is exposed in the component contract", () => {

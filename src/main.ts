@@ -7,9 +7,12 @@ document.body.classList.toggle("lab", lab);
 if (!import.meta.env.DEV) document.getElementById("lab-link")!.remove();
 const scene = new FieldScene();
 if (import.meta.env.DEV)
-  scene.onReady = async () => {
-    const { installLab } = await import("./tools/rig-lab");
-    installLab(scene);
+  scene.onReady = () => {
+    import("./tools/rig-lab")
+      .then(({ installLab }) => installLab(scene))
+      .catch((error: unknown) =>
+        console.error("Rig Lab failed to load", error),
+      );
   };
 const game = new Phaser.Game({
   type: Phaser.AUTO,

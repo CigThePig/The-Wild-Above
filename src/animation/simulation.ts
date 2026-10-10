@@ -159,7 +159,9 @@ export class Simulation {
   }
   recording(): Recording {
     if (this.tick > MAX_REPLAY_FRAMES)
-      throw Error("Recording exceeds the 36,000-frame replay limit; reset to capture a shorter session");
+      throw Error(
+        "Recording exceeds the 36,000-frame replay limit; reset to capture a shorter session",
+      );
     // Never return a recording that replay() itself would reject.
     return recordingSchema.parse(
       structuredClone({

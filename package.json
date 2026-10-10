@@ -12,10 +12,11 @@
     "test": "vitest run",
     "test:browser": "playwright test",
     "capture": "node scripts/capture.mjs",
-    "check": "npm run typecheck && npm run lint && npm test && npm run build",
-    "format": "prettier --write src tests scripts *.ts *.js *.json *.html *.md docs .github",
+    "check": "npm run typecheck && npm run lint && npm run format:check && npm test && npm run build",
+    "format": "prettier --write src tests scripts schemas *.ts *.js *.json *.html *.md docs .github .claude",
     "notices": "node scripts/notices.mjs",
-    "capture:motion": "node scripts/capture-motion.mjs"
+    "capture:motion": "node scripts/capture-motion.mjs",
+    "format:check": "prettier --check src tests scripts schemas *.ts *.js *.json *.html *.md docs .github .claude"
   },
   "engines": {
     "node": ">=22.12"
@@ -28,14 +29,19 @@
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
+    "@napi-rs/canvas": "1.0.9",
+    "@playwright/mcp": "0.0.82",
     "@playwright/test": "1.58.2",
     "@tweakpane/core": "2.0.5",
     "@types/node": "26.6.4",
+    "chrome-devtools-mcp": "1.10.1",
     "eslint": "10.12.0",
     "fast-check": "4.10.2",
+    "gifenc": "1.0.3",
     "pixelmatch": "8.0.0",
     "pngjs": "7.0.0",
     "prettier": "3.9.9",
+    "tsx": "4.23.15",
     "typescript": "6.0.3",
     "typescript-eslint": "8.71.1",
     "vite": "8.3.4",
