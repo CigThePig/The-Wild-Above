@@ -66,3 +66,25 @@ window.rigLab.advance(300, {});
 ```
 
 `capture:motion` writes cropped actual frames, contact sheets, input recordings and report.json under artifacts/motion. It runs 120 simulated seconds per actor, 20 seconds of stationary turning per actor, full 360° sweeps at 0.35 and 1.5 seconds in 2° increments, and center/corner/edge boarding scenarios. Largest raster-delta pairs are retained for human review. This command intentionally takes longer than the smoke tests and does not update baselines. Its deterministic time is advanced by fixed ticks, not waiting two minutes per actor in real time.
+
+## Surface inspection
+
+```js
+window.rigLab.pause();
+window.rigLab.configure({ actor: "mech", heading: 89, animation: "run" });
+window.rigLab.setAnimationTime(0.35);
+window.rigLab.selectComponent("");
+window.rigLab.selectSurface("mech.torso.top");
+window.rigLab.setSurfaceGuides(true);
+const face = window.rigLab.inspectSurface("mech.torso.top");
+const resolution = window.rigLab.inspectOcclusion();
+const cost = window.rigLab.inspectPerformance();
+```
+
+The surface selector and Surface boundaries toggle expose source outlines, culled faces in red, selected fragment boundaries and the selected world normal projected into the view. Occlusion warnings appear in the status bar while surface guides are enabled. These guides are off by default and gameplay never draws them. Component selection remains independent. Surface inspection returns world/projected geometry, normal, depth plane, facing dot product, culling, material/opacity, computed overlaps/occluders, fragments, method and relevant decisions. `inspectOcclusion` includes the actual resolver method/fallback reason, ambiguity diagnostics, approximate depth relationships and localized canopy exception. `inspect()` adds `surfaceStats`, `occlusionMethod`, and `occlusionDiagnostics` without changing existing fields. `inspectPerformance()` avoids cloning large geometry when sampling timings.
+
+Face IDs are stable across headings. Fragment IDs are deterministic for identical inputs, with explicit `source`, but may change when the decomposition topology changes. `visible` does not guarantee uncovered pixels on the fast painter path; consult relationships and actual captures. Near-coplanar surfaces use documented geometric tolerances; approximation flags identify limb/silhouette relationships that cannot establish exact physical visibility.
+
+With development servers running for the feature on 5173 and the original main on 5174, run `BASELINE_URL=http://127.0.0.1:5174 node scripts/capture-surfaces.mjs`. It writes narrow-angle before/after sheets at both gait phases and six-heading warmed CPU timing samples under `artifacts/surfaces`. Use separate Vite cache directories if the worktrees share node_modules. The benchmark baseline can expose the tiny `inspectPerformance: () => ({renderMs: scene.renderMs})` sampling shim; its rendering code stays unchanged. `CAPTURE_HEADINGS`, `CAPTURE_TIMES` and `CAPTURE_OUTPUT` optionally restrict or redirect captures. `capture:motion` now checks occlusion diagnostics too and retains overview sheets and per-heading surface workload for its full sweeps. Browser binaries can be selected with `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`.
+
+For a bug report retain config, exact heading/time or recording/placements, surface IDs, `inspectOcclusion()` output and actual adjacent screenshots. Examine the labelled before/after views, not only draw-order or raster-difference counts. Reproduce aiming with `advance(frames, {aim: true, aimYaw: radians})`; upper surfaces follow turret orientation independently from the pelvis.
