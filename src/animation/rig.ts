@@ -30,7 +30,17 @@ export function buildRig(world: World, config: RigConfig, isolated: boolean) {
       parent = id as string,
     ) => {
       geo.component(name, parent, "shape", p);
-      geo.block(name, p, w, d, h, yaw, color, cap);
+      const semantic =
+        name === "mech.torso" ||
+        name.includes(".armor") ||
+        [
+          "mech.pack",
+          "mech.cockpit",
+          "mech.pelvis",
+          "mech.tool.barrel",
+        ].includes(name);
+      if (semantic) geo.surfaceBlock(name, p, w, d, h, yaw, color, cap);
+      else geo.block(name, p, w, d, h, yaw, color, cap);
     };
     const limb = (
       name: string,
