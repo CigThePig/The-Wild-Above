@@ -47,16 +47,28 @@ export function halfPlane(
 function edge(a: Point, b: Point): DepthPlane {
   return { x: a.y - b.y, y: b.x - a.x, c: b.y * a.x - b.x * a.y };
 }
+function edges(p: Point[]): DepthPlane[] {
+  return p.map((a, i) => edge(a, p[(i + 1) % p.length]));
+}
+/** A convex polygon with its edge lines computed once, not once per pair. */
+interface Convex {
+  points: Point[];
+  edges: DepthPlane[];
+}
+const convexPiece = (points: Point[]): Convex => ({
+  points,
+  edges: edges(points),
+});
 function ccw(p: Point[]) {
   return area(p) < 0 ? p.slice().reverse() : p;
 }
 function valid(p: Point[]) {
   return p.length >= 3 && Math.abs(area(p)) > AREA_EPS;
 }
-function intersect(a: Point[], b: Point[]) {
+function intersect(a: Point[], b: Point[], be: DepthPlane[] = edges(b)) {
   let p = a;
-  for (let i = 0; i < b.length && p.length >= 3; i++)
-    p = halfPlane(p, edge(b[i], b[(i + 1) % b.length]), true);
+  for (let i = 0; i < be.length && p.length >= 3; i++)
+    p = halfPlane(p, be[i], true);
   return valid(p) ? p : [];
 }
 function subtract(a: Point[], b: Point[]) {
@@ -91,18 +103,29 @@ function convex(p: Point[]) {
       -AREA_EPS,
   );
 }
-function overlapsConvex(a: Point[], b: Point[]) {
-  for (const [p, q] of [
-    [a, b],
-    [b, a],
-  ])
-    for (let i = 0; i < p.length; i++) {
-      const e = edge(p[i], p[(i + 1) % p.length]);
-      let max = -Infinity;
-      for (const v of q) max = Math.max(max, depthAt(e, v));
-      if (max <= AREA_EPS) return false;
-    }
-  return true;
+// Separating-axis test: some edge line of one polygon has the other entirely outside.
+function separated(e: DepthPlane[], q: Point[]) {
+  for (const line of e) {
+    let max = -Infinity;
+    for (const v of q) max = Math.max(max, depthAt(line, v));
+    if (max <= AREA_EPS) return true;
+  }
+  return false;
+}
+function overlapsConvex(a: Convex, b: Convex) {
+  return !separated(a.edges, b.points) && !separated(b.edges, a.points);
+}
+type Overlaps = (a: Convex, b: Convex) => boolean;
+/** Memoise by polygon identity: unsplit fragments repeat the pair tests. */
+function overlapCache(): Overlaps {
+  const cache = new Map<Convex, Map<Convex, boolean>>();
+  return (a, b) => {
+    let row = cache.get(a);
+    if (!row) cache.set(a, (row = new Map<Convex, boolean>()));
+    let hit = row.get(b);
+    if (hit === undefined) row.set(b, (hit = overlapsConvex(a, b)));
+    return hit;
+  };
 }
 interface Candidate {
   shape: Shape;
@@ -111,6 +134,7 @@ interface Candidate {
   bounds: ReturnType<typeof bounds>;
   surface?: Surface;
   patches: Point[][];
+  pieces: Convex[];
 }
 // Small deterministic ear decomposition for the existing concave hook. No holes.
 function patches(points: Point[]): Point[][] {
@@ -175,14 +199,18 @@ function orderFragments(
   decisions: OcclusionResult["decisions"],
   limit: number,
   work: { comparisons: number; reason: string },
+  overlaps: Overlaps,
 ): Fragment[] | null {
   if (candidates.some((c) => c.shape.alpha < 1 && c.shape.alpha > 0)) {
     work.reason = "transparent composition";
     return null;
   }
-  const relations = new Map<string, OcclusionResult["decisions"][number]>();
+  // Candidate-index pair keys avoid building a string for every node pair.
+  const index = new Map(candidates.map((c, i) => [c.shape.id, i])),
+    n = candidates.length;
+  const relations = new Map<number, OcclusionResult["decisions"][number]>();
   for (const d of decisions) {
-    const key = `${d.a}\0${d.b}`,
+    const key = index.get(d.a)! * n + index.get(d.b)!,
       old = relations.get(key);
     relations.set(
       key,
@@ -211,9 +239,18 @@ function orderFragments(
   const nodes: {
     fragment: Fragment;
     candidate: Candidate;
+    index: number;
     bounds: ReturnType<typeof bounds>;
+    parts?: Convex[];
   }[] = [];
-  for (const c of candidates) {
+  // A fragment overlaps as itself when convex, else via its source's ears.
+  const parts = (node: (typeof nodes)[number]) =>
+    (node.parts ??=
+      node.fragment.points === node.candidate.points ||
+      !convex(node.fragment.points)
+        ? node.candidate.pieces
+        : [convexPiece(node.fragment.points)]);
+  for (const [ci, c] of candidates.entries()) {
     let pieces = lines.has(c.shape.id) ? c.patches : [c.points];
     for (const line of lines.get(c.shape.id) ?? []) {
       pieces = pieces.flatMap((p) => {
@@ -236,6 +273,7 @@ function orderFragments(
     pieces.forEach((points, i) =>
       nodes.push({
         candidate: c,
+        index: ci,
         bounds: bounds(points),
         fragment: {
           id: pieces.length === 1 ? c.shape.id : `${c.shape.id}.fragment.${i}`,
@@ -266,11 +304,6 @@ function orderFragments(
         b.bounds.maxY <= a.bounds.minY
       )
         continue;
-      const delta = {
-        x: b.candidate.plane.x - a.candidate.plane.x,
-        y: b.candidate.plane.y - a.candidate.plane.y,
-        c: b.candidate.plane.c - a.candidate.plane.c,
-      };
       let frontB: boolean;
       if (!a.candidate.surface && !b.candidate.surface)
         frontB =
@@ -278,31 +311,23 @@ function orderFragments(
           (b.fragment.depth === a.fragment.depth &&
             b.fragment.id > a.fragment.id);
       else {
-        const original = relations.get(
-          `${a.fragment.source}\0${b.fragment.source}`,
-        );
+        const original = relations.get(a.index * n + b.index);
         if (!original) continue;
+        const aa = parts(a),
+          bb = parts(b);
         if (original.relation !== "crossing") {
-          const aa = convex(a.fragment.points)
-            ? [a.fragment.points]
-            : a.candidate.patches;
-          const bb = convex(b.fragment.points)
-            ? [b.fragment.points]
-            : b.candidate.patches;
-          if (!aa.some((pa) => bb.some((pb) => overlapsConvex(pa, pb))))
-            continue;
+          if (!aa.some((pa) => bb.some((pb) => overlaps(pa, pb)))) continue;
           frontB = original.front === b.fragment.source;
         } else {
           // Convex semantic faces / split fragments. Concave uncut legacy hook is
           // decomposed only for the actual overlap test, without changing its drawing.
-          const aa = convex(a.fragment.points)
-            ? [a.fragment.points]
-            : a.candidate.patches;
-          const bb = convex(b.fragment.points)
-            ? [b.fragment.points]
-            : b.candidate.patches;
+          const delta = {
+            x: b.candidate.plane.x - a.candidate.plane.x,
+            y: b.candidate.plane.y - a.candidate.plane.y,
+            c: b.candidate.plane.c - a.candidate.plane.c,
+          };
           const overlap = aa.flatMap((pa) =>
-            bb.flatMap((pb) => intersect(pa, pb)),
+            bb.flatMap((pb) => intersect(pa.points, pb.points, pb.edges)),
           );
           if (!overlap.length) continue;
           const ds = overlap.map((p) => depthAt(delta, p)),
@@ -354,24 +379,26 @@ export function resolveOcclusion(
       s.diagnostics.map((d) => `${s.id}: ${d}`),
     ),
     decisions: OcclusionResult["decisions"] = [];
-  const candidates: Candidate[] = [
-    ...legacy.map((shape) => ({
+  const candidate = (
+    shape: Shape,
+    plane: DepthPlane,
+    surface?: Surface,
+  ): Candidate => {
+    const points = ccw(shape.points),
+      list = patches(points);
+    return {
       shape,
-      points: ccw(shape.points),
-      plane: { x: 0, y: 0, c: shape.depth },
+      points,
+      plane,
       bounds: bounds(shape.points),
-      patches: patches(ccw(shape.points)),
-    })),
-    ...surfaces
-      .filter((s) => !s.culled)
-      .map((s) => ({
-        shape: s,
-        points: ccw(s.points),
-        plane: s.plane,
-        bounds: bounds(s.points),
-        surface: s,
-        patches: patches(ccw(s.points)),
-      })),
+      patches: list,
+      pieces: list.map(convexPiece),
+      ...(surface && { surface }),
+    };
+  };
+  const candidates: Candidate[] = [
+    ...legacy.map((shape) => candidate(shape, { x: 0, y: 0, c: shape.depth })),
+    ...surfaces.filter((s) => !s.culled).map((s) => candidate(s, s.plane, s)),
   ].filter((c) => valid(c.points));
   candidates.sort((a, b) =>
     a.shape.id < b.shape.id ? -1 : a.shape.id > b.shape.id ? 1 : 0,
@@ -389,6 +416,7 @@ export function resolveOcclusion(
   }[] = [];
   let comparisons = 0,
     overlaps = 0;
+  const overlapTest = overlapCache();
   for (let i = 0; i < candidates.length; i++)
     for (let j = i + 1; j < candidates.length; j++) {
       const a = candidates[i],
@@ -403,14 +431,16 @@ export function resolveOcclusion(
         b.bounds.maxY <= a.bounds.minY
       )
         continue;
-      if (!a.patches.length || !b.patches.length) {
+      if (!a.pieces.length || !b.pieces.length) {
         diagnostics.push(
           `unsupported nonconvex overlap: ${a.shape.id} / ${b.shape.id}`,
         );
         continue;
       }
-      for (const pa of a.patches)
-        for (const pb of b.patches) {
+      for (const ca of a.pieces)
+        for (const cb of b.pieces) {
+          const pa = ca.points,
+            pb = cb.points;
           const delta = {
             x: b.plane.x - a.plane.x,
             y: b.plane.y - a.plane.y,
@@ -421,9 +451,9 @@ export function resolveOcclusion(
             hi = Math.max(...values),
             overlap: Point[] | undefined;
           if (lo >= -DEPTH_EPS || hi <= DEPTH_EPS) {
-            if (!overlapsConvex(pa, pb)) continue;
+            if (!overlapTest(ca, cb)) continue;
           } else {
-            overlap = intersect(pa, pb);
+            overlap = intersect(pa, pb, cb.edges);
             if (!valid(overlap)) continue;
             const ds = overlap.map((p) => depthAt(delta, p));
             lo = Math.min(...ds);
@@ -471,7 +501,13 @@ export function resolveOcclusion(
         }
     }
   const work = { comparisons: 0, reason: "ordering cycle" };
-  const ordered = orderFragments(candidates, decisions, limit, work);
+  const ordered = orderFragments(
+    candidates,
+    decisions,
+    limit,
+    work,
+    overlapTest,
+  );
   comparisons += work.comparisons;
   if (ordered) {
     for (const c of candidates)

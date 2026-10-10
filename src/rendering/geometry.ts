@@ -2,12 +2,8 @@ import type { Vec, Point, Shape, Component } from "../animation/types";
 import { vec, add, rotate } from "../animation/motion/math";
 import { makeSurface, type Surface } from "./surfaces";
 import { resolveOcclusion, type OcclusionResult } from "./occlusion";
-export { vec, add, rotate };
-export const project = (p: Vec) => ({
-  x: p.x,
-  y: p.y * 0.72 - p.z * 0.694,
-  d: p.y * 0.694 + p.z * 0.72,
-});
+import { project } from "./projection";
+export { vec, add, rotate, project };
 export const mix = (a: Vec, b: Vec, t: number) =>
   vec(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t, a.z + (b.z - a.z) * t);
 // Retained monotone-chain silhouette construction from the supplied renderer.
@@ -49,6 +45,7 @@ export class Geometry {
   occlusion!: OcclusionResult;
   generationMs = 0;
   private started = performance.now();
+  private byId = new Map<string, Component>();
   component(
     id: string,
     parent: string | null,
@@ -56,7 +53,8 @@ export class Geometry {
     world: Vec,
     contact?: boolean,
   ) {
-    const origin = this.components.find((c) => c.id === parent)?.world ?? vec();
+    const origin =
+      (parent === null ? undefined : this.byId.get(parent))?.world ?? vec();
     const c: Component = {
       id,
       parent,
@@ -70,6 +68,7 @@ export class Geometry {
       issues: [],
     };
     this.components.push(c);
+    if (!this.byId.has(id)) this.byId.set(id, c);
     return c;
   }
   polygon(id: string, points: Vec[], color: number, bias = 0, alpha = 1) {
@@ -174,18 +173,20 @@ export class Geometry {
     this.generationMs = performance.now() - this.started;
     this.occlusion = resolveOcclusion(this.shapes, this.surfaces);
     this.shapes = this.occlusion.shapes;
+    const owned = new Map<string, Point[]>();
     this.shapes.forEach((s, i) => {
-      const c = this.components.find((c) => c.id === s.component);
+      const c = this.byId.get(s.component);
       c?.drawOrder.push(i);
       if (s.points.some((p) => !Number.isFinite(p.x) || !Number.isFinite(p.y)))
         c?.issues.push("non-finite geometry");
+      const list = owned.get(s.component);
+      if (list) list.push(...s.points);
+      else owned.set(s.component, s.points.slice());
     });
     for (const c of this.components) {
       if (Object.values(c.world).some((v) => !Number.isFinite(v)))
         c.issues.push("non-finite transform");
-      const points = this.shapes
-        .filter((s) => s.component === c.id)
-        .flatMap((s) => s.points);
+      const points = owned.get(c.id) ?? [];
       if (points.length) {
         const xs = points.map((p) => p.x),
           ys = points.map((p) => p.y);
