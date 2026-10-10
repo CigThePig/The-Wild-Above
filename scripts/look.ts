@@ -42,6 +42,9 @@ const USAGE = `Usage: npm run look -- [mech-id | path/to/spec.json ...] [options
                           and write before/after/diff images
   --gif                   animated gait GIF for human review
   --zoom <n>              fixed zoom instead of fitting the cells
+  --focus <z>             camera centre height (default 40; ~15 for feet and
+                          shins, ~60 for the cockpit) — use with --zoom
+  --cell <w>x<h>          sheet cell size in pixels (default 300x270)
   --out <dir>             output directory (default artifacts/look)
   --no-check              skip the mech:check summary`;
 
@@ -60,6 +63,8 @@ const valueFlags = new Set([
   "--frames",
   "--compare",
   "--zoom",
+  "--focus",
+  "--cell",
   "--out",
 ]);
 const flags = new Map<string, string>(),
@@ -97,6 +102,7 @@ const options = {
   compare: flags.get("--compare"),
   gif: flags.has("--gif"),
   zoom: flags.has("--zoom") ? number("--zoom", 3) : undefined,
+  focus: number("--focus", 40),
   out: flags.get("--out") ?? "artifacts/look",
   check: !flags.has("--no-check"),
   draw: {
@@ -107,7 +113,12 @@ const options = {
 if (options.headings.some((h) => !Number.isFinite(h) || h < 0 || h >= 360))
   throw Error("--headings must be comma-separated degrees in [0, 360)");
 
-const CELL = { w: 300, h: 270 },
+const [cellW, cellH] = (flags.get("--cell") ?? "300x270")
+  .split("x")
+  .map(Number);
+if (!(cellW >= 120 && cellH >= 120 && cellW <= 1200 && cellH <= 1200))
+  throw Error("--cell must look like 300x270 (120 to 1200 pixels each)");
+const CELL = { w: cellW, h: cellH },
   COMPARE_CELL = { w: 280, h: 250 },
   GIF_CELL = { w: 360, h: 320 };
 
@@ -258,7 +269,7 @@ for (const target of chosen) {
     dir = join(options.out, spec.id);
   mkdirSync(dir, { recursive: true });
   const requested = poses(engine, design);
-  const shots = requested.map((p) => shoot(engine, design, p));
+  const shots = requested.map((p) => shoot(engine, design, p, options.focus));
   const report = options.check ? checkMech(spec, { quick: true }) : null;
   const outputs: Record<string, string> = {};
   let compared: Record<string, unknown> | undefined;
@@ -276,7 +287,9 @@ for (const target of chosen) {
       compared = { ref, sha, missing: true };
       console.log(`  ${spec.id} does not exist at ${ref}; nothing to compare`);
     } else {
-      const oldShots = requested.map((p) => shoot(old, before, p));
+      const oldShots = requested.map((p) =>
+        shoot(old, before, p, options.focus),
+      );
       zoom = options.zoom ?? fitZoom([...shots, ...oldShots], CELL);
       const cz = options.zoom ?? fitZoom([...shots, ...oldShots], COMPARE_CELL);
       const pairs = requested.map((pose, i) => {
@@ -350,7 +363,7 @@ for (const target of chosen) {
         run: (s) => s.step(tick),
         isolated: true,
       });
-    const gifShots = frames.map((p) => shoot(engine, design, p)),
+    const gifShots = frames.map((p) => shoot(engine, design, p, options.focus)),
       gz = options.zoom ?? fitZoom(gifShots, GIF_CELL);
     writeFileSync(
       (outputs.gif = join(dir, "gait.gif")),

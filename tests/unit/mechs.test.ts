@@ -12,10 +12,14 @@ import {
 } from "../../src/mechs";
 import { checkMech } from "../../src/mechs/check";
 import { mechJsonSchema } from "../../src/mechs/json-schema";
-import { parseMechSpec, type MechSpec } from "../../src/mechs/schema";
+import {
+  parseMechSpec,
+  type MechSpec,
+  type MechSpecInput,
+} from "../../src/mechs/schema";
 
-const variant = (change: (spec: MechSpec) => void): MechSpec => {
-  const spec = structuredClone(STANDARD);
+const variant = (change: (spec: MechSpecInput) => void): MechSpec => {
+  const spec: MechSpecInput = structuredClone(STANDARD);
   spec.id = "variant";
   spec.status = "draft";
   change(spec);

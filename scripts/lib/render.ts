@@ -32,12 +32,18 @@ export interface DrawOptions {
   surfaces: boolean;
 }
 
-export function shoot(engine: Engine, design: Design, pose: Pose): Shot {
+/** focus: camera centre height above the Mech's ground point (Rig Lab uses 40). */
+export function shoot(
+  engine: Engine,
+  design: Design,
+  pose: Pose,
+  focus = 40,
+): Shot {
   const s = simulate(engine, design, pose.patch, pose.placement);
   pose.run(s);
   const rig = engine.rig.buildRig(s.world, s.config, pose.isolated);
-  // Follow the Mech like Rig Lab: centre on its body, 40 units up.
-  const c = project({ x: s.world.mech.x, y: s.world.mech.y, z: 40 });
+  // Follow the Mech like Rig Lab: centre on its body, `focus` units up.
+  const c = project({ x: s.world.mech.x, y: s.world.mech.y, z: focus });
   const issues = [
     ...rig.components.flatMap((k) => k.issues.map((i) => `${k.id}: ${i}`)),
     ...rig.occlusion.diagnostics,

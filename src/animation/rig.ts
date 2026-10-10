@@ -17,6 +17,8 @@ type Size = { w: number; d: number; h: number };
 type Frame = MechPart["attach"];
 interface Anchor {
   origin: Vec;
+  /** Bone frames: the lower joint; parts sit `along` origin→end. */
+  end?: Vec;
   yaw: number;
   parent: string;
 }
@@ -153,6 +155,18 @@ export function buildRig(
           origin: l.f.p,
           yaw: l.f.yaw,
           parent: prefix + ".foot",
+        });
+        legAnchors.set(`thigh.${side}`, {
+          origin: l.hip,
+          end: l.knee,
+          yaw: a.yaw,
+          parent: prefix + ".thigh",
+        });
+        legAnchors.set(`shin.${side}`, {
+          origin: l.knee,
+          end: l.f.p,
+          yaw: a.yaw,
+          parent: prefix + ".shin",
         });
       } else {
         block(
@@ -317,6 +331,18 @@ export function buildRig(
           yaw: y,
           parent: `mech.arm.${s}.lower`,
         });
+        armAnchors.set(`upper-arm.${s}`, {
+          origin: shoulder,
+          end: elbow,
+          yaw: y,
+          parent: `mech.arm.${s}.upper`,
+        });
+        armAnchors.set(`forearm.${s}`, {
+          origin: elbow,
+          end: wrist,
+          yaw: y,
+          parent: `mech.arm.${s}.lower`,
+        });
       }
       if (tools.barrel) {
         const b = tools.barrel;
@@ -356,6 +382,10 @@ export function buildRig(
         hip: (s) => legAnchors.get(`hip.${s}`)!,
         knee: (s) => legAnchors.get(`knee.${s}`)!,
         foot: (s) => legAnchors.get(`foot.${s}`)!,
+        "upper-arm": (s) => armAnchors.get(`upper-arm.${s}`)!,
+        forearm: (s) => armAnchors.get(`forearm.${s}`)!,
+        thigh: (s) => legAnchors.get(`thigh.${s}`)!,
+        shin: (s) => legAnchors.get(`shin.${s}`)!,
       };
       for (const p of spec.parts) {
         const sided =
@@ -367,8 +397,19 @@ export function buildRig(
             : ([[null, 1]] as const);
         for (const [s, sign] of sided) {
           const anchor = frames[p.attach](s ?? "right"),
-            place = (q: Vec) =>
-              add(anchor.origin, rotate(vec(sign * q.x, q.y, q.z), anchor.yaw)),
+            at = (t: number) =>
+              anchor.end
+                ? add(
+                    anchor.origin,
+                    vec(
+                      (anchor.end.x - anchor.origin.x) * t,
+                      (anchor.end.y - anchor.origin.y) * t,
+                      (anchor.end.z - anchor.origin.z) * t,
+                    ),
+                  )
+                : anchor.origin,
+            place = (q: Vec, t = p.along) =>
+              add(at(t), rotate(vec(sign * q.x, q.y, q.z), anchor.yaw)),
             name = `mech.part.${p.id}${s ? "." + s : ""}`;
           if (p.kind === "block")
             block(
@@ -385,7 +426,7 @@ export function buildRig(
             limb(
               name,
               place(p.from),
-              place(p.to),
+              place(p.to, p.alongTo ?? p.along),
               p.width[0],
               p.width[1],
               tone(p.color),

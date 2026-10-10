@@ -976,9 +976,20 @@
                   "wrist",
                   "hip",
                   "knee",
-                  "foot"
+                  "foot",
+                  "upper-arm",
+                  "forearm",
+                  "thigh",
+                  "shin"
                 ],
-                "description": "body: hip centre, follows body yaw. turret: upper-body origin, follows turret yaw. shoulder/elbow/wrist: arm joints, turret yaw. hip/knee: leg joints, body yaw. foot: ankle joint, foot yaw. Joint frames always produce a left and a right copy."
+                "description": "body: hip centre, follows body yaw. turret: upper-body origin, follows turret yaw. shoulder/elbow/wrist: arm joints, turret yaw. hip/knee: leg joints, body yaw. foot: ankle joint, foot yaw. upper-arm/forearm/thigh/shin: a point `along` that bone, so armour stays on it as joints bend. Offsets never rotate with a bone's tilt (world-aligned, AGENTS.md). Every frame except body/turret produces a left and a right copy."
+              },
+              "along": {
+                "default": 0.5,
+                "description": "Bone frames only: 0 at the upper joint (shoulder, elbow, hip, knee), 1 at the lower joint.",
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
               },
               "mirror": {
                 "default": false,
@@ -1076,9 +1087,20 @@
                   "wrist",
                   "hip",
                   "knee",
-                  "foot"
+                  "foot",
+                  "upper-arm",
+                  "forearm",
+                  "thigh",
+                  "shin"
                 ],
-                "description": "body: hip centre, follows body yaw. turret: upper-body origin, follows turret yaw. shoulder/elbow/wrist: arm joints, turret yaw. hip/knee: leg joints, body yaw. foot: ankle joint, foot yaw. Joint frames always produce a left and a right copy."
+                "description": "body: hip centre, follows body yaw. turret: upper-body origin, follows turret yaw. shoulder/elbow/wrist: arm joints, turret yaw. hip/knee: leg joints, body yaw. foot: ankle joint, foot yaw. upper-arm/forearm/thigh/shin: a point `along` that bone, so armour stays on it as joints bend. Offsets never rotate with a bone's tilt (world-aligned, AGENTS.md). Every frame except body/turret produces a left and a right copy."
+              },
+              "along": {
+                "default": 0.5,
+                "description": "Bone frames only: 0 at the upper joint (shoulder, elbow, hip, knee), 1 at the lower joint.",
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
               },
               "mirror": {
                 "default": false,
@@ -1107,6 +1129,12 @@
                 "required": ["x", "y", "z"],
                 "additionalProperties": false,
                 "description": "Offset in the attachment frame, in Mech units: x right (outward for mirrored or per-side parts), y back (+) / front (−), z up."
+              },
+              "alongTo": {
+                "description": "Bone frames only: place `to` at this point of the bone (`from` uses `along`), so plates follow the bone's slope.",
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
               },
               "width": {
                 "type": "array",

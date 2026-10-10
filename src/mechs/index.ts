@@ -1,6 +1,7 @@
 import { parseMechSpec, type MechSpec } from "./schema";
 import { paletteHex } from "./palette";
 import standard from "./specs/standard.json" with { type: "json" };
+import strider from "./specs/strider.json" with { type: "json" };
 
 // Registered Mech designs. Add a spec file under ./specs and list it here.
 // Tooling (npm run look/mech:check, rigLab.previewMech) can register drafts
@@ -16,7 +17,7 @@ export function registerMech(value: unknown, replace = false): MechSpec {
   registry.set(spec.id, spec);
   return spec;
 }
-for (const spec of [standard]) registerMech(spec);
+for (const spec of [standard, strider]) registerMech(spec);
 
 export const hasMech = (id: string) => registry.has(id);
 export function getMech(id: string = STANDARD_ID): MechSpec {

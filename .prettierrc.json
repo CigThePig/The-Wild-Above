@@ -1,0 +1,8 @@
+{
+  "overrides": [
+    {
+      "files": "src/mechs/specs/*.json",
+      "options": { "objectWrap": "collapse" }
+    }
+  ]
+}

@@ -42,9 +42,22 @@ const widths = z
 const block = z.object({ position: vec3, size: size3, color, cap }).strict();
 
 const frame = z
-  .enum(["body", "turret", "shoulder", "elbow", "wrist", "hip", "knee", "foot"])
+  .enum([
+    "body",
+    "turret",
+    "shoulder",
+    "elbow",
+    "wrist",
+    "hip",
+    "knee",
+    "foot",
+    "upper-arm",
+    "forearm",
+    "thigh",
+    "shin",
+  ])
   .describe(
-    "body: hip centre, follows body yaw. turret: upper-body origin, follows turret yaw. shoulder/elbow/wrist: arm joints, turret yaw. hip/knee: leg joints, body yaw. foot: ankle joint, foot yaw. Joint frames always produce a left and a right copy.",
+    "body: hip centre, follows body yaw. turret: upper-body origin, follows turret yaw. shoulder/elbow/wrist: arm joints, turret yaw. hip/knee: leg joints, body yaw. foot: ankle joint, foot yaw. upper-arm/forearm/thigh/shin: a point `along` that bone, so armour stays on it as joints bend. Offsets never rotate with a bone's tilt (world-aligned, AGENTS.md). Every frame except body/turret produces a left and a right copy.",
   );
 const partBase = {
   id: z
@@ -52,6 +65,14 @@ const partBase = {
     .regex(/^[a-z][a-z0-9-]{0,23}$/)
     .describe("Stable part ID; the component is mech.part.<id>[.left|.right]."),
   attach: frame,
+  along: z
+    .number()
+    .min(0)
+    .max(1)
+    .default(0.5)
+    .describe(
+      "Bone frames only: 0 at the upper joint (shoulder, elbow, hip, knee), 1 at the lower joint.",
+    ),
   mirror: z
     .boolean()
     .default(false)
@@ -82,6 +103,14 @@ const part = z.discriminatedUnion("kind", [
       kind: z.literal("limb"),
       from: vec3,
       to: vec3,
+      alongTo: z
+        .number()
+        .min(0)
+        .max(1)
+        .optional()
+        .describe(
+          "Bone frames only: place `to` at this point of the bone (`from` uses `along`), so plates follow the bone's slope.",
+        ),
       width: widths,
       color,
     })
@@ -258,6 +287,8 @@ export const mechSpecSchema = z
       });
   });
 export type MechSpec = z.infer<typeof mechSpecSchema>;
+/** What authors write: defaulted fields (parts, mirror, along, surfaces) may be omitted. */
+export type MechSpecInput = z.input<typeof mechSpecSchema>;
 export type MechPart = MechSpec["parts"][number];
 export type ColorRef = z.infer<typeof color>;
 

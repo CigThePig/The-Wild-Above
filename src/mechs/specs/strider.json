@@ -1,0 +1,131 @@
+{
+  "$schema": "../../../schemas/mech-spec.schema.json",
+  "version": 1,
+  "id": "strider",
+  "name": "Strider scout",
+  "status": "draft",
+  "description": "Example draft made with npm run look and mech:check: longer legs, a slimmer hull, a sensor mast, shoulder fins and shin guards. Not approved for gameplay; it exists to exercise the authoring tools.",
+  "paint": "ochre",
+  "legs": {
+    "hipWidth": 11,
+    "hipHeight": 44,
+    "thigh": 26,
+    "shin": 27,
+    "ankleHeight": 3,
+    "stance": { "width": 15, "forward": 1 },
+    "stepLift": 9,
+    "thighWidth": [10, 11],
+    "thighColor": "sand",
+    "shinWidth": [8, 10],
+    "shinColor": "sand",
+    "boot": {
+      "lift": 2,
+      "size": { "w": 12, "d": 22, "h": 6 },
+      "color": "slate",
+      "cap": "sand"
+    },
+    "kneecap": { "size": { "w": 10, "d": 7, "h": 8 }, "color": "slate" }
+  },
+  "gait": {
+    "walkSpeed": 64,
+    "runSpeed": 96,
+    "turnRate": 2.6,
+    "stepDuration": 0.2,
+    "runStepDuration": 0.16,
+    "runStepAbove": 78,
+    "bob": 1.4,
+    "landDip": 0.7
+  },
+  "pelvis": {
+    "position": { "x": 0, "y": 0, "z": 3 },
+    "size": { "w": 26, "d": 18, "h": 10 },
+    "color": "slate"
+  },
+  "turret": { "height": 61 },
+  "torso": {
+    "size": { "w": 32, "d": 26, "h": 22 },
+    "color": "paint",
+    "cap": "bone"
+  },
+  "pack": {
+    "position": { "x": 0, "y": 15, "z": 1 },
+    "size": { "w": 24, "d": 9, "h": 18 },
+    "color": "slate"
+  },
+  "cockpit": {
+    "position": { "x": 0, "y": -13.5, "z": 0 },
+    "size": { "w": 22, "d": 5, "h": 16 },
+    "color": "slate"
+  },
+  "canopy": {
+    "halfWidth": 8,
+    "front": -16.5,
+    "top": 6,
+    "bottom": -4,
+    "open": { "y": -12, "z": 18 },
+    "color": "glass"
+  },
+  "arms": {
+    "shoulder": { "x": 21, "y": 1, "z": 4 },
+    "elbow": { "x": 24, "y": 0, "z": -9 },
+    "wrist": { "x": 23, "y": -11, "z": -10 },
+    "upper": { "width": [8, 7], "color": "slate" },
+    "lower": { "width": [9, 8], "color": "paint" },
+    "armor": {
+      "offset": { "x": 2, "y": 0, "z": 4 },
+      "size": { "w": 12, "d": 16, "h": 8 },
+      "color": "paint",
+      "cap": "bone"
+    }
+  },
+  "tools": {
+    "barrel": {
+      "position": { "x": 22, "y": -21, "z": -8 },
+      "size": { "w": 9, "d": 22, "h": 9 },
+      "color": "slate",
+      "cap": "paint"
+    },
+    "hook": null
+  },
+  "parts": [
+    {
+      "id": "mast",
+      "attach": "turret",
+      "kind": "limb",
+      "from": { "x": -9, "y": 9, "z": 11 },
+      "to": { "x": -9, "y": 12, "z": 30 },
+      "width": [2, 1.5],
+      "color": "slate"
+    },
+    {
+      "id": "mast-lamp",
+      "attach": "turret",
+      "kind": "block",
+      "position": { "x": -9, "y": 12, "z": 31 },
+      "size": { "w": 4, "d": 4, "h": 3 },
+      "color": "glass",
+      "surfaces": false
+    },
+    {
+      "id": "fin",
+      "attach": "turret",
+      "mirror": true,
+      "kind": "block",
+      "position": { "x": 13, "y": 8, "z": 13 },
+      "size": { "w": 2, "d": 10, "h": 6 },
+      "color": "bone",
+      "surfaces": false
+    },
+    {
+      "id": "shin-guard",
+      "attach": "shin",
+      "kind": "limb",
+      "along": 0.15,
+      "alongTo": 0.7,
+      "from": { "x": 0, "y": -6, "z": 0 },
+      "to": { "x": 0, "y": -6, "z": 0 },
+      "width": [7, 6],
+      "color": "paint"
+    }
+  ]
+}
