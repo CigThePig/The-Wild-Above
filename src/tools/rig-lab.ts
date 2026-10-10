@@ -84,6 +84,7 @@ export function installLab(scene: FieldScene) {
       interactionFailure: scene.sim.world.interactionFailure,
       components: structuredClone(scene.rig.components),
       drawOrder: scene.rig.shapes.map((s) => s.id),
+      occlusionDiagnostics: scene.rig.occlusion.diagnostics,
       diagnostics: scene.rig.components.flatMap((c) =>
         c.issues.map((issue) => ({ component: c.id, issue })),
       ),
@@ -102,6 +103,45 @@ export function installLab(scene: FieldScene) {
           scene.rig.shapes.filter((s) => s.component === id),
         ),
       };
+    },
+    inspectSurface: (id: string) => {
+      const surface = scene.rig.surfaces.find((s) => s.id === id);
+      if (!surface) throw Error(`Unknown surface: ${id}`);
+      return {
+        ...structuredClone(surface),
+        geometry: structuredClone(
+          scene.rig.occlusion.fragments.filter((f) => f.source === id),
+        ),
+        exception: null,
+      };
+    },
+    inspectOcclusion: () =>
+      structuredClone({
+        surfaces: scene.rig.surfaces,
+        decisions: scene.rig.occlusion.decisions,
+        diagnostics: scene.rig.occlusion.diagnostics,
+        stats: scene.rig.occlusion.stats,
+        generationMs: scene.rig.generationMs,
+        exceptions: [
+          {
+            component: "mech.cockpit.hatch",
+            reason:
+              "continuous directional width collapse and legacy +15 depth bias",
+            depthModel: "representative",
+          },
+        ],
+        approximations:
+          "Legacy silhouettes and limb slices use constant representative depth. Transparent legacy pairs retain painter ordering.",
+      }),
+    selectSurface: (id: string) => {
+      if (id && !scene.rig.surfaces.some((s) => s.id === id))
+        throw Error(`Unknown surface: ${id}`);
+      scene.selectedSurface = id;
+      scene.refresh();
+    },
+    setSurfaceGuides: (value: boolean) => {
+      scene.surfaceGuides = value;
+      scene.refresh();
     },
     recording: () => scene.sim.recording(),
     replay: (recording: unknown) => {
@@ -125,6 +165,7 @@ export function installLab(scene: FieldScene) {
     playbackSpeed: 1,
     guides: true,
     isolated: true,
+    surfaces: false,
     time: 0,
     elapsed: 0,
   };
@@ -171,6 +212,9 @@ export function installLab(scene: FieldScene) {
   pane
     .addBinding(state, "isolated", { label: "Isolate actor" })
     .on("change", (e) => api.setIsolation(e.value));
+  pane
+    .addBinding(state, "surfaces", { label: "Surface boundaries" })
+    .on("change", (e) => api.setSurfaceGuides(e.value));
   const motion = pane.addFolder({
     title: "Motion parameters",
     expanded: false,
@@ -210,6 +254,12 @@ export function installLab(scene: FieldScene) {
     }
   };
   const select = document.getElementById("components") as HTMLSelectElement;
+  const surfaceSelect = document.createElement("select");
+  surfaceSelect.id = "surfaces";
+  surfaceSelect.setAttribute("aria-label", "Surface selection");
+  select.after(surfaceSelect);
+  surfaceSelect.onchange = () => api.selectSurface(surfaceSelect.value);
+  let surfaceSignature = "";
   let signature = "";
   let lastSyncedTick = -Infinity;
   let lastSyncedPaused = scene.paused;
@@ -249,7 +299,24 @@ export function installLab(scene: FieldScene) {
       select.value = scene.selected;
     }
     select.value = scene.selected;
-    const c = scene.rig.components.find((c) => c.id === scene.selected);
+    const surfaceNext = scene.rig.surfaces.map((s) => s.id).join();
+    if (surfaceSignature !== surfaceNext) {
+      surfaceSignature = surfaceNext;
+      surfaceSelect.replaceChildren(
+        ...["", ...scene.rig.surfaces.map((s) => s.id)].map((id) => {
+          const o = document.createElement("option");
+          o.value = id;
+          o.textContent = id || "None / surface highlight";
+          return o;
+        }),
+      );
+      if (!scene.rig.surfaces.some((s) => s.id === scene.selectedSurface))
+        scene.selectedSurface = "";
+    }
+    surfaceSelect.value = scene.selectedSurface;
+    const c = scene.selectedSurface
+      ? api.inspectSurface(scene.selectedSurface)
+      : scene.rig.components.find((c) => c.id === scene.selected);
     document.getElementById("details")!.textContent = JSON.stringify(
       c,
       null,

@@ -13,6 +13,8 @@ export class FieldScene extends Phaser.Scene {
   paused = false;
   rate = 1;
   guides = true;
+  surfaceGuides = false;
+  selectedSurface = "";
   selected = "mech.leg.right.knee";
   accumulator = 0;
   droppedSeconds = 0;
@@ -142,6 +144,8 @@ export class FieldScene extends Phaser.Scene {
       this.rig,
       this.lab && this.guides,
       this.lab ? this.selected : "",
+      this.lab && this.surfaceGuides,
+      this.lab ? this.selectedSurface : "",
     );
     const actor = this.sim.world.actor,
       p = project({
