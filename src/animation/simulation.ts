@@ -3,6 +3,7 @@ import { FIELD } from "./motion/boarding";
 import { PilotWorld } from "./motion/world";
 import type { Input } from "./types";
 import { configSchema, defaultConfig, type RigConfig } from "./config";
+import { getMech } from "../mechs";
 export const DT = 1 / 60;
 const MAX_REPLAY_FRAMES = 36_000;
 // Each recorded step consumes at least one frame. Successful interactions
@@ -74,18 +75,25 @@ export class Simulation {
   }
   reset() {
     this.commands = [];
-    this.world = new PilotWorld();
+    this.world = new PilotWorld(getMech(this.config.mech));
     this.tick = 0;
     const a = (this.config.heading * Math.PI) / 180,
-      g = this.world.mech;
+      g = this.world.mech,
+      { stance, ankleHeight } = g.spec.legs;
     g.yaw = g.turret = a;
     g.x = this.placement.mech.x;
     g.y = this.placement.mech.y;
     for (const f of g.feet) {
       f.p = {
-        x: g.x + f.side * 17 * Math.cos(a) - Math.sin(a),
-        y: g.y + f.side * 17 * Math.sin(a) + Math.cos(a),
-        z: 3,
+        x:
+          g.x +
+          f.side * stance.width * Math.cos(a) -
+          stance.forward * Math.sin(a),
+        y:
+          g.y +
+          f.side * stance.width * Math.sin(a) +
+          stance.forward * Math.cos(a),
+        z: ankleHeight,
       };
       f.yaw = a;
     }

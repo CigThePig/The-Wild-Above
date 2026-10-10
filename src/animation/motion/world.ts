@@ -3,21 +3,16 @@ import { boardingRoute, inField } from "./boarding";
 import { Mech } from "./mech";
 import { Pilot } from "./pilot";
 import { vec, rot, clamp, angle, smooth, lerp } from "./math";
+import type { MechSpec } from "../../mechs/schema";
 export class PilotWorld implements World {
-  mech = new Mech();
+  mech: Mech;
   pilot = new Pilot();
   control: World["control"] = "mech";
   transition: BoardingTransition | null = null;
   time = 0;
   interactionFailure: string | null = null;
-  reset() {
-    this.mech.reset();
-    this.time = 0;
-    this.interactionFailure = null;
-    this.pilot = new Pilot();
-    this.control = "mech";
-    this.transition = null;
-    this.mech.hatch = 0;
+  constructor(spec?: MechSpec) {
+    this.mech = new Mech(spec);
   }
   get actor() {
     return this.control === "foot" ? this.pilot : this.mech;
@@ -125,7 +120,12 @@ export class PilotWorld implements World {
     }
     const tr = this.transition;
     if (tr && tr.stage === "park") {
-      this.mech.yaw += clamp(angle(this.mech.yaw, tr.yaw), -dt * 2.1, dt * 2.1);
+      const rate = this.mech.spec.gait.turnRate;
+      this.mech.yaw += clamp(
+        angle(this.mech.yaw, tr.yaw),
+        -dt * rate,
+        dt * rate,
+      );
     }
     this.time += dt;
     this.mech.update(dt, {});

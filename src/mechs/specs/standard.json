@@ -1,0 +1,105 @@
+{
+  "$schema": "../../../schemas/mech-spec.schema.json",
+  "version": 1,
+  "id": "standard",
+  "name": "Standard field Mech",
+  "status": "approved",
+  "description": "The reviewed Phase 0/1 machine. Its geometry and motion are guarded byte-for-byte by tests/fixtures/rig-geometry.json and motion-parity.json; copy it as a starting point rather than editing it.",
+  "paint": "sand",
+  "legs": {
+    "hipWidth": 12.7,
+    "hipHeight": 38,
+    "thigh": 23,
+    "shin": 24,
+    "ankleHeight": 3,
+    "stance": { "width": 17, "forward": 1 },
+    "stepLift": 7,
+    "thighWidth": [13, 14],
+    "thighColor": "sand",
+    "shinWidth": [10, 12],
+    "shinColor": "sand",
+    "boot": {
+      "lift": 2,
+      "size": { "w": 15, "d": 25, "h": 7 },
+      "color": "slate",
+      "cap": "sand"
+    },
+    "kneecap": { "size": { "w": 12, "d": 8, "h": 9 }, "color": "slate" }
+  },
+  "gait": {
+    "walkSpeed": 57,
+    "runSpeed": 83,
+    "turnRate": 2.1,
+    "stepDuration": 0.22,
+    "runStepDuration": 0.18,
+    "runStepAbove": 68,
+    "bob": 1.2,
+    "landDip": 0.9
+  },
+  "pelvis": {
+    "position": { "x": 0, "y": 0, "z": 3 },
+    "size": { "w": 31, "d": 22, "h": 12 },
+    "color": "slate"
+  },
+  "turret": { "height": 59 },
+  "torso": {
+    "size": { "w": 37, "d": 29, "h": 26 },
+    "color": "paint",
+    "cap": "bone"
+  },
+  "pack": {
+    "position": { "x": 0, "y": 17, "z": 0 },
+    "size": { "w": 30, "d": 11, "h": 22 },
+    "color": "slate"
+  },
+  "cockpit": {
+    "position": { "x": 0, "y": -15, "z": 1 },
+    "size": { "w": 24, "d": 5, "h": 18 },
+    "color": "slate"
+  },
+  "canopy": {
+    "halfWidth": 9,
+    "front": -18,
+    "top": 7,
+    "bottom": -4,
+    "open": { "y": -12, "z": 18 },
+    "color": "glass"
+  },
+  "arms": {
+    "shoulder": { "x": 24, "y": 1, "z": 5 },
+    "elbow": { "x": 27, "y": 0, "z": -9 },
+    "wrist": { "x": 26, "y": -12, "z": -10 },
+    "upper": { "width": [10, 9], "color": "slate" },
+    "lower": { "width": [11, 10], "color": "paint" },
+    "armor": {
+      "offset": { "x": 0, "y": 0, "z": 4 },
+      "size": { "w": 15, "d": 20, "h": 10 },
+      "color": "paint",
+      "cap": "bone"
+    }
+  },
+  "tools": {
+    "barrel": {
+      "position": { "x": 25, "y": -22, "z": -8 },
+      "size": { "w": 12, "d": 24, "h": 12 },
+      "color": "slate",
+      "cap": "paint"
+    },
+    "hook": {
+      "points": [
+        [-32, -12],
+        [-20, -12],
+        [-18, -24],
+        [-22, -30],
+        [-23, -20],
+        [-29, -20],
+        [-30, -30],
+        [-34, -24]
+      ],
+      "z": -10,
+      "anchor": { "x": -26, "y": -20 },
+      "color": "bone"
+    }
+  },
+  "parts": []
+}

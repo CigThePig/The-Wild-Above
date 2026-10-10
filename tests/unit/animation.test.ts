@@ -44,7 +44,7 @@ describe("motion", () => {
         (x, y) => {
           const hip = { x: 0, y: 0, z: 38 },
             foot = { x, y, z: 3 },
-            k = solveLeg(hip, foot, { x: 0, y: -1, z: 0 }).knee;
+            k = solveLeg(hip, foot, { x: 0, y: -1, z: 0 }, 23, 24).knee;
           expect(Math.hypot(k.x, k.y, k.z - 38)).toBeCloseTo(23, 5);
           expect(Math.hypot(k.x - x, k.y - y, k.z - 3)).toBeCloseTo(24, 5);
         },

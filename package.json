@@ -16,7 +16,8 @@
     "format": "prettier --write src tests scripts schemas *.ts *.js *.json *.html *.md docs .github .claude",
     "notices": "node scripts/notices.mjs",
     "capture:motion": "node scripts/capture-motion.mjs",
-    "format:check": "prettier --check src tests scripts schemas *.ts *.js *.json *.html *.md docs .github .claude"
+    "format:check": "prettier --check src tests scripts schemas *.ts *.js *.json *.html *.md docs .github .claude",
+    "mech:schema": "tsx scripts/mech-schema.ts"
   },
   "engines": {
     "node": ">=22.12"

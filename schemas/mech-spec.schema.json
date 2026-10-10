@@ -1,0 +1,1182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": { "type": "number", "const": 1 },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{1,31}$",
+      "description": "Stable ID used by config.mech. Never rename after approval."
+    },
+    "name": { "type": "string", "minLength": 1, "maxLength": 60 },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "approved"],
+      "description": "draft: tooling and Rig Lab only. A human approves the silhouette before gameplay use."
+    },
+    "description": { "type": "string", "maxLength": 600 },
+    "paint": {
+      "type": "string",
+      "enum": ["sand", "bone", "slate", "glass", "ochre", "straw"],
+      "description": "Paint colour applied when this Mech is selected."
+    },
+    "legs": {
+      "type": "object",
+      "properties": {
+        "hipWidth": {
+          "type": "number",
+          "minimum": 2,
+          "maximum": 40,
+          "description": "Hip joint distance from the centre line."
+        },
+        "hipHeight": {
+          "type": "number",
+          "minimum": 10,
+          "maximum": 120,
+          "description": "Hip height above ground when standing."
+        },
+        "thigh": {
+          "type": "number",
+          "minimum": 5,
+          "maximum": 80,
+          "description": "Hip-to-knee bone length."
+        },
+        "shin": {
+          "type": "number",
+          "minimum": 5,
+          "maximum": 80,
+          "description": "Knee-to-ankle bone length."
+        },
+        "ankleHeight": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 20,
+          "description": "Ankle joint height above ground for a planted foot."
+        },
+        "stance": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "number",
+              "minimum": 2,
+              "maximum": 60,
+              "description": "Planted foot distance from the centre line."
+            },
+            "forward": {
+              "type": "number",
+              "minimum": -20,
+              "maximum": 20,
+              "description": "Planted foot offset along y (negative is forward)."
+            }
+          },
+          "required": ["width", "forward"],
+          "additionalProperties": false
+        },
+        "stepLift": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 40,
+          "description": "Peak foot lift of a step at stepHeight 1."
+        },
+        "thighWidth": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 40,
+              "description": "Width at the start joint."
+            },
+            {
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 40,
+              "description": "Width at the end joint."
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "Limb widths at its start and end."
+        },
+        "thighColor": {
+          "type": "string",
+          "enum": ["sand", "bone", "slate", "glass", "ochre", "straw", "paint"],
+          "description": "Palette token (src/mechs/palette.ts), or 'paint' for the live paint colour selected in Rig Lab."
+        },
+        "shinWidth": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 40,
+              "description": "Width at the start joint."
+            },
+            {
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 40,
+              "description": "Width at the end joint."
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "Limb widths at its start and end."
+        },
+        "shinColor": {
+          "type": "string",
+          "enum": ["sand", "bone", "slate", "glass", "ochre", "straw", "paint"],
+          "description": "Palette token (src/mechs/palette.ts), or 'paint' for the live paint colour selected in Rig Lab."
+        },
+        "boot": {
+          "type": "object",
+          "properties": {
+            "lift": {
+              "type": "number",
+              "minimum": -10,
+              "maximum": 20,
+              "description": "Boot centre height above the ankle joint."
+            },
+            "size": {
+              "type": "object",
+              "properties": {
+                "w": {
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 120,
+                  "description": "Width along x."
+                },
+                "d": {
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 120,
+                  "description": "Depth along y."
+                },
+                "h": {
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 120,
+                  "description": "Height along z."
+                }
+              },
+              "required": ["w", "d", "h"],
+              "additionalProperties": false,
+              "description": "Bounding box the bevelled octagonal block footprint is cut from."
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "sand",
+                "bone",
+                "slate",
+                "glass",
+                "ochre",
+                "straw",
+                "paint"
+              ],
+              "description": "Palette token (src/mechs/palette.ts), or 'paint' for the live paint colour selected in Rig Lab."
+            },
+            "cap": {
+              "description": "Top face colour. Omitted: semantic blocks use the side colour; legacy blocks draw no separate cap.",
+              "type": "string",
+              "enum": [
+                "sand",
+                "bone",
+                "slate",
+                "glass",
+                "ochre",
+                "straw",
+                "paint"
+              ]
+            }
+          },
+          "required": ["lift", "size", "color"],
+          "additionalProperties": false
+        },
+        "kneecap": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "object",
+                  "properties": {
+                    "w": {
+                      "type": "number",
+                      "minimum": 0.5,
+                      "maximum": 120,
+                      "description": "Width along x."
+                    },
+                    "d": {
+                      "type": "number",
+                      "minimum": 0.5,
+                      "maximum": 120,
+                      "description": "Depth along y."
+                    },
+                    "h": {
+                      "type": "number",
+                      "minimum": 0.5,
+                      "maximum": 120,
+                      "description": "Height along z."
+                    }
+                  },
+                  "required": ["w", "d", "h"],
+                  "additionalProperties": false,
+                  "description": "Bounding box the bevelled octagonal block footprint is cut from."
+                },
+                "color": {
+                  "type": "string",
+                  "enum": [
+                    "sand",
+                    "bone",
+                    "slate",
+                    "glass",
+                    "ochre",
+                    "straw",
+                    "paint"
+                  ],
+                  "description": "Palette token (src/mechs/palette.ts), or 'paint' for the live paint colour selected in Rig Lab."
+                },
+                "cap": {
+                  "description": "Top face colour. Omitted: semantic blocks use the side colour; legacy blocks draw no separate cap.",
+                  "type": "string",
+                  "enum": [
+                    "sand",
+                    "bone",
+                    "slate",
+                    "glass",
+                    "ochre",
+                    "straw",
+                    "paint"
+                  ]
+                }
+              },
+              "required": ["size", "color"],
+              "additionalProperties": false
+            },
+            { "type": "null" }
+          ]
+        }
+      },
+      "required": [
+        "hipWidth",
+        "hipHeight",
+        "thigh",
+        "shin",
+        "ankleHeight",
+        "stance",
+        "stepLift",
+        "thighWidth",
+        "thighColor",
+        "shinWidth",
+        "shinColor",
+        "boot",
+        "kneecap"
+      ],
+      "additionalProperties": false
+    },
+    "gait": {
+      "type": "object",
+      "properties": {
+        "walkSpeed": {
+          "type": "number",
+          "minimum": 10,
+          "maximum": 200,
+          "description": "Walking speed in units per second."
+        },
+        "runSpeed": {
+          "type": "number",
+          "minimum": 10,
+          "maximum": 300,
+          "description": "Running speed in units per second."
+        },
+        "turnRate": {
+          "type": "number",
+          "minimum": 0.2,
+          "maximum": 8,
+          "description": "Body turn rate in radians per second."
+        },
+        "stepDuration": {
+          "type": "number",
+          "minimum": 0.05,
+          "maximum": 1,
+          "description": "Walking swing duration in seconds."
+        },
+        "runStepDuration": {
+          "type": "number",
+          "minimum": 0.05,
+          "maximum": 1,
+          "description": "Running swing duration in seconds."
+        },
+        "runStepAbove": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 300,
+          "description": "Speed above which runStepDuration applies."
+        },
+        "bob": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10,
+          "description": "Body rise during a swing at bob 1."
+        },
+        "landDip": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10,
+          "description": "Body dip when a foot lands."
+        }
+      },
+      "required": [
+        "walkSpeed",
+        "runSpeed",
+        "turnRate",
+        "stepDuration",
+        "runStepDuration",
+        "runStepAbove",
+        "bob",
+        "landDip"
+      ],
+      "additionalProperties": false
+    },
+    "pelvis": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "type": "object",
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" },
+            "z": { "type": "number" }
+          },
+          "required": ["x", "y", "z"],
+          "additionalProperties": false,
+          "description": "Offset in the attachment frame, in Mech units: x right (outward for mirrored or per-side parts), y back (+) / front (−), z up."
+        },
+        "size": {
+          "type": "object",
+          "properties": {
+            "w": {
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 120,
+              "description": "Width along x."
+            },
+            "d": {
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 120,
+              "description": "Depth along y."
+            },
+            "h": {
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 120,
+              "description": "Height along z."
+            }
+          },
+          "required": ["w", "d", "h"],
+          "additionalProperties": false,
+          "description": "Bounding box the bevelled octagonal block footprint is cut from."
+        },
+        "color": {
+          "type": "string",
+          "enum": ["sand", "bone", "slate", "glass", "ochre", "straw", "paint"],
+          "description": "Palette token (src/mechs/palette.ts), or 'paint' for the live paint colour selected in Rig Lab."
+        },
+        "cap": {
+          "description": "Top face colour. Omitted: semantic blocks use the side colour; legacy blocks draw no separate cap.",
+          "type": "string",
+          "enum": ["sand", "bone", "slate", "glass", "ochre", "straw", "paint"]
+        }
+      },
+      "required": ["position", "size", "color"],
+      "additionalProperties": false,
+      "description": "Body frame block at the hips."
+    },
+    "turret": {
+      "type": "object",
+      "properties": {
+        "height": {
+          "type": "number",
+          "minimum": 10,
+          "maximum": 200,
+          "description": "Upper-body frame origin height when the hips are at hipHeight."
+        }
+      },
+      "required": ["height"],
+      "additionalProperties": false
+    },
+    "torso": {
+      "type": "object",
+      "properties": {
+        "size": {
+          "type": "object",
+          "properties": {
+            "w": {
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 120,
+              "description": "Width along x."
+            },
+            "d": {
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 120,
+              "description": "Depth along y."
+            },
+            "h": {
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 120,
+              "description": "Height along z."
+            }
+          },
+          "required": ["w", "d", "h"],
+          "additionalProperties": false,
+          "description": "Bounding box the bevelled octagonal block footprint is cut from."
+        },
+        "color": {
+          "type": "string",
+          "enum": ["sand", "bone", "slate", "glass", "ochre", "straw", "paint"],
+          "description": "Palette token (src/mechs/palette.ts), or 'paint' for the live paint colour selected in Rig Lab."
+        },
+        "cap": {
+          "description": "Top face colour. Omitted: semantic blocks use the side colour; legacy blocks draw no separate cap.",
+          "type": "string",
+          "enum": ["sand", "bone", "slate", "glass", "ochre", "straw", "paint"]
+        }
+      },
+      "required": ["size", "color"],
+      "additionalProperties": false,
+      "description": "Turret frame block centred on the upper-body origin."
+    },
+    "pack": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "position": {
+              "type": "object",
+              "properties": {
+                "x": { "type": "number" },
+                "y": { "type": "number" },
+                "z": { "type": "number" }
+              },
+              "required": ["x", "y", "z"],
+              "additionalProperties": false,
+              "description": "Offset in the attachment frame, in Mech units: x right (outward for mirrored or per-side parts), y back (+) / front (−), z up."
+            },
+            "size": {
+              "type": "object",
+              "properties": {
+                "w": {
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 120,
+                  "description": "Width along x."
+                },
+                "d": {
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 120,
+                  "description": "Depth along y."
+                },
+                "h": {
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 120,
+                  "description": "Height along z."
+                }
+              },
+              "required": ["w", "d", "h"],
+              "additionalProperties": false,
+              "description": "Bounding box the bevelled octagonal block footprint is cut from."
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "sand",
+                "bone",
+                "slate",
+                "glass",
+                "ochre",
+                "straw",
+                "paint"
+              ],
+              "description": "Palette token (src/mechs/palette.ts), or 'paint' for the live paint colour selected in Rig Lab."
+            },
+            "cap": {
+              "description": "Top face colour. Omitted: semantic blocks use the side colour; legacy blocks draw no separate cap.",
+              "type": "string",
+              "enum": [
+                "sand",
+                "bone",
+                "slate",
+                "glass",
+                "ochre",
+                "straw",
+                "paint"
+              ]
+            }
+          },
+          "required": ["position", "size", "color"],
+          "additionalProperties": false
+        },
+        { "type": "null" }
+      ],
+      "description": "Turret frame block, usually behind."
+    },
+    "cockpit": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "type": "object",
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" },
+            "z": { "type": "number" }
+          },
+          "required": ["x", "y", "z"],
+          "additionalProperties": false,
+          "description": "Offset in the attachment frame, in Mech units: x right (outward for mirrored or per-side parts), y back (+) / front (−), z up."
+        },
+        "size": {
+          "type": "object",
+          "properties": {
+            "w": {
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 120,
+              "description": "Width along x."
+            },
+            "d": {
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 120,
+              "description": "Depth along y."
+            },
+            "h": {
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 120,
+              "description": "Height along z."
+            }
+          },
+          "required": ["w", "d", "h"],
+          "additionalProperties": false,
+          "description": "Bounding box the bevelled octagonal block footprint is cut from."
+        },
+        "color": {
+          "type": "string",
+          "enum": ["sand", "bone", "slate", "glass", "ochre", "straw", "paint"],
+          "description": "Palette token (src/mechs/palette.ts), or 'paint' for the live paint colour selected in Rig Lab."
+        },
+        "cap": {
+          "description": "Top face colour. Omitted: semantic blocks use the side colour; legacy blocks draw no separate cap.",
+          "type": "string",
+          "enum": ["sand", "bone", "slate", "glass", "ochre", "straw", "paint"]
+        }
+      },
+      "required": ["position", "size", "color"],
+      "additionalProperties": false,
+      "description": "Turret frame housing. Boarding choreography is fixed: keep it near the standard cockpit (mech:check enforces this)."
+    },
+    "canopy": {
+      "type": "object",
+      "properties": {
+        "halfWidth": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 40,
+          "description": "Half width when facing the viewer."
+        },
+        "front": {
+          "type": "number",
+          "description": "Canopy plane y in the turret frame."
+        },
+        "top": { "type": "number", "description": "Top edge z." },
+        "bottom": {
+          "type": "number",
+          "description": "Bottom edge z when closed."
+        },
+        "open": {
+          "type": "object",
+          "properties": {
+            "y": { "type": "number" },
+            "z": { "type": "number" }
+          },
+          "required": ["y", "z"],
+          "additionalProperties": false,
+          "description": "Bottom edge travel when the hatch is fully open."
+        },
+        "color": {
+          "type": "string",
+          "enum": ["sand", "bone", "slate", "glass", "ochre", "straw", "paint"],
+          "description": "Palette token (src/mechs/palette.ts), or 'paint' for the live paint colour selected in Rig Lab."
+        }
+      },
+      "required": ["halfWidth", "front", "top", "bottom", "open", "color"],
+      "additionalProperties": false
+    },
+    "arms": {
+      "type": "object",
+      "properties": {
+        "shoulder": {
+          "type": "object",
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" },
+            "z": { "type": "number" }
+          },
+          "required": ["x", "y", "z"],
+          "additionalProperties": false,
+          "description": "Offset in the attachment frame, in Mech units: x right (outward for mirrored or per-side parts), y back (+) / front (−), z up."
+        },
+        "elbow": {
+          "type": "object",
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" },
+            "z": { "type": "number" }
+          },
+          "required": ["x", "y", "z"],
+          "additionalProperties": false,
+          "description": "Offset in the attachment frame, in Mech units: x right (outward for mirrored or per-side parts), y back (+) / front (−), z up."
+        },
+        "wrist": {
+          "type": "object",
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" },
+            "z": { "type": "number" }
+          },
+          "required": ["x", "y", "z"],
+          "additionalProperties": false,
+          "description": "Offset in the attachment frame, in Mech units: x right (outward for mirrored or per-side parts), y back (+) / front (−), z up."
+        },
+        "upper": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 40,
+                  "description": "Width at the start joint."
+                },
+                {
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 40,
+                  "description": "Width at the end joint."
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "Limb widths at its start and end."
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "sand",
+                "bone",
+                "slate",
+                "glass",
+                "ochre",
+                "straw",
+                "paint"
+              ],
+              "description": "Palette token (src/mechs/palette.ts), or 'paint' for the live paint colour selected in Rig Lab."
+            }
+          },
+          "required": ["width", "color"],
+          "additionalProperties": false
+        },
+        "lower": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 40,
+                  "description": "Width at the start joint."
+                },
+                {
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 40,
+                  "description": "Width at the end joint."
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "Limb widths at its start and end."
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "sand",
+                "bone",
+                "slate",
+                "glass",
+                "ochre",
+                "straw",
+                "paint"
+              ],
+              "description": "Palette token (src/mechs/palette.ts), or 'paint' for the live paint colour selected in Rig Lab."
+            }
+          },
+          "required": ["width", "color"],
+          "additionalProperties": false
+        },
+        "armor": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "offset": {
+                  "type": "object",
+                  "properties": {
+                    "x": { "type": "number" },
+                    "y": { "type": "number" },
+                    "z": { "type": "number" }
+                  },
+                  "required": ["x", "y", "z"],
+                  "additionalProperties": false,
+                  "description": "From the shoulder joint, x outward."
+                },
+                "size": {
+                  "type": "object",
+                  "properties": {
+                    "w": {
+                      "type": "number",
+                      "minimum": 0.5,
+                      "maximum": 120,
+                      "description": "Width along x."
+                    },
+                    "d": {
+                      "type": "number",
+                      "minimum": 0.5,
+                      "maximum": 120,
+                      "description": "Depth along y."
+                    },
+                    "h": {
+                      "type": "number",
+                      "minimum": 0.5,
+                      "maximum": 120,
+                      "description": "Height along z."
+                    }
+                  },
+                  "required": ["w", "d", "h"],
+                  "additionalProperties": false,
+                  "description": "Bounding box the bevelled octagonal block footprint is cut from."
+                },
+                "color": {
+                  "type": "string",
+                  "enum": [
+                    "sand",
+                    "bone",
+                    "slate",
+                    "glass",
+                    "ochre",
+                    "straw",
+                    "paint"
+                  ],
+                  "description": "Palette token (src/mechs/palette.ts), or 'paint' for the live paint colour selected in Rig Lab."
+                },
+                "cap": {
+                  "description": "Top face colour. Omitted: semantic blocks use the side colour; legacy blocks draw no separate cap.",
+                  "type": "string",
+                  "enum": [
+                    "sand",
+                    "bone",
+                    "slate",
+                    "glass",
+                    "ochre",
+                    "straw",
+                    "paint"
+                  ]
+                }
+              },
+              "required": ["offset", "size", "color"],
+              "additionalProperties": false
+            },
+            { "type": "null" }
+          ]
+        }
+      },
+      "required": ["shoulder", "elbow", "wrist", "upper", "lower", "armor"],
+      "additionalProperties": false,
+      "description": "Right arm in the turret frame; the left arm mirrors it."
+    },
+    "tools": {
+      "type": "object",
+      "properties": {
+        "barrel": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "position": {
+                  "type": "object",
+                  "properties": {
+                    "x": { "type": "number" },
+                    "y": { "type": "number" },
+                    "z": { "type": "number" }
+                  },
+                  "required": ["x", "y", "z"],
+                  "additionalProperties": false,
+                  "description": "Offset in the attachment frame, in Mech units: x right (outward for mirrored or per-side parts), y back (+) / front (−), z up."
+                },
+                "size": {
+                  "type": "object",
+                  "properties": {
+                    "w": {
+                      "type": "number",
+                      "minimum": 0.5,
+                      "maximum": 120,
+                      "description": "Width along x."
+                    },
+                    "d": {
+                      "type": "number",
+                      "minimum": 0.5,
+                      "maximum": 120,
+                      "description": "Depth along y."
+                    },
+                    "h": {
+                      "type": "number",
+                      "minimum": 0.5,
+                      "maximum": 120,
+                      "description": "Height along z."
+                    }
+                  },
+                  "required": ["w", "d", "h"],
+                  "additionalProperties": false,
+                  "description": "Bounding box the bevelled octagonal block footprint is cut from."
+                },
+                "color": {
+                  "type": "string",
+                  "enum": [
+                    "sand",
+                    "bone",
+                    "slate",
+                    "glass",
+                    "ochre",
+                    "straw",
+                    "paint"
+                  ],
+                  "description": "Palette token (src/mechs/palette.ts), or 'paint' for the live paint colour selected in Rig Lab."
+                },
+                "cap": {
+                  "description": "Top face colour. Omitted: semantic blocks use the side colour; legacy blocks draw no separate cap.",
+                  "type": "string",
+                  "enum": [
+                    "sand",
+                    "bone",
+                    "slate",
+                    "glass",
+                    "ochre",
+                    "straw",
+                    "paint"
+                  ]
+                }
+              },
+              "required": ["position", "size", "color"],
+              "additionalProperties": false
+            },
+            { "type": "null" }
+          ],
+          "description": "Turret frame tool; recoils along y."
+        },
+        "hook": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "points": {
+                  "minItems": 3,
+                  "maxItems": 16,
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "prefixItems": [{ "type": "number" }, { "type": "number" }],
+                    "items": false,
+                    "minItems": 2,
+                    "maxItems": 2
+                  },
+                  "description": "Flat outline as [x, y] pairs in the turret frame."
+                },
+                "z": { "type": "number" },
+                "anchor": {
+                  "type": "object",
+                  "properties": {
+                    "x": { "type": "number" },
+                    "y": { "type": "number" }
+                  },
+                  "required": ["x", "y"],
+                  "additionalProperties": false
+                },
+                "color": {
+                  "type": "string",
+                  "enum": [
+                    "sand",
+                    "bone",
+                    "slate",
+                    "glass",
+                    "ochre",
+                    "straw",
+                    "paint"
+                  ],
+                  "description": "Palette token (src/mechs/palette.ts), or 'paint' for the live paint colour selected in Rig Lab."
+                }
+              },
+              "required": ["points", "z", "anchor", "color"],
+              "additionalProperties": false
+            },
+            { "type": "null" }
+          ]
+        }
+      },
+      "required": ["barrel", "hook"],
+      "additionalProperties": false
+    },
+    "parts": {
+      "default": [],
+      "description": "Additional blocks and limbs attached to named frames.",
+      "maxItems": 24,
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,23}$",
+                "description": "Stable part ID; the component is mech.part.<id>[.left|.right]."
+              },
+              "attach": {
+                "type": "string",
+                "enum": [
+                  "body",
+                  "turret",
+                  "shoulder",
+                  "elbow",
+                  "wrist",
+                  "hip",
+                  "knee",
+                  "foot"
+                ],
+                "description": "body: hip centre, follows body yaw. turret: upper-body origin, follows turret yaw. shoulder/elbow/wrist: arm joints, turret yaw. hip/knee: leg joints, body yaw. foot: ankle joint, foot yaw. Joint frames always produce a left and a right copy."
+              },
+              "mirror": {
+                "default": false,
+                "description": "body/turret parts only: also place a copy reflected across the centre line.",
+                "type": "boolean"
+              },
+              "kind": { "type": "string", "const": "block" },
+              "position": {
+                "type": "object",
+                "properties": {
+                  "x": { "type": "number" },
+                  "y": { "type": "number" },
+                  "z": { "type": "number" }
+                },
+                "required": ["x", "y", "z"],
+                "additionalProperties": false,
+                "description": "Offset in the attachment frame, in Mech units: x right (outward for mirrored or per-side parts), y back (+) / front (−), z up."
+              },
+              "size": {
+                "type": "object",
+                "properties": {
+                  "w": {
+                    "type": "number",
+                    "minimum": 0.5,
+                    "maximum": 120,
+                    "description": "Width along x."
+                  },
+                  "d": {
+                    "type": "number",
+                    "minimum": 0.5,
+                    "maximum": 120,
+                    "description": "Depth along y."
+                  },
+                  "h": {
+                    "type": "number",
+                    "minimum": 0.5,
+                    "maximum": 120,
+                    "description": "Height along z."
+                  }
+                },
+                "required": ["w", "d", "h"],
+                "additionalProperties": false,
+                "description": "Bounding box the bevelled octagonal block footprint is cut from."
+              },
+              "color": {
+                "type": "string",
+                "enum": [
+                  "sand",
+                  "bone",
+                  "slate",
+                  "glass",
+                  "ochre",
+                  "straw",
+                  "paint"
+                ],
+                "description": "Palette token (src/mechs/palette.ts), or 'paint' for the live paint colour selected in Rig Lab."
+              },
+              "cap": {
+                "description": "Top face colour. Omitted: semantic blocks use the side colour; legacy blocks draw no separate cap.",
+                "type": "string",
+                "enum": [
+                  "sand",
+                  "bone",
+                  "slate",
+                  "glass",
+                  "ochre",
+                  "straw",
+                  "paint"
+                ]
+              },
+              "surfaces": {
+                "default": true,
+                "description": "Resolve with exact semantic faces (better occlusion, more CPU). false uses one representative-depth silhouette.",
+                "type": "boolean"
+              }
+            },
+            "required": ["id", "attach", "kind", "position", "size", "color"],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,23}$",
+                "description": "Stable part ID; the component is mech.part.<id>[.left|.right]."
+              },
+              "attach": {
+                "type": "string",
+                "enum": [
+                  "body",
+                  "turret",
+                  "shoulder",
+                  "elbow",
+                  "wrist",
+                  "hip",
+                  "knee",
+                  "foot"
+                ],
+                "description": "body: hip centre, follows body yaw. turret: upper-body origin, follows turret yaw. shoulder/elbow/wrist: arm joints, turret yaw. hip/knee: leg joints, body yaw. foot: ankle joint, foot yaw. Joint frames always produce a left and a right copy."
+              },
+              "mirror": {
+                "default": false,
+                "description": "body/turret parts only: also place a copy reflected across the centre line.",
+                "type": "boolean"
+              },
+              "kind": { "type": "string", "const": "limb" },
+              "from": {
+                "type": "object",
+                "properties": {
+                  "x": { "type": "number" },
+                  "y": { "type": "number" },
+                  "z": { "type": "number" }
+                },
+                "required": ["x", "y", "z"],
+                "additionalProperties": false,
+                "description": "Offset in the attachment frame, in Mech units: x right (outward for mirrored or per-side parts), y back (+) / front (−), z up."
+              },
+              "to": {
+                "type": "object",
+                "properties": {
+                  "x": { "type": "number" },
+                  "y": { "type": "number" },
+                  "z": { "type": "number" }
+                },
+                "required": ["x", "y", "z"],
+                "additionalProperties": false,
+                "description": "Offset in the attachment frame, in Mech units: x right (outward for mirrored or per-side parts), y back (+) / front (−), z up."
+              },
+              "width": {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "number",
+                    "minimum": 0.5,
+                    "maximum": 40,
+                    "description": "Width at the start joint."
+                  },
+                  {
+                    "type": "number",
+                    "minimum": 0.5,
+                    "maximum": 40,
+                    "description": "Width at the end joint."
+                  }
+                ],
+                "items": false,
+                "minItems": 2,
+                "maxItems": 2,
+                "description": "Limb widths at its start and end."
+              },
+              "color": {
+                "type": "string",
+                "enum": [
+                  "sand",
+                  "bone",
+                  "slate",
+                  "glass",
+                  "ochre",
+                  "straw",
+                  "paint"
+                ],
+                "description": "Palette token (src/mechs/palette.ts), or 'paint' for the live paint colour selected in Rig Lab."
+              }
+            },
+            "required": [
+              "id",
+              "attach",
+              "kind",
+              "from",
+              "to",
+              "width",
+              "color"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "version",
+    "id",
+    "name",
+    "status",
+    "paint",
+    "legs",
+    "gait",
+    "pelvis",
+    "turret",
+    "torso",
+    "pack",
+    "cockpit",
+    "canopy",
+    "arms",
+    "tools"
+  ],
+  "additionalProperties": false,
+  "$id": "https://github.com/CigThePig/The-Wild-Above/schemas/mech-spec.schema.json",
+  "title": "The Wild Above Mech spec",
+  "description": "A Mech design. Generated from src/mechs/schema.ts; see docs/mechs/authoring.md. Cross-field rules (unique part IDs, runSpeed >= walkSpeed) and design checks run in npm run mech:check."
+}

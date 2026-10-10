@@ -1,3 +1,4 @@
+import type { MechSpec } from "../mechs/schema";
 export interface Vec {
   x: number;
   y: number;
@@ -8,6 +9,7 @@ interface MovementInput {
   y?: number;
   fast?: boolean;
   turn?: number;
+  /** Reserved for combat; accepted so existing recordings stay valid. */
   fire?: boolean;
 }
 export type Input = MovementInput &
@@ -44,8 +46,10 @@ export interface Actor {
   pose(): { base: Vec; legs: Leg[] };
 }
 export interface MechActor extends Actor {
+  readonly spec: MechSpec;
   turret: number;
   lean: Vec;
+  /** Firing kick (decays to 0); offsets wrists and barrel. Nothing fires yet. */
   recoil: number;
   hatch: number;
 }
