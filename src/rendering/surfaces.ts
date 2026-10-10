@@ -1,0 +1,106 @@
+import type { Vec, Point, Shape } from "../animation/types";
+
+export interface DepthPlane {
+  x: number;
+  y: number;
+  c: number;
+}
+export interface Surface {
+  id: string;
+  component: string;
+  world: Vec[];
+  points: Point[];
+  normal: Vec;
+  plane: DepthPlane;
+  depth: number;
+  color: number;
+  alpha: number;
+  facing: number;
+  culled: boolean;
+  status: "visible" | "hidden" | "culled" | "unresolved";
+  overlaps: string[];
+  occluders: string[];
+  fragments: string[];
+  diagnostics: string[];
+}
+export interface Fragment extends Shape {
+  source: string;
+}
+export const VIEW = { x: 0, y: 0.694, z: 0.72 };
+export const AREA_EPS = 1e-8;
+export const DEPTH_EPS = 1e-7;
+export function area(p: Point[]) {
+  return (
+    p.reduce((s, a, i) => {
+      const b = p[(i + 1) % p.length];
+      return s + a.x * b.y - b.x * a.y;
+    }, 0) / 2
+  );
+}
+export function depthAt(p: DepthPlane, q: Point) {
+  return p.x * q.x + p.y * q.y + p.c;
+}
+// The projection is orthogonal up to k=.72²+.694²; do not assume k=1.
+export function makeSurface(
+  id: string,
+  component: string,
+  world: Vec[],
+  color: number,
+  alpha = 1,
+): Surface {
+  const project = (p: Vec) => ({
+    x: p.x,
+    y: 0.72 * p.y - 0.694 * p.z,
+    d: 0.694 * p.y + 0.72 * p.z,
+  });
+  const points = world.map(project);
+  const a = world[0] ?? { x: 0, y: 0, z: 0 },
+    b = world[1] ?? a,
+    c = world[2] ?? a;
+  const u = { x: b.x - a.x, y: b.y - a.y, z: b.z - a.z },
+    v = { x: c.x - a.x, y: c.y - a.y, z: c.z - a.z };
+  const n = {
+    x: u.y * v.z - u.z * v.y,
+    y: u.z * v.x - u.x * v.z,
+    z: u.x * v.y - u.y * v.x,
+  };
+  const len = Math.hypot(n.x, n.y, n.z);
+  const normal = {
+    x: n.x / (len || 1),
+    y: n.y / (len || 1),
+    z: n.z / (len || 1),
+  };
+  const facing = normal.y * VIEW.y + normal.z * VIEW.z;
+  const k = 0.72 ** 2 + 0.694 ** 2;
+  const plane =
+    Math.abs(facing) > 1e-12
+      ? {
+          x: (-normal.x * k) / facing,
+          y: -(normal.y * 0.72 - normal.z * 0.694) / facing,
+          c: ((normal.x * a.x + normal.y * a.y + normal.z * a.z) * k) / facing,
+        }
+      : { x: 0, y: 0, c: 0 };
+  const invalid =
+    world.length < 3 ||
+    world.some((p) => !Object.values(p).every(Number.isFinite)) ||
+    len < 1e-12;
+  const culled = invalid || facing <= 0 || Math.abs(area(points)) <= AREA_EPS;
+  return {
+    id,
+    component,
+    world,
+    points,
+    normal,
+    plane,
+    depth: points.reduce((s, p) => s + p.d, 0) / points.length,
+    color,
+    alpha,
+    facing,
+    culled,
+    status: culled ? "culled" : "visible",
+    overlaps: [],
+    occluders: [],
+    fragments: [],
+    diagnostics: invalid ? ["invalid surface geometry"] : [],
+  };
+}
