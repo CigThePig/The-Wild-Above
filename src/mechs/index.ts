@@ -1,6 +1,6 @@
 import { parseMechSpec, type MechSpec } from "./schema";
 import { paletteHex } from "./palette";
-import standard from "./specs/standard.json";
+import standard from "./specs/standard.json" with { type: "json" };
 
 // Registered Mech designs. Add a spec file under ./specs and list it here.
 // Tooling (npm run look/mech:check, rigLab.previewMech) can register drafts

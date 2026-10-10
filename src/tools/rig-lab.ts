@@ -2,8 +2,18 @@ import { Pane } from "tweakpane";
 import type { FieldScene } from "../game/scene";
 import { configSchema, type RigConfig } from "../animation/config";
 import type { ActorId, Input } from "../animation/types";
+import {
+  STANDARD_ID,
+  configForMech,
+  getMech,
+  listMechs,
+  registerMech,
+} from "../mechs";
+import { checkMech } from "../mechs/check";
+import { parseMechSpec } from "../mechs/schema";
 export function installLab(scene: FieldScene) {
   let syncUI = () => {};
+  let rebuildMechOptions = () => {};
   let syncing = false;
   const refresh = () => {
     scene.accumulator = 0;
@@ -35,6 +45,31 @@ export function installLab(scene: FieldScene) {
       scene.sim.configure({ actor });
       refresh();
     },
+    /** Registered Mech designs, including drafts loaded with previewMech. */
+    listMechs: () =>
+      listMechs().map(({ id, name, status }) => ({ id, name, status })),
+    /** Show a registered Mech (applies its default paint). */
+    selectMech: (id: string) => {
+      if (syncing) return;
+      scene.sim.configure(configForMech(scene.sim.config, id));
+      refresh();
+    },
+    /**
+     * Validate and register a spec object or JSON text in this tab only, then
+     * select it. Edits to the spec file itself hot-reload through Vite.
+     */
+    previewMech: (spec: unknown) => {
+      const parsed = parseMechSpec(
+        typeof spec === "string" ? (JSON.parse(spec) as unknown) : spec,
+      );
+      registerMech(parsed, true);
+      rebuildMechOptions();
+      api.selectMech(parsed.id);
+      return { id: parsed.id, status: parsed.status };
+    },
+    /** Same design review as npm run mech:check (quick by default). */
+    checkMech: (id = scene.sim.config.mech ?? STANDARD_ID, quick = true) =>
+      checkMech(getMech(id), { quick }),
     setHeading: (heading: number) => {
       if (syncing) return;
       scene.sim.configure({ heading });
@@ -78,6 +113,10 @@ export function installLab(scene: FieldScene) {
       seed: scene.sim.seed,
       tick: scene.sim.tick,
       config: { ...scene.sim.config },
+      mech: (({ id, name, status }) => ({ id, name, status }))(
+        scene.sim.world.mech.spec,
+      ),
+      manualSession: scene.sim.manual,
       control: scene.sim.world.control,
       selected: scene.selected,
       transition: structuredClone(scene.sim.world.transition),
@@ -179,6 +218,7 @@ export function installLab(scene: FieldScene) {
     "Fixed 60 Hz · time seeks replay from reset";
   const state = {
     ...scene.sim.config,
+    mech: scene.sim.config.mech ?? STANDARD_ID,
     paused: scene.paused,
     playbackSpeed: 1,
     guides: true,
@@ -194,6 +234,28 @@ export function installLab(scene: FieldScene) {
   pane
     .addBinding(state, "actor", { options: { Mech: "mech", Pilot: "pilot" } })
     .on("change", (e) => api.selectActor(e.value));
+  // Tweakpane list options are fixed per binding; rebuild it when previewMech
+  // registers a new design.
+  const mechOptions = () =>
+    Object.fromEntries(
+      listMechs().map((m) => [
+        `${m.name}${m.status === "draft" ? " (draft)" : ""}`,
+        m.id,
+      ]),
+    );
+  let mechBinding = pane
+    .addBinding(state, "mech", { label: "design", options: mechOptions() })
+    .on("change", (e) => api.selectMech(e.value));
+  rebuildMechOptions = () => {
+    mechBinding.dispose();
+    mechBinding = pane
+      .addBinding(state, "mech", {
+        label: "design",
+        options: mechOptions(),
+        index: 1,
+      })
+      .on("change", (e) => api.selectMech(e.value));
+  };
   pane
     .addBinding(state, "heading", { min: 0, max: 359, step: 1 })
     .on("change", (e) => api.setHeading(e.value));
@@ -224,9 +286,7 @@ export function installLab(scene: FieldScene) {
     api.step();
     pane.refresh();
   });
-  pane
-    .addBinding(state, "guides")
-    .on("change", (e) => (scene.guides = e.value));
+  pane.addBinding(state, "guides").on("change", (e) => api.setGuides(e.value));
   pane
     .addBinding(state, "isolated", { label: "Isolate actor" })
     .on("change", (e) => api.setIsolation(e.value));
@@ -260,6 +320,7 @@ export function installLab(scene: FieldScene) {
     syncing = true;
     try {
       Object.assign(state, scene.sim.config, {
+        mech: scene.sim.config.mech ?? STANDARD_ID,
         paused: scene.paused,
         time: Math.min(scene.sim.tick / 60, 60),
         elapsed: scene.sim.tick / 60,

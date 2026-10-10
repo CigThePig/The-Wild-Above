@@ -59,10 +59,18 @@ const recordingSchema = z.object({
     .max(MAX_REPLAY_COMMANDS),
 });
 type Recording = z.infer<typeof recordingSchema>;
+/** Changing only these redraws; motion and recordings are unaffected. */
+const RENDER_ONLY = new Set<keyof RigConfig>(["color", "kneeLimit"]);
+/** configure() rebuilds at most this far (the deterministic seek horizon). */
+const CONFIGURE_HORIZON = 3600;
 export class Simulation {
   world!: PilotWorld;
   tick = 0;
   commands: Recording["commands"] = [];
+  /** Explicit input, interactions or a replay shaped this session (not autopilot). */
+  manual = false;
+  /** Production play has no reader for the command log; skip building it. */
+  recordCommands = true;
   config: RigConfig;
   readonly seed = 197;
   placement: Placement;
@@ -80,6 +88,7 @@ export class Simulation {
   }
   reset() {
     this.commands = [];
+    this.manual = false;
     this.world = new PilotWorld(this.spec ?? getMech(this.config.mech));
     this.tick = 0;
     const a = (this.config.heading * Math.PI) / 180,
@@ -129,9 +138,10 @@ export class Simulation {
       throw Error("frames must be an integer from 0 to 3600");
     const checked = inputSchema.parse(input ?? this.input());
     if (frames === 0) return; // No-op calls must not exhaust command capacity.
+    if (input !== undefined) this.manual = true;
     // The live game may run indefinitely; only the first ten minutes are
     // recordable. Do not grow an unusable command log without bound.
-    if (this.tick + frames <= MAX_REPLAY_FRAMES) {
+    if (this.recordCommands && this.tick + frames <= MAX_REPLAY_FRAMES) {
       const last = this.commands.at(-1);
       if (
         last?.kind === "step" &&
@@ -154,23 +164,48 @@ export class Simulation {
   }
   configure(patch: Partial<RigConfig>) {
     const c = configSchema.parse({ ...this.config, ...patch });
+    const changed = (Object.keys(c) as (keyof RigConfig)[]).filter(
+      (k) => c[k] !== this.config[k],
+    );
+    if (changed.every((k) => RENDER_ONLY.has(k))) {
+      this.config = c; // Paint and diagnostics only: keep the live session.
+      return;
+    }
     // Build the replacement before committing; long playback edits restart at
     // the seek horizon rather than leaving config and motion half-applied.
-    const replacement = new Simulation(c, this.placement, this.spec);
-    replacement.step(Math.min(this.tick, 3600));
+    // Autopilot sessions re-derive their input from the new config; manual
+    // sessions re-run their own recorded inputs under it.
+    const replacement = new Simulation(c, this.placement, this.spec),
+      horizon = Math.min(this.tick, CONFIGURE_HORIZON);
+    if (this.manual) {
+      for (const command of this.commands) {
+        if (replacement.tick >= horizon) break;
+        if (command.kind === "interact") replacement.interact();
+        else
+          replacement.step(
+            Math.min(command.frames, horizon - replacement.tick),
+            command.input,
+          );
+      }
+      replacement.manual = true;
+    } else replacement.step(horizon);
     this.config = replacement.config;
     this.world = replacement.world;
     this.tick = replacement.tick;
     this.commands = replacement.commands;
+    this.manual = replacement.manual;
   }
 
   interact() {
     const accepted = this.world.interact();
-    if (accepted && this.tick <= MAX_REPLAY_FRAMES)
+    if (accepted) this.manual = true;
+    if (accepted && this.recordCommands && this.tick <= MAX_REPLAY_FRAMES)
       this.commands.push({ kind: "interact" });
     return accepted;
   }
   recording(): Recording {
+    if (!this.recordCommands)
+      throw Error("Command recording is disabled for this session");
     if (this.tick > MAX_REPLAY_FRAMES)
       throw Error(
         "Recording exceeds the 36,000-frame replay limit; reset to capture a shorter session",
@@ -201,6 +236,8 @@ export class Simulation {
       if (command.kind === "interact") this.interact();
       else this.step(command.frames, command.input);
     }
+    // A loaded recording is a reproduction: later edits must keep its inputs.
+    this.manual = recording.commands.length > 0;
   }
   snapshot() {
     return JSON.parse(

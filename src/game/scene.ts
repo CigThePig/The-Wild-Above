@@ -19,6 +19,10 @@ export class FieldScene extends Phaser.Scene {
   accumulator = 0;
   droppedSeconds = 0;
   renderMs = 0;
+  /** Set when something other than a simulation step changes the drawing. */
+  dirty = true;
+  private hud?: { status: HTMLElement; button: HTMLButtonElement };
+  private shown = { status: "", hidden: false, disabled: false, label: "" };
   rig = buildRig(this.sim.world, this.sim.config, true);
   graphics!: Phaser.GameObjects.Graphics;
   joystick!: VirtualJoystick;
@@ -32,6 +36,12 @@ export class FieldScene extends Phaser.Scene {
     this.lab =
       import.meta.env.DEV && new URLSearchParams(location.search).has("lab");
     this.paused = this.lab;
+    // Only development tooling reads recordings (window.rigLab).
+    this.sim.recordCommands = import.meta.env.DEV;
+    this.hud = {
+      status: document.getElementById("status")!,
+      button: document.getElementById("interact") as HTMLButtonElement,
+    };
     this.graphics = this.add.graphics();
     const ground = this.add.graphics().setDepth(-1);
     drawGround(ground);
@@ -40,7 +50,10 @@ export class FieldScene extends Phaser.Scene {
     ) as typeof this.keys;
     this.input.keyboard!.on("keydown-F", (event: KeyboardEvent) => {
       // One interaction per physical press, even when an exit finishes while F is held.
-      if (!this.lab && !event.repeat) this.sim.interact();
+      if (!this.lab && !event.repeat) {
+        this.sim.interact();
+        this.dirty = true;
+      }
     });
     this.input.addPointer(2);
     this.joystick = new VirtualJoystick(this, {
@@ -73,7 +86,7 @@ export class FieldScene extends Phaser.Scene {
       this.accumulator = 0;
     });
     this.layout();
-    document.getElementById("interact")!.onclick = () => {
+    this.hud.button.onclick = () => {
       this.sim.interact();
       this.refresh();
     };
@@ -116,6 +129,7 @@ export class FieldScene extends Phaser.Scene {
   }
   override update(_time: number, delta: number) {
     if (!this.graphics) return;
+    let stepped = false;
     if (!this.paused) {
       const seconds = (delta / 1000) * this.rate;
       this.droppedSeconds += Math.max(0, seconds - 0.1);
@@ -123,9 +137,13 @@ export class FieldScene extends Phaser.Scene {
       while (this.accumulator >= DT) {
         this.sim.step(1, this.lab ? undefined : this.movement());
         this.accumulator -= DT;
+        stepped = true;
       }
     }
-    this.refresh();
+    // Rebuilding the rig costs milliseconds; frames between 60 Hz ticks
+    // (high-refresh displays) and paused frames keep the last drawing.
+    if (stepped || this.dirty) this.refresh();
+    else this.updateHud();
   }
   refresh() {
     if (!this.graphics) return;
@@ -151,17 +169,29 @@ export class FieldScene extends Phaser.Scene {
       });
     this.cameras.main.centerOn(p.x, p.y);
     this.renderMs = performance.now() - start;
-    const w = this.sim.world;
-    document.getElementById("status")!.textContent =
-      `${this.lab && this.surfaceGuides && this.rig.occlusion.diagnostics.length ? "OCCLUSION WARNING · " : ""}${this.lab ? "RIG LAB" : w.control === "foot" ? "PILOT" : "MECH"} · ${w.transition?.stage ?? this.sim.config.animation} · ${Math.round(this.game.loop.actualFps)} FPS · ${this.renderMs.toFixed(1)} ms rig`;
-    const button = document.getElementById("interact") as HTMLButtonElement;
-    button.hidden = this.lab;
-    button.disabled = !!w.transition || (w.control === "foot" && !w.nearby);
-    button.textContent = w.transition
-      ? "Transferring…"
-      : w.control === "foot"
-        ? "Enter Mech · F"
-        : "Exit Mech · F";
+    this.dirty = false;
+    this.updateHud();
     this.onFrame?.();
+  }
+  /** Status line and interact button; DOM is written only when text changes. */
+  updateHud() {
+    if (!this.hud) return;
+    const w = this.sim.world,
+      shown = this.shown;
+    const failure =
+      !w.transition && w.interactionFailure ? ` · ${w.interactionFailure}` : "";
+    const status = `${this.lab && this.surfaceGuides && this.rig.occlusion.diagnostics.length ? "OCCLUSION WARNING · " : ""}${this.lab ? "RIG LAB" : w.control === "foot" ? "PILOT" : "MECH"} · ${w.transition?.stage ?? this.sim.config.animation} · ${Math.round(this.game.loop.actualFps)} FPS · ${this.renderMs.toFixed(1)} ms rig${failure}`;
+    const disabled = !!w.transition || (w.control === "foot" && !w.nearby),
+      label = w.transition
+        ? "Transferring…"
+        : w.control === "foot"
+          ? "Enter Mech · F"
+          : "Exit Mech · F",
+      { status: statusEl, button } = this.hud;
+    if (status !== shown.status) statusEl.textContent = shown.status = status;
+    if (this.lab !== shown.hidden) button.hidden = shown.hidden = this.lab;
+    if (disabled !== shown.disabled)
+      button.disabled = shown.disabled = disabled;
+    if (label !== shown.label) button.textContent = shown.label = label;
   }
 }

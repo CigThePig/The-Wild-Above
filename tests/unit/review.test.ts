@@ -207,3 +207,57 @@ it("does not record zero-frame no-ops", () => {
   expect(sim.recording().commands).toEqual([]);
   expect(sim.tick).toBe(0);
 });
+
+it("render-only edits keep a manual session; motion edits replay its own inputs", () => {
+  const session = () => {
+    const s = new Simulation({ ...defaultConfig, animation: "idle" });
+    s.step(30, { x: 1 });
+    s.interact();
+    s.step(600, {});
+    return s;
+  };
+  const s = session(),
+    before = s.snapshot();
+  expect(s.world.control).toBe("foot");
+  s.configure({ color: "#34413b", kneeLimit: 120 });
+  expect(s.snapshot().world).toEqual(before.world);
+  expect(s.tick).toBe(630);
+  // Same commands under the new tuning, not the config-derived autopilot.
+  s.configure({ speed: 0.75 });
+  const expected = new Simulation({
+    ...defaultConfig,
+    animation: "idle",
+    speed: 0.75,
+  });
+  expected.step(30, { x: 1 });
+  expected.interact();
+  expected.step(600, {});
+  expect(s.tick).toBe(630);
+  expect(s.world.control).toBe("foot");
+  expect(s.snapshot().world).toEqual(expected.snapshot().world);
+  expect(s.recording().commands).toEqual(expected.recording().commands);
+});
+
+it("a blocked boarding approach recovers instead of owning input forever", () => {
+  const s = new Simulation(
+    { ...defaultConfig, actor: "pilot", heading: 0, animation: "idle" },
+    { mech: { x: 0, y: 0 }, pilot: { x: 60, y: 20 } },
+  );
+  s.world.pilot.tuning.speed = 0; // The pilot cannot walk the route.
+  expect(s.interact()).toBe(true);
+  s.step(1800, {});
+  expect(s.world.transition?.stage).toBe("approach");
+  // Approach snaps at 30 s; the walk to the ladder (step) snaps 30 s later.
+  s.step(3600, {});
+  expect(s.world.transition).toBeNull();
+  expect(s.world.control).toBe("mech");
+  expect(s.world.interactionFailure).toMatch(/"step".*snapped/);
+});
+
+it("production sessions can skip the unused command log", () => {
+  const s = new Simulation();
+  s.recordCommands = false;
+  s.step(120, { x: 1 });
+  expect(s.commands).toEqual([]);
+  expect(() => s.recording()).toThrow(/disabled/);
+});
