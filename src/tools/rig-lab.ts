@@ -243,7 +243,8 @@ export function installLab(scene: FieldScene) {
   const mechOptions = () =>
     Object.fromEntries(
       listMechs().map((m) => [
-        `${m.name}${m.status === "draft" ? " (draft)" : ""}`,
+        // IDs are unique; names need not be.
+        `${m.name} · ${m.id}${m.status === "draft" ? " (draft)" : ""}`,
         m.id,
       ]),
     );

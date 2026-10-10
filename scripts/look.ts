@@ -287,13 +287,28 @@ for (const target of chosen) {
       compared = { ref, sha, missing: true };
       console.log(`  ${spec.id} does not exist at ${ref}; nothing to compare`);
     } else {
-      const oldShots = requested.map((p) =>
-        shoot(old, before, p, options.focus),
-      );
+      // Boarding stage timings can differ between refs, so each side probes
+      // its own stages; poses are paired by group and label.
+      const key = (p: Pose) => `${p.group}\0${p.label}`;
+      const oldRequested = poses(old, before),
+        oldShots = oldRequested.map((p) =>
+          shoot(old, before, p, options.focus),
+        ),
+        oldByKey = new Map(oldShots.map((s) => [key(s.pose), s]));
+      const unmatched = {
+        onlyBefore: oldRequested
+          .filter((p) => !requested.some((q) => key(q) === key(p)))
+          .map((p) => p.label),
+        onlyAfter: requested
+          .filter((p) => !oldByKey.has(key(p)))
+          .map((p) => p.label),
+      };
       zoom = options.zoom ?? fitZoom([...shots, ...oldShots], CELL);
       const cz = options.zoom ?? fitZoom([...shots, ...oldShots], COMPARE_CELL);
-      const pairs = requested.map((pose, i) => {
-        const a = cellCanvas(oldShots[i], COMPARE_CELL, cz, options.draw),
+      const pairs = requested.flatMap((pose, i) => {
+        const previous = oldByKey.get(key(pose));
+        if (!previous) return [];
+        const a = cellCanvas(previous, COMPARE_CELL, cz, options.draw),
           b = cellCanvas(shots[i], COMPARE_CELL, cz, options.draw),
           d = diffCanvas(a, b);
         return {
@@ -343,6 +358,7 @@ for (const target of chosen) {
           pixels: p.pixels,
         })),
         unchanged: pairs.length - changed.length,
+        unmatched,
       };
     }
   }

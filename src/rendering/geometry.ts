@@ -43,6 +43,9 @@ export interface Volume {
   max: Vec;
   /** Limbs are drawn as projected strokes; their bounds are approximate. */
   limb: boolean;
+  /** Limbs: lowest centre-line point and largest radius. */
+  axisMinZ?: number;
+  radius?: number;
 }
 export class Geometry {
   shapes: Shape[] = [];
@@ -186,6 +189,9 @@ export class Geometry {
         vec(across(b.x - a.x), across(b.y - a.y), across(b.z - a.z)),
         true,
       );
+      const v = this.volumes.get(id)!;
+      v.axisMinZ = Math.min(v.axisMinZ ?? Infinity, a.z, b.z);
+      v.radius = Math.max(v.radius ?? 0, r);
     }
     // Small opaque slices localize depth crossings; stable IDs break exact depth ties.
     for (let i = 0; i < 8; i++) {

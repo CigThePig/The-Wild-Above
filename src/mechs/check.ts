@@ -27,6 +27,8 @@ export interface MechReport {
     standingHipHeight: number;
     footprintRadius: number;
     maxKneeFlexion: number;
+    /** Smallest leg slack while walking/running (thigh + shin − hip-to-ankle). */
+    reachMargin: number;
     maxFragments: number;
     maxComparisons: number;
     medianBuildMs: number;
@@ -36,7 +38,13 @@ export interface MechReport {
 }
 
 /** Boarding choreography (motion/world.ts) is authored for this cockpit. */
-export const COCKPIT_INTERFACE = { centerZ: 60, front: -17.5, tolerance: 6 };
+export const COCKPIT_INTERFACE = {
+  centerZ: 60,
+  front: -17.5,
+  tolerance: 6,
+  /** Ladder, hatch and canopy are centred: the cockpit must be too. */
+  lateral: 3,
+};
 /** Standard ≈ 45 (hook tip bounding box). */
 export const FOOTPRINT_LIMIT = 50;
 /** Standard peaks ≈ 175 fragments / 19k pair checks; leave modest headroom. */
@@ -153,11 +161,16 @@ export function checkMech(
   );
   let footprint = 0;
   for (const [id, v] of volumes) {
-    if (!v.limb && v.min.z < -0.5)
+    // Limb bounds are approximate cylinders (a shin's sits ~1 below its boot),
+    // so limbs fail on their centre line or on more than half their width.
+    const sunk = v.limb
+      ? Math.max(-(v.axisMinZ ?? 0), -v.min.z - (v.radius ?? 0) / 2)
+      : -v.min.z;
+    if (sunk > 0.5)
       report(
         "error",
         "ground",
-        `extends ${(-v.min.z).toFixed(1)} below the ground`,
+        `extends ${sunk.toFixed(1)} below the ground`,
         id,
       );
     footprint = Math.max(
@@ -204,6 +217,13 @@ export function checkMech(
   const cockpitZ =
       spec.turret.height + base.z - legs.hipHeight + spec.cockpit.position.z,
     cockpitFront = spec.cockpit.position.y - spec.cockpit.size.d / 2;
+  if (Math.abs(spec.cockpit.position.x) > COCKPIT_INTERFACE.lateral)
+    report(
+      "error",
+      "boarding",
+      `cockpit is ${spec.cockpit.position.x.toFixed(1)} off the centre line (limit ±${COCKPIT_INTERFACE.lateral}); the ladder, hatch and canopy are centred, so the pilot would climb beside it`,
+      "mech.cockpit",
+    );
   if (
     Math.abs(cockpitZ - COCKPIT_INTERFACE.centerZ) >
       COCKPIT_INTERFACE.tolerance ||
@@ -216,6 +236,17 @@ export function checkMech(
       `cockpit centre height ${cockpitZ.toFixed(1)} / front ${cockpitFront.toFixed(1)} is outside ±${COCKPIT_INTERFACE.tolerance} of the fixed boarding interface (${COCKPIT_INTERFACE.centerZ} / ${COCKPIT_INTERFACE.front}); the ladder climb would miss the hatch`,
       "mech.cockpit",
     );
+
+  // Legs must reach every foot target; past thigh + shin the IK clamps and the
+  // drawn shin stretches to the foot.
+  const legLength = legs.thigh + legs.shin;
+  let reachMargin = Infinity;
+  const reachOf = (s: Simulation) => {
+    let worst = Infinity;
+    for (const l of s.world.mech.pose().legs)
+      worst = Math.min(worst, legLength - (l.reach ?? 0));
+    return worst;
+  };
 
   // Locomotion sweeps: finite geometry, no diagnostics, planted feet stay put.
   const headings = options.quick
@@ -231,6 +262,7 @@ export function checkMech(
           p: { ...f.p },
         }));
         s.step(1);
+        reachMargin = Math.min(reachMargin, reachOf(s));
         s.world.mech.feet.forEach((f, i) => {
           const b = before[i];
           if (
@@ -248,6 +280,32 @@ export function checkMech(
           inspect(s, `${animation} ${heading}°`);
       }
     }
+  if (reachMargin < 0.001)
+    report(
+      "error",
+      "legs.overreach",
+      `a foot target lies ${(-reachMargin).toFixed(1)} beyond thigh + shin while walking or running; lengthen the legs, lower hipHeight or reduce walkSpeed/runSpeed`,
+    );
+  // Rig Lab tuning goes up to speed and stride 1.25.
+  let tunedMargin = Infinity;
+  for (const heading of options.quick ? [0] : [0, 90, 180, 270]) {
+    const s = simulate({
+      heading,
+      animation: "run",
+      speed: 1.25,
+      stride: 1.25,
+    });
+    for (let frame = 1; frame <= 120; frame++) {
+      s.step(1);
+      tunedMargin = Math.min(tunedMargin, reachOf(s));
+    }
+  }
+  if (reachMargin >= 0.001 && tunedMargin < 0.001)
+    report(
+      "warning",
+      "legs.overreach",
+      `at Rig Lab's maximum speed/stride tuning a foot target lies ${(-tunedMargin).toFixed(1)} beyond thigh + shin`,
+    );
   const turning = simulate({ heading: 0, animation: "idle" });
   const turn: Input = { turn: 1 };
   for (let frame = 1; frame <= 90; frame++) {
@@ -303,6 +361,7 @@ export function checkMech(
       standingHipHeight: base.z,
       footprintRadius: footprint,
       maxKneeFlexion,
+      reachMargin,
       maxFragments,
       maxComparisons,
       medianBuildMs: at(0.5),

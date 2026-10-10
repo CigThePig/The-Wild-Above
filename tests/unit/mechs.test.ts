@@ -269,6 +269,45 @@ describe("mech specs", () => {
         }),
       ),
     ).toContain("error:boarding");
+    // Ladder, hatch and canopy are centred, so the cockpit must be too.
+    expect(
+      checks(
+        variant((s) => {
+          s.cockpit.position.x = 13;
+        }),
+      ),
+    ).toContain("error:boarding");
+    // Limb parts are checked on their centre line, not skipped.
+    expect(
+      checks(
+        variant((s) => {
+          s.parts = [
+            {
+              id: "anchor",
+              attach: "foot",
+              kind: "limb",
+              from: { x: 0, y: 0, z: 0 },
+              to: { x: 0, y: 0, z: -15 },
+              width: [3, 3],
+              color: "slate",
+            },
+          ];
+        }),
+      ),
+    ).toContain("error:ground");
+    // Short legs at high speed: foot targets beyond thigh + shin.
+    expect(
+      checks(
+        variant((s) => {
+          s.legs.thigh = 18;
+          s.legs.shin = 19;
+          s.legs.hipHeight = 30;
+          s.turret.height = 59 - 8;
+          s.gait.walkSpeed = 120;
+          s.gait.runSpeed = 200;
+        }),
+      ),
+    ).toContain("error:legs.overreach");
     expect(
       checks(
         variant((s) => {

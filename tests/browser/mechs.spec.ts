@@ -35,7 +35,7 @@ test("Rig Lab previews, selects and checks Mech specs live", async ({
   expect(state.diagnostics).toEqual([]);
   await expect(
     page.locator(".tp-lblv").filter({ hasText: "design" }).locator("select"),
-  ).toContainText(`${standard.name} (draft)`);
+  ).toContainText(`${standard.name} · lab-preview (draft)`);
   expect(await page.evaluate(() => window.rigLab.checkMech().ok)).toBe(true);
   // Invalid specs are rejected with the failing path, without changing state.
   const rejected = await page.evaluate(() => {
