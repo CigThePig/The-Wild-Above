@@ -40,3 +40,18 @@ Use the 60–66° sweep, cardinal views and boarding captures before changing th
 ## Extending actors
 
 Add a pose adapter returning named world joints and a geometry builder using Geometry's block/limb/polygon methods. Register an ActorId/config choice and lab selector, then test finite geometry, deterministic replay and rendered cardinal/sweep views. Reuse gait only where anatomy warrants it: current motion controllers are biped-specific. Quadrupeds need a contact scheduler, not a copied mech class with four legs. Keep shared Geometry and Component contracts; do not invent a universal animation language first.
+
+## Data-driven Mech specs
+
+Mech dimensions, gait constants, colours and extra parts moved from literals in `rig.ts`, `motion/mech.ts` and `simulation.ts` into validated JSON specs (`src/mechs/`, see [authoring Mechs](../mechs/authoring.md)). `standard.json` reproduces the reviewed machine exactly. All 246 hashed poses in `tests/fixtures/rig-geometry.json` (headings, gait phases, pilot, aiming, every boarding stage) and the 48-state motion parity fixture are unchanged, and `npm run look -- --compare` against the pre-spec main is pixel-identical.
+
+Migration and reproduction implications:
+
+- Config gains optional `mech` (registered spec ID). Configs and recordings without it use the standard Mech; existing recordings replay unchanged. Recordings that name an unregistered draft only replay where that spec is registered (for example via `rigLab.previewMech`).
+- `Mech` snapshots no longer contain the unused `time`, `steps` and `distance` fields; the design itself stays out of snapshots.
+- `configure()` keeps manual sessions (see [Rig Lab](../ai-workflow/rig-lab.md)). Render-only edits no longer reset state.
+- Boarding stages that cannot finish snap to their end after 30 s and report it. Reviewed boarding timings are far below that and unchanged.
+- The ground's boundary rectangle is now the projected movement clamp (`FIELD`); it was drawn about 15 units outside it.
+- Camera projection constants live only in `src/rendering/projection.ts`.
+
+Still fixed for every design: boarding choreography (ladder, seat and hatch positions in `motion/world.ts`), pilot collision radius and route ring, and the biped gait controller. `mech:check` enforces the cockpit interface instead of pretending these are parameterised.

@@ -1,0 +1,2216 @@
+[
+  {
+    "name": "mech run 0° 0.35s",
+    "stage": null,
+    "shapes": 142,
+    "geometry": "ca26f06d8c8d0262",
+    "components": "0afe5a2ddd1e43c5",
+    "surfaces": "1d504db455f2956d",
+    "decisions": "b5744d0898cb504f"
+  },
+  {
+    "name": "mech run 0° 1.5s",
+    "stage": null,
+    "shapes": 142,
+    "geometry": "4f21334453fe69b1",
+    "components": "b92c68f3439b7d56",
+    "surfaces": "1d504db455f2956d",
+    "decisions": "a9da9d84267629f6"
+  },
+  {
+    "name": "mech run 45° 0.35s",
+    "stage": null,
+    "shapes": 161,
+    "geometry": "47b4e383820de1c9",
+    "components": "3ab12dfab2fe527a",
+    "surfaces": "56220fc5f25f3375",
+    "decisions": "4c27ea220c686e9e"
+  },
+  {
+    "name": "mech run 45° 1.5s",
+    "stage": null,
+    "shapes": 158,
+    "geometry": "3d4803178378e0ba",
+    "components": "a04e168471237f11",
+    "surfaces": "7079371b7bad16f4",
+    "decisions": "025fd3fb59044fdd"
+  },
+  {
+    "name": "mech run 63° 0.35s",
+    "stage": null,
+    "shapes": 156,
+    "geometry": "05eb941906990354",
+    "components": "f0785e820555f61d",
+    "surfaces": "c64d8fbd30331b81",
+    "decisions": "db296137dc126497"
+  },
+  {
+    "name": "mech run 63° 1.5s",
+    "stage": null,
+    "shapes": 156,
+    "geometry": "b63393ba9cb86b8d",
+    "components": "fa7cc06a1bbc106d",
+    "surfaces": "c64d8fbd30331b81",
+    "decisions": "2922888388911d6c"
+  },
+  {
+    "name": "mech run 89° 0.35s",
+    "stage": null,
+    "shapes": 147,
+    "geometry": "78af20b08000feee",
+    "components": "d405aae036210194",
+    "surfaces": "a70a2a80096d6dc7",
+    "decisions": "006775edcb1b48e3"
+  },
+  {
+    "name": "mech run 89° 1.5s",
+    "stage": null,
+    "shapes": 147,
+    "geometry": "f91fdb3a0abf1736",
+    "components": "4e54bf072a0c48cf",
+    "surfaces": "a70a2a80096d6dc7",
+    "decisions": "2269ef308a93bd32"
+  },
+  {
+    "name": "mech run 90° 0.35s",
+    "stage": null,
+    "shapes": 123,
+    "geometry": "5117f7d54e046485",
+    "components": "052fcaa961f76cca",
+    "surfaces": "64ea1bb21b3083e1",
+    "decisions": "9cb83572d448eb70"
+  },
+  {
+    "name": "mech run 90° 1.5s",
+    "stage": null,
+    "shapes": 123,
+    "geometry": "782168d142b24b9d",
+    "components": "48aa13e3873df7c9",
+    "surfaces": "64ea1bb21b3083e1",
+    "decisions": "a7210021e82ab8e5"
+  },
+  {
+    "name": "mech run 135° 0.35s",
+    "stage": null,
+    "shapes": 131,
+    "geometry": "ca95174705c0c9b1",
+    "components": "cc2eb45f397b9ef6",
+    "surfaces": "fa2007b4b961da1e",
+    "decisions": "d93e742874d57bf5"
+  },
+  {
+    "name": "mech run 135° 1.5s",
+    "stage": null,
+    "shapes": 131,
+    "geometry": "ec797b29822a7974",
+    "components": "07b1078d3a204459",
+    "surfaces": "fa2007b4b961da1e",
+    "decisions": "8dc8e0b0bbbd32bc"
+  },
+  {
+    "name": "mech run 180° 0.35s",
+    "stage": null,
+    "shapes": 112,
+    "geometry": "eabb168abe312fff",
+    "components": "0cf544093bae91e1",
+    "surfaces": "545a9182319a7d5c",
+    "decisions": "08878e1150da8da2"
+  },
+  {
+    "name": "mech run 180° 1.5s",
+    "stage": null,
+    "shapes": 112,
+    "geometry": "1927ae02d922807b",
+    "components": "45a608d0f8bcb31c",
+    "surfaces": "545a9182319a7d5c",
+    "decisions": "238df78e175731b7"
+  },
+  {
+    "name": "mech run 225° 0.35s",
+    "stage": null,
+    "shapes": 123,
+    "geometry": "4c685092de20417c",
+    "components": "19f6001267c5074f",
+    "surfaces": "e3fa441386709005",
+    "decisions": "0efa9524885caa2b"
+  },
+  {
+    "name": "mech run 225° 1.5s",
+    "stage": null,
+    "shapes": 125,
+    "geometry": "74da7c1a5346251e",
+    "components": "c8faff6e8e6ee1b3",
+    "surfaces": "c75153b4a74d3660",
+    "decisions": "661f291342e6098d"
+  },
+  {
+    "name": "mech run 270° 0.35s",
+    "stage": null,
+    "shapes": 115,
+    "geometry": "983fdced6232fed8",
+    "components": "73bcb2572af363bf",
+    "surfaces": "bebd105fb9830078",
+    "decisions": "82ed0df9a183cd41"
+  },
+  {
+    "name": "mech run 270° 1.5s",
+    "stage": null,
+    "shapes": 117,
+    "geometry": "fa3a62ef3986f17d",
+    "components": "b89a54db954a0696",
+    "surfaces": "3e87660f89fd4041",
+    "decisions": "9ef637a75d392b69"
+  },
+  {
+    "name": "mech run 315° 0.35s",
+    "stage": null,
+    "shapes": 148,
+    "geometry": "fe85358a2f5ec8ac",
+    "components": "b803dc5bc5aab1f7",
+    "surfaces": "bb7262059ce1328c",
+    "decisions": "0b64e3f6c8e5458a"
+  },
+  {
+    "name": "mech run 315° 1.5s",
+    "stage": null,
+    "shapes": 148,
+    "geometry": "e6be7f1029e6bcd6",
+    "components": "f0636b949c7feae3",
+    "surfaces": "bb7262059ce1328c",
+    "decisions": "3d17bc8e4f82c032"
+  },
+  {
+    "name": "mech run 359° 0.35s",
+    "stage": null,
+    "shapes": 156,
+    "geometry": "1aecc7c21ed611d4",
+    "components": "7506cc76c377554e",
+    "surfaces": "c9e52ac53a5c0cdf",
+    "decisions": "d31a82d29fa58075"
+  },
+  {
+    "name": "mech run 359° 1.5s",
+    "stage": null,
+    "shapes": 156,
+    "geometry": "240e020f7a9783fc",
+    "components": "87af474fc963367d",
+    "surfaces": "c9e52ac53a5c0cdf",
+    "decisions": "127d2ff9cebb8ffc"
+  },
+  {
+    "name": "mech walk 0° 0.35s",
+    "stage": null,
+    "shapes": 142,
+    "geometry": "cdacefca968fd542",
+    "components": "4e357bc2a2eed818",
+    "surfaces": "1d504db455f2956d",
+    "decisions": "077d9acdcee4d971"
+  },
+  {
+    "name": "mech walk 0° 1.5s",
+    "stage": null,
+    "shapes": 142,
+    "geometry": "7d8937aaf1276b65",
+    "components": "c3ac4c56201b2619",
+    "surfaces": "1d504db455f2956d",
+    "decisions": "f5247e3049343f97"
+  },
+  {
+    "name": "mech walk 45° 0.35s",
+    "stage": null,
+    "shapes": 160,
+    "geometry": "f0ef4b8bdb573f38",
+    "components": "8cff50c249c32127",
+    "surfaces": "712c227b0fb558df",
+    "decisions": "fefe4a5ad018aeea"
+  },
+  {
+    "name": "mech walk 45° 1.5s",
+    "stage": null,
+    "shapes": 160,
+    "geometry": "ccdd1bd1d6bd11f9",
+    "components": "842a8bbed19aabac",
+    "surfaces": "712c227b0fb558df",
+    "decisions": "ac71a1b24d77549a"
+  },
+  {
+    "name": "mech walk 63° 0.35s",
+    "stage": null,
+    "shapes": 156,
+    "geometry": "42c4dbe3c2d59ce9",
+    "components": "b360113c3c452871",
+    "surfaces": "c64d8fbd30331b81",
+    "decisions": "fea96d9591572a48"
+  },
+  {
+    "name": "mech walk 63° 1.5s",
+    "stage": null,
+    "shapes": 158,
+    "geometry": "d164a7252a77b44b",
+    "components": "e4147a78584360f7",
+    "surfaces": "8049074824b5030d",
+    "decisions": "2840b301e9b3a9fe"
+  },
+  {
+    "name": "mech walk 89° 0.35s",
+    "stage": null,
+    "shapes": 147,
+    "geometry": "42413685f82ac72e",
+    "components": "abe3dd23e162f112",
+    "surfaces": "a70a2a80096d6dc7",
+    "decisions": "916a040bfcdd4060"
+  },
+  {
+    "name": "mech walk 89° 1.5s",
+    "stage": null,
+    "shapes": 149,
+    "geometry": "241179dbb0688729",
+    "components": "f77eb95222867bf9",
+    "surfaces": "0bed51d0267d5dac",
+    "decisions": "675d8de6771ea06e"
+  },
+  {
+    "name": "mech walk 90° 0.35s",
+    "stage": null,
+    "shapes": 123,
+    "geometry": "c865b80ba1a5dead",
+    "components": "5accfcb742994c4a",
+    "surfaces": "64ea1bb21b3083e1",
+    "decisions": "6f3ba0826beee77b"
+  },
+  {
+    "name": "mech walk 90° 1.5s",
+    "stage": null,
+    "shapes": 125,
+    "geometry": "c22e757588c14216",
+    "components": "b4744983e0b7d146",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "19d62de0ce43ec56"
+  },
+  {
+    "name": "mech walk 135° 0.35s",
+    "stage": null,
+    "shapes": 131,
+    "geometry": "627f32c19e581bbe",
+    "components": "fe06c78471209beb",
+    "surfaces": "fa2007b4b961da1e",
+    "decisions": "e8fb64d351fc1bb2"
+  },
+  {
+    "name": "mech walk 135° 1.5s",
+    "stage": null,
+    "shapes": 133,
+    "geometry": "3d5f7a96548a2deb",
+    "components": "39dea3453b36ccc4",
+    "surfaces": "c18c94ed64460898",
+    "decisions": "a33c28070b760590"
+  },
+  {
+    "name": "mech walk 180° 0.35s",
+    "stage": null,
+    "shapes": 112,
+    "geometry": "bf5f248458f28739",
+    "components": "efb71649d8c08443",
+    "surfaces": "545a9182319a7d5c",
+    "decisions": "22aad9eba5eef71c"
+  },
+  {
+    "name": "mech walk 180° 1.5s",
+    "stage": null,
+    "shapes": 112,
+    "geometry": "5522d550bf3b88d6",
+    "components": "b9c7a0145a013304",
+    "surfaces": "545a9182319a7d5c",
+    "decisions": "0682486c7dab33c1"
+  },
+  {
+    "name": "mech walk 225° 0.35s",
+    "stage": null,
+    "shapes": 125,
+    "geometry": "51bae6e45dcb953b",
+    "components": "6aee579c6a89565d",
+    "surfaces": "c75153b4a74d3660",
+    "decisions": "975301d630accb32"
+  },
+  {
+    "name": "mech walk 225° 1.5s",
+    "stage": null,
+    "shapes": 123,
+    "geometry": "e76fbcf6d5a88be9",
+    "components": "07554faae67f5de0",
+    "surfaces": "e3fa441386709005",
+    "decisions": "18fc6a588f34f6d8"
+  },
+  {
+    "name": "mech walk 270° 0.35s",
+    "stage": null,
+    "shapes": 115,
+    "geometry": "34c2195c379bd3b0",
+    "components": "21d2d4a7c0caef75",
+    "surfaces": "bebd105fb9830078",
+    "decisions": "918899324c36c9b3"
+  },
+  {
+    "name": "mech walk 270° 1.5s",
+    "stage": null,
+    "shapes": 115,
+    "geometry": "5e598afee05a10aa",
+    "components": "9d873c30d99af8df",
+    "surfaces": "bebd105fb9830078",
+    "decisions": "ce238f1502d45e9e"
+  },
+  {
+    "name": "mech walk 315° 0.35s",
+    "stage": null,
+    "shapes": 148,
+    "geometry": "e1744ba4ff056144",
+    "components": "0037f89fc66028ae",
+    "surfaces": "bb7262059ce1328c",
+    "decisions": "e5e2f4ffd4661904"
+  },
+  {
+    "name": "mech walk 315° 1.5s",
+    "stage": null,
+    "shapes": 148,
+    "geometry": "efeb09a9a8a32057",
+    "components": "f0d531b69d67cbfd",
+    "surfaces": "bb7262059ce1328c",
+    "decisions": "7eb63df2762ea5a2"
+  },
+  {
+    "name": "mech walk 359° 0.35s",
+    "stage": null,
+    "shapes": 156,
+    "geometry": "f42abfa7d4f80f14",
+    "components": "43b6f7e5376227ac",
+    "surfaces": "c9e52ac53a5c0cdf",
+    "decisions": "90a38417680848bc"
+  },
+  {
+    "name": "mech walk 359° 1.5s",
+    "stage": null,
+    "shapes": 156,
+    "geometry": "b5069f1d12934fad",
+    "components": "eea5df9fcba9fe86",
+    "surfaces": "c9e52ac53a5c0cdf",
+    "decisions": "ecb80586379736a0"
+  },
+  {
+    "name": "mech idle 0° 0s",
+    "stage": null,
+    "shapes": 142,
+    "geometry": "7b504203db8e8952",
+    "components": "eeffd0d8535bcaae",
+    "surfaces": "7115215010550df4",
+    "decisions": "0f507d793ba34d33"
+  },
+  {
+    "name": "mech idle 45° 0s",
+    "stage": null,
+    "shapes": 160,
+    "geometry": "06cdcae3950ed616",
+    "components": "231c58a9d81a2ec2",
+    "surfaces": "712c227b0fb558df",
+    "decisions": "18100cf1025032a6"
+  },
+  {
+    "name": "mech idle 63° 0s",
+    "stage": null,
+    "shapes": 158,
+    "geometry": "ab8b700b2e094d67",
+    "components": "cfb3f78c822847d2",
+    "surfaces": "8049074824b5030d",
+    "decisions": "b62125d48c23a34f"
+  },
+  {
+    "name": "mech idle 89° 0s",
+    "stage": null,
+    "shapes": 149,
+    "geometry": "4e3771541ea590ca",
+    "components": "5499d35d03abe46a",
+    "surfaces": "0bed51d0267d5dac",
+    "decisions": "3c9eb41610e09bb0"
+  },
+  {
+    "name": "mech idle 90° 0s",
+    "stage": null,
+    "shapes": 125,
+    "geometry": "f276df5cec50b3e3",
+    "components": "17e6769be5cdd601",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "2d46278ae29ca7dd"
+  },
+  {
+    "name": "mech idle 135° 0s",
+    "stage": null,
+    "shapes": 133,
+    "geometry": "4234bdec6d6e2288",
+    "components": "63520367c44ea6a0",
+    "surfaces": "c18c94ed64460898",
+    "decisions": "dedfe8f75d212d5d"
+  },
+  {
+    "name": "mech idle 180° 0s",
+    "stage": null,
+    "shapes": 112,
+    "geometry": "6fe086e6667164a7",
+    "components": "722afdcf7e547e3a",
+    "surfaces": "39cb1ae8b52bf404",
+    "decisions": "770e00503e2e1128"
+  },
+  {
+    "name": "mech idle 225° 0s",
+    "stage": null,
+    "shapes": 125,
+    "geometry": "f649ec9990163778",
+    "components": "cbd3fa2709aea04b",
+    "surfaces": "c75153b4a74d3660",
+    "decisions": "e96944577d890b51"
+  },
+  {
+    "name": "mech idle 270° 0s",
+    "stage": null,
+    "shapes": 117,
+    "geometry": "d275a3beaf533e7e",
+    "components": "b22e8f7265cbce41",
+    "surfaces": "3e87660f89fd4041",
+    "decisions": "df036c397450cee8"
+  },
+  {
+    "name": "mech idle 315° 0s",
+    "stage": null,
+    "shapes": 148,
+    "geometry": "898a9598d9bd5bdf",
+    "components": "ba07ad20e10f464f",
+    "surfaces": "bb7262059ce1328c",
+    "decisions": "dfa33d2c87116744"
+  },
+  {
+    "name": "mech idle 359° 0s",
+    "stage": null,
+    "shapes": 156,
+    "geometry": "3baf79e276993c58",
+    "components": "709335ba9352386d",
+    "surfaces": "c9e52ac53a5c0cdf",
+    "decisions": "8e07a31f022f8f8a"
+  },
+  {
+    "name": "pilot run 0° 0.35s",
+    "stage": null,
+    "shapes": 73,
+    "geometry": "a5ea86a05c6e2b5c",
+    "components": "d6d46273168a04b2",
+    "surfaces": "4f53cda18c2baa0c",
+    "decisions": "4f53cda18c2baa0c"
+  },
+  {
+    "name": "pilot run 0° 1.5s",
+    "stage": null,
+    "shapes": 73,
+    "geometry": "a9bfc647674ac124",
+    "components": "112226854389bb68",
+    "surfaces": "4f53cda18c2baa0c",
+    "decisions": "4f53cda18c2baa0c"
+  },
+  {
+    "name": "pilot run 90° 0.35s",
+    "stage": null,
+    "shapes": 73,
+    "geometry": "ab20930d5e4a65d7",
+    "components": "a6dfa1a6ec0cece9",
+    "surfaces": "4f53cda18c2baa0c",
+    "decisions": "4f53cda18c2baa0c"
+  },
+  {
+    "name": "pilot run 90° 1.5s",
+    "stage": null,
+    "shapes": 73,
+    "geometry": "010c4a3a1e3fed9f",
+    "components": "03ff3ab7aae5a75f",
+    "surfaces": "4f53cda18c2baa0c",
+    "decisions": "4f53cda18c2baa0c"
+  },
+  {
+    "name": "pilot run 150° 0.35s",
+    "stage": null,
+    "shapes": 73,
+    "geometry": "bcaa1fdd6cb94d56",
+    "components": "e1b9b22211644224",
+    "surfaces": "4f53cda18c2baa0c",
+    "decisions": "4f53cda18c2baa0c"
+  },
+  {
+    "name": "pilot run 150° 1.5s",
+    "stage": null,
+    "shapes": 73,
+    "geometry": "5fd8fbb5658dcb41",
+    "components": "34ab77206d16d869",
+    "surfaces": "4f53cda18c2baa0c",
+    "decisions": "4f53cda18c2baa0c"
+  },
+  {
+    "name": "pilot run 270° 0.35s",
+    "stage": null,
+    "shapes": 73,
+    "geometry": "dd580f5073aa126d",
+    "components": "9cd590e5fa663e7d",
+    "surfaces": "4f53cda18c2baa0c",
+    "decisions": "4f53cda18c2baa0c"
+  },
+  {
+    "name": "pilot run 270° 1.5s",
+    "stage": null,
+    "shapes": 73,
+    "geometry": "5aa2585ec324368d",
+    "components": "58b44e6c566d34f7",
+    "surfaces": "4f53cda18c2baa0c",
+    "decisions": "4f53cda18c2baa0c"
+  },
+  {
+    "name": "mech aiming",
+    "stage": null,
+    "shapes": 145,
+    "geometry": "3c8e8dcc408815e7",
+    "components": "5cf43c6172971985",
+    "surfaces": "9322e3da57887e8c",
+    "decisions": "550ed8f54a1c71b8"
+  },
+  {
+    "name": "boarding +0",
+    "stage": "park",
+    "shapes": 199,
+    "geometry": "e7bed1541f2783bb",
+    "components": "ac2ada1ac6dcb5ec",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +10",
+    "stage": "open",
+    "shapes": 271,
+    "geometry": "a3a46a242917853b",
+    "components": "87808373db38486c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "69b3086e9bad18ae"
+  },
+  {
+    "name": "boarding +20",
+    "stage": "open",
+    "shapes": 271,
+    "geometry": "243d23da2063a142",
+    "components": "911374cf1866cf2b",
+    "surfaces": "e8e414d921992602",
+    "decisions": "28df61cba9a2e401"
+  },
+  {
+    "name": "boarding +30",
+    "stage": "emerge",
+    "shapes": 560,
+    "geometry": "9c3a59825cb06515",
+    "components": "5208dd196c37ee01",
+    "surfaces": "3b17d255b2fe593c",
+    "decisions": "dbaf37341a0aebae"
+  },
+  {
+    "name": "boarding +40",
+    "stage": "emerge",
+    "shapes": 511,
+    "geometry": "e2d6c9eea6aebfbb",
+    "components": "b8258b0b67582e83",
+    "surfaces": "3b17d255b2fe593c",
+    "decisions": "6aff86f4b95c23fb"
+  },
+  {
+    "name": "boarding +50",
+    "stage": "emerge",
+    "shapes": 271,
+    "geometry": "95313c9d420cc949",
+    "components": "638e4f621c9993ee",
+    "surfaces": "e8e414d921992602",
+    "decisions": "81c78644117c6a38"
+  },
+  {
+    "name": "boarding +60",
+    "stage": "descend",
+    "shapes": 271,
+    "geometry": "420d5324dec00fb5",
+    "components": "e3a77573cc39a716",
+    "surfaces": "e8e414d921992602",
+    "decisions": "03252a5a8f08343a"
+  },
+  {
+    "name": "boarding +70",
+    "stage": "descend",
+    "shapes": 271,
+    "geometry": "c516e02bac89dbd5",
+    "components": "0e8d6e9cae9e97ab",
+    "surfaces": "e8e414d921992602",
+    "decisions": "819a97d3dc7b6130"
+  },
+  {
+    "name": "boarding +80",
+    "stage": "descend",
+    "shapes": 271,
+    "geometry": "94d477edd64a2e46",
+    "components": "18ea0de6f26d8eaa",
+    "surfaces": "e8e414d921992602",
+    "decisions": "b32be6c907afce36"
+  },
+  {
+    "name": "boarding +90",
+    "stage": "descend",
+    "shapes": 271,
+    "geometry": "04ff0bc7aeed4b1b",
+    "components": "73774f9bd615e4ee",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +100",
+    "stage": "descend",
+    "shapes": 271,
+    "geometry": "5357200d54cb4fc2",
+    "components": "64a6f965bbf7d598",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +110",
+    "stage": "descend",
+    "shapes": 271,
+    "geometry": "29bd70d7abf655ff",
+    "components": "58ea681edef0e140",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +120",
+    "stage": "descend",
+    "shapes": 271,
+    "geometry": "7561131269bb0526",
+    "components": "8942324f13faf4b1",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +130",
+    "stage": "descend",
+    "shapes": 271,
+    "geometry": "535fc4a388f955a4",
+    "components": "2add274aa1309cde",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +140",
+    "stage": "descend",
+    "shapes": 271,
+    "geometry": "577a91552a956e02",
+    "components": "0c00ab04f308684b",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +150",
+    "stage": "descend",
+    "shapes": 271,
+    "geometry": "1973caf755101f51",
+    "components": "91a8f6075581560e",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +160",
+    "stage": "land",
+    "shapes": 271,
+    "geometry": "6205c7a60a833322",
+    "components": "7d17d9d5f299234c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +170",
+    "stage": "land",
+    "shapes": 271,
+    "geometry": "957c890c63f381c8",
+    "components": "80b8e28ee88a8777",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +180",
+    "stage": "close",
+    "shapes": 271,
+    "geometry": "60d1bca8e6ddc827",
+    "components": "a4f08b1a99434f53",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +190",
+    "stage": "close",
+    "shapes": 271,
+    "geometry": "784e2d3cd66c6fc9",
+    "components": "edbae0c9544997cc",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +200",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +210",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +220",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +230",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +240",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +250",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +260",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +270",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +280",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +290",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +300",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +310",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +320",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +330",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +340",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +350",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +360",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +370",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +380",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +390",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +400",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +410",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +420",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +430",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +440",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +450",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +460",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +470",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +480",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +490",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +500",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +510",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +520",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +530",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +540",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +550",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +560",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +570",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +580",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +590",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +600",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +610",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +620",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +630",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +640",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +650",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +660",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +670",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +680",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +690",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +700",
+    "stage": null,
+    "shapes": 199,
+    "geometry": "b61d8f74f31b6566",
+    "components": "4c1dd94e5d07f75c",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +710",
+    "stage": "open",
+    "shapes": 271,
+    "geometry": "a7e7a7d266dbd184",
+    "components": "0e00acb638893966",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +720",
+    "stage": "open",
+    "shapes": 271,
+    "geometry": "a516edb9256650f1",
+    "components": "128cc26a1531e7d2",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +730",
+    "stage": "step",
+    "shapes": 271,
+    "geometry": "d6258370360dcdfd",
+    "components": "2f75d821285f430a",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +740",
+    "stage": "step",
+    "shapes": 271,
+    "geometry": "fff4fed56383d0ee",
+    "components": "3720aa1778fb9ff6",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +750",
+    "stage": "climb",
+    "shapes": 271,
+    "geometry": "db79c7530b3bdca4",
+    "components": "ebe8749d4135a1a5",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +760",
+    "stage": "climb",
+    "shapes": 271,
+    "geometry": "ffa6049096c14b46",
+    "components": "73d5de2e5f1dcc2b",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +770",
+    "stage": "climb",
+    "shapes": 271,
+    "geometry": "3a503b447def0241",
+    "components": "7b08d2bb41d0144e",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +780",
+    "stage": "climb",
+    "shapes": 271,
+    "geometry": "67d4e8d75ac37929",
+    "components": "28890ac2ca318405",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +790",
+    "stage": "climb",
+    "shapes": 271,
+    "geometry": "c8b1fc3cceee9709",
+    "components": "1ec224f76a3aa656",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +800",
+    "stage": "climb",
+    "shapes": 271,
+    "geometry": "d8449df95653d9e3",
+    "components": "72ea114cd5666ca2",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +810",
+    "stage": "climb",
+    "shapes": 271,
+    "geometry": "037f4fa047b0ead1",
+    "components": "905f16b4ac2cfc68",
+    "surfaces": "e8e414d921992602",
+    "decisions": "8acb21248acfe1ab"
+  },
+  {
+    "name": "boarding +820",
+    "stage": "climb",
+    "shapes": 271,
+    "geometry": "8a3d640b240d7838",
+    "components": "0051e7ee8fd4d883",
+    "surfaces": "e8e414d921992602",
+    "decisions": "1d69e5aba69b516b"
+  },
+  {
+    "name": "boarding +830",
+    "stage": "climb",
+    "shapes": 271,
+    "geometry": "c41bf5d0c0408a9f",
+    "components": "557ffdc94a9be6a7",
+    "surfaces": "e8e414d921992602",
+    "decisions": "93cacacd8d58fbb7"
+  },
+  {
+    "name": "boarding +840",
+    "stage": "climb",
+    "shapes": 271,
+    "geometry": "dcd57d4b6e8f59d3",
+    "components": "fe25ce78fbfce182",
+    "surfaces": "e8e414d921992602",
+    "decisions": "717ab5934ddb8407"
+  },
+  {
+    "name": "boarding +850",
+    "stage": "seat",
+    "shapes": 271,
+    "geometry": "ec8ea534fc57598b",
+    "components": "aeb4c464c6a22f42",
+    "surfaces": "e8e414d921992602",
+    "decisions": "4ff129e7d039d216"
+  },
+  {
+    "name": "boarding +860",
+    "stage": "seat",
+    "shapes": 514,
+    "geometry": "df8f6162b70afc70",
+    "components": "f0c53ed0cd0b3313",
+    "surfaces": "3b17d255b2fe593c",
+    "decisions": "3c8a51d267e0da23"
+  },
+  {
+    "name": "boarding +870",
+    "stage": "seat",
+    "shapes": 542,
+    "geometry": "7194191e4b6b4001",
+    "components": "762197a3cb908207",
+    "surfaces": "3b17d255b2fe593c",
+    "decisions": "311c4d3b09afff18"
+  },
+  {
+    "name": "boarding +880",
+    "stage": "close",
+    "shapes": 302,
+    "geometry": "5f01ded122d384e0",
+    "components": "d48eff2f9ce5c706",
+    "surfaces": "5beacf892ea97ec8",
+    "decisions": "b9cbd35e8195cd18"
+  },
+  {
+    "name": "boarding +890",
+    "stage": "close",
+    "shapes": 302,
+    "geometry": "fb0863f156abfafa",
+    "components": "a7573695a5a36d5c",
+    "surfaces": "5beacf892ea97ec8",
+    "decisions": "3c2c0db754c3758a"
+  },
+  {
+    "name": "boarding +900",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +910",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +920",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +930",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +940",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +950",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +960",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +970",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +980",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +990",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1000",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1010",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1020",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1030",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1040",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1050",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1060",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1070",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1080",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1090",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1100",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1110",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1120",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1130",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1140",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1150",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1160",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1170",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1180",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1190",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1200",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1210",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1220",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1230",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1240",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1250",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1260",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1270",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1280",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1290",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1300",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1310",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1320",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1330",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1340",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1350",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1360",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1370",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1380",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1390",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1400",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1410",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1420",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1430",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1440",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1450",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1460",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1470",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1480",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1490",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "boarding +1500",
+    "stage": null,
+    "shapes": 126,
+    "geometry": "bb96a3f6d4dac95c",
+    "components": "b5bfd94319c1aca4",
+    "surfaces": "e8e414d921992602",
+    "decisions": "3bb93d3ab24db8aa"
+  },
+  {
+    "name": "edge approach +0",
+    "stage": "park",
+    "shapes": 215,
+    "geometry": "c1fa00da94336b09",
+    "components": "dc75562e31d5e58f",
+    "surfaces": "1d504db455f2956d",
+    "decisions": "0f507d793ba34d33"
+  },
+  {
+    "name": "edge approach +10",
+    "stage": "park",
+    "shapes": 233,
+    "geometry": "cb59177629b0f985",
+    "components": "0560fc3fe00e87a2",
+    "surfaces": "9b7ce1e864dedf10",
+    "decisions": "f25f77822b992a49"
+  },
+  {
+    "name": "edge approach +20",
+    "stage": "park",
+    "shapes": 235,
+    "geometry": "3c2be6a1335b8096",
+    "components": "36c11b43465087a1",
+    "surfaces": "a6a7daf37dff26b6",
+    "decisions": "7ae3ad46f72f1ae4"
+  },
+  {
+    "name": "edge approach +30",
+    "stage": "park",
+    "shapes": 233,
+    "geometry": "be394942e2ed705f",
+    "components": "c62c6b3cd0c6a27d",
+    "surfaces": "ab9de5712e44e1dd",
+    "decisions": "4bc814fb09f68e90"
+  },
+  {
+    "name": "edge approach +40",
+    "stage": "park",
+    "shapes": 230,
+    "geometry": "f3775a0fe9ac79d8",
+    "components": "e6fa94e0a3419fb6",
+    "surfaces": "0776ef88d66e9d3b",
+    "decisions": "891836d99bc37f59"
+  },
+  {
+    "name": "edge approach +50",
+    "stage": "approach",
+    "shapes": 200,
+    "geometry": "9f9ad1f8fe8f94f1",
+    "components": "04e98ed3fe5971a8",
+    "surfaces": "05e73de979b4ceaa",
+    "decisions": "239d49483b635b6a"
+  },
+  {
+    "name": "edge approach +60",
+    "stage": "approach",
+    "shapes": 200,
+    "geometry": "882b2a9c0c9ea6c7",
+    "components": "714fc541d0648fce",
+    "surfaces": "05e73de979b4ceaa",
+    "decisions": "f6d9f3bfd1c0903f"
+  },
+  {
+    "name": "edge approach +70",
+    "stage": "approach",
+    "shapes": 198,
+    "geometry": "53e381065fe3c8f6",
+    "components": "79754784c15f60df",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "27ea3c6f869bbd6f"
+  },
+  {
+    "name": "edge approach +80",
+    "stage": "approach",
+    "shapes": 198,
+    "geometry": "c376e59eeaa6bd76",
+    "components": "4151924f74d11176",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "f90b233b8feffa78"
+  },
+  {
+    "name": "edge approach +90",
+    "stage": "approach",
+    "shapes": 198,
+    "geometry": "83887d1aad280630",
+    "components": "516de54926262582",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "b96a41b7d329098d"
+  },
+  {
+    "name": "edge approach +100",
+    "stage": "approach",
+    "shapes": 198,
+    "geometry": "f2bf3438d40b5adc",
+    "components": "ce764a48a2454a3b",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "2d46278ae29ca7dd"
+  },
+  {
+    "name": "edge approach +110",
+    "stage": "approach",
+    "shapes": 198,
+    "geometry": "f0af8f0b4d5a46a6",
+    "components": "936ed798035965c8",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "2d46278ae29ca7dd"
+  },
+  {
+    "name": "edge approach +120",
+    "stage": "approach",
+    "shapes": 198,
+    "geometry": "1488416f64a11161",
+    "components": "0b0e8c95a54b1d09",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "2d46278ae29ca7dd"
+  },
+  {
+    "name": "edge approach +130",
+    "stage": "approach",
+    "shapes": 198,
+    "geometry": "86fcd00f3d7a2eb0",
+    "components": "95b77fde25485127",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "2d46278ae29ca7dd"
+  },
+  {
+    "name": "edge approach +140",
+    "stage": "approach",
+    "shapes": 198,
+    "geometry": "91936d0d988b5587",
+    "components": "c8171f13701d6a1a",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "2d46278ae29ca7dd"
+  },
+  {
+    "name": "edge approach +150",
+    "stage": "approach",
+    "shapes": 198,
+    "geometry": "374619e45ee37f6d",
+    "components": "df4145f13abccccd",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "a714074dcd3691b3"
+  },
+  {
+    "name": "edge approach +160",
+    "stage": "approach",
+    "shapes": 198,
+    "geometry": "33ad5575e47157fe",
+    "components": "dc0710a4a8d705d0",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "90a4883ab1a91e7e"
+  },
+  {
+    "name": "edge approach +170",
+    "stage": "approach",
+    "shapes": 198,
+    "geometry": "5204a2a3f505386c",
+    "components": "3ac3989c373ea5de",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "ed87978ceb44accf"
+  },
+  {
+    "name": "edge approach +180",
+    "stage": "approach",
+    "shapes": 198,
+    "geometry": "2bd9a58f33a92dd3",
+    "components": "b05963be1b62b44d",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "a3f0e55fe8dc8635"
+  },
+  {
+    "name": "edge approach +190",
+    "stage": "approach",
+    "shapes": 198,
+    "geometry": "e7768e82adf239bf",
+    "components": "d65d7f1cd69b4649",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "2d46278ae29ca7dd"
+  },
+  {
+    "name": "edge approach +200",
+    "stage": "approach",
+    "shapes": 198,
+    "geometry": "5d9441b49bf15bcf",
+    "components": "0a594e3052c93d45",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "2d46278ae29ca7dd"
+  },
+  {
+    "name": "edge approach +210",
+    "stage": "open",
+    "shapes": 270,
+    "geometry": "2c18b5442d6d3147",
+    "components": "189216ccf6eaf383",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "91ac9aaef7445817"
+  },
+  {
+    "name": "edge approach +220",
+    "stage": "open",
+    "shapes": 270,
+    "geometry": "71c8ee8049e9bcbd",
+    "components": "6b54ab8361170f94",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "91ac9aaef7445817"
+  },
+  {
+    "name": "edge approach +230",
+    "stage": "step",
+    "shapes": 270,
+    "geometry": "1584dc08916826cb",
+    "components": "dcacd7e3b77268e5",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "91ac9aaef7445817"
+  },
+  {
+    "name": "edge approach +240",
+    "stage": "step",
+    "shapes": 270,
+    "geometry": "075fb02786702ddf",
+    "components": "1dbe467551f44d18",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "91ac9aaef7445817"
+  },
+  {
+    "name": "edge approach +250",
+    "stage": "climb",
+    "shapes": 270,
+    "geometry": "4ddb0dd3091e09c6",
+    "components": "a0ab16e9dd947488",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "1650cfdd30a7d417"
+  },
+  {
+    "name": "edge approach +260",
+    "stage": "climb",
+    "shapes": 270,
+    "geometry": "6b71124b76ad68b8",
+    "components": "246c8bb80629ef1a",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "a2dfd17e3ccac703"
+  },
+  {
+    "name": "edge approach +270",
+    "stage": "climb",
+    "shapes": 270,
+    "geometry": "9bd0ddce6620991c",
+    "components": "def815eb31a4b759",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "2ecedcfa8d72b191"
+  },
+  {
+    "name": "edge approach +280",
+    "stage": "climb",
+    "shapes": 270,
+    "geometry": "dcb024822bcddee9",
+    "components": "4ee57fbaca18bd0d",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "3dcda65eaf5f2101"
+  },
+  {
+    "name": "edge approach +290",
+    "stage": "climb",
+    "shapes": 270,
+    "geometry": "749e2cf564d6e9b7",
+    "components": "c7afba9c5ad29536",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "179d18403d1b7e15"
+  },
+  {
+    "name": "edge approach +300",
+    "stage": "climb",
+    "shapes": 270,
+    "geometry": "aca9f2f05db9bbf8",
+    "components": "c6e41de79ecc7fe3",
+    "surfaces": "f1fea7db80a201d6",
+    "decisions": "3d4534e53431cf34"
+  }
+]

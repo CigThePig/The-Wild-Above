@@ -1,0 +1,6 @@
+# Captured evidence data is written by scripts; keep it byte-for-byte.
+docs/evidence/**/*.json
+artifacts/
+dist/
+test-results/
+playwright-report/

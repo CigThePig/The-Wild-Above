@@ -17,13 +17,20 @@ export function rotate(p: Vec, yaw: number) {
     s = Math.sin(yaw);
   return vec(p.x * c - p.y * s, p.x * s + p.y * c, p.z);
 }
-export function solveLeg(hip: Vec, foot: Vec, forward: Vec) {
+/** Analytic two-bone IK; the knee bends toward `forward`. */
+export function solveLeg(
+  hip: Vec,
+  foot: Vec,
+  forward: Vec,
+  upper: number,
+  lower: number,
+) {
   const dvec = sub(foot, hip),
     raw = len(dvec),
-    d = clamp(raw, 0.01, 46.999),
+    d = clamp(raw, 0.01, upper + lower - 0.001),
     axis = norm(dvec),
-    a = (23 * 23 - 24 * 24 + d * d) / (2 * d),
-    h = Math.sqrt(Math.max(0, 23 * 23 - a * a));
+    a = (upper * upper - lower * lower + d * d) / (2 * d),
+    h = Math.sqrt(Math.max(0, upper * upper - a * a));
   let bend = sub(forward, mul(axis, dot(forward, axis)));
   if (len(bend) < 0.01) bend = vec(0, -1, 0);
   const knee = add(hip, add(mul(axis, a), mul(norm(bend), h)));

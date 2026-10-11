@@ -3,21 +3,21 @@ import { boardingRoute, inField } from "./boarding";
 import { Mech } from "./mech";
 import { Pilot } from "./pilot";
 import { vec, rot, clamp, angle, smooth, lerp } from "./math";
+import type { MechSpec } from "../../mechs/schema";
+/**
+ * Movement-driven boarding stages normally finish in a few seconds. Past this
+ * they snap to their end state so a blocked path cannot own input forever.
+ */
+export const STAGE_TIMEOUT = 30;
 export class PilotWorld implements World {
-  mech = new Mech();
+  mech: Mech;
   pilot = new Pilot();
   control: World["control"] = "mech";
   transition: BoardingTransition | null = null;
   time = 0;
   interactionFailure: string | null = null;
-  reset() {
-    this.mech.reset();
-    this.time = 0;
-    this.interactionFailure = null;
-    this.pilot = new Pilot();
-    this.control = "mech";
-    this.transition = null;
-    this.mech.hatch = 0;
+  constructor(spec?: MechSpec) {
+    this.mech = new Mech(spec);
   }
   get actor() {
     return this.control === "foot" ? this.pilot : this.mech;
@@ -125,7 +125,12 @@ export class PilotWorld implements World {
     }
     const tr = this.transition;
     if (tr && tr.stage === "park") {
-      this.mech.yaw += clamp(angle(this.mech.yaw, tr.yaw), -dt * 2.1, dt * 2.1);
+      const rate = this.mech.spec.gait.turnRate;
+      this.mech.yaw += clamp(
+        angle(this.mech.yaw, tr.yaw),
+        -dt * rate,
+        dt * rate,
+      );
     }
     this.time += dt;
     this.mech.update(dt, {});
@@ -140,6 +145,22 @@ export class PilotWorld implements World {
       tr.t = 0;
     };
     const p = this.pilot;
+    if (tr.t > STAGE_TIMEOUT) {
+      this.interactionFailure = `Boarding stage "${tr.stage}" exceeded ${STAGE_TIMEOUT}s; snapped to its end`;
+      if (tr.stage === "park") this.mech.yaw = this.mech.turret = tr.yaw;
+      else if (tr.stage === "approach") {
+        p.place(tr.ground.x, tr.ground.y, tr.yaw + Math.PI);
+        tr.path = [];
+        return next("open");
+      } else if (tr.stage === "step") {
+        const q = this.local(0, -39);
+        p.place(q.x, q.y, tr.yaw + Math.PI);
+        return next("climb");
+      } else if (tr.stage === "land") {
+        p.place(tr.ground.x, tr.ground.y, tr.yaw);
+        return next("close");
+      }
+    }
     if (tr.stage === "park") {
       this.mech.turret = this.mech.yaw;
       if (

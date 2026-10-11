@@ -2,6 +2,7 @@ import { expect, it } from "vitest";
 import { Simulation } from "../../src/animation/simulation";
 import { defaultConfig } from "../../src/animation/config";
 import { buildRig } from "../../src/animation/rig";
+import type { Input } from "../../src/animation/types";
 it("exits at the west-facing northwest corner", () => {
   const s = new Simulation({ ...defaultConfig, animation: "idle" });
   const g = s.world.mech;
@@ -49,7 +50,7 @@ it("configuration edits work after 61 seconds", () => {
 it("invalid aiming is rejected before changing simulation", () => {
   const s = new Simulation(),
     before = s.snapshot();
-  expect(() => Reflect.apply(s.step, s, [1, { aim: true }])).toThrow();
+  expect(() => s.step(1, { aim: true } as unknown as Input)).toThrow();
   expect(s.snapshot()).toEqual(before);
 });
 it("pilot fade opacity is exposed in the component contract", () => {
@@ -205,4 +206,68 @@ it("does not record zero-frame no-ops", () => {
   for (let i = 0; i < 100; i++) sim.step(0, { x: i % 2 ? 1 : -1 });
   expect(sim.recording().commands).toEqual([]);
   expect(sim.tick).toBe(0);
+});
+
+it("render-only edits keep a manual session; motion edits replay its own inputs", () => {
+  const session = () => {
+    const s = new Simulation({ ...defaultConfig, animation: "idle" });
+    s.step(30, { x: 1 });
+    s.interact();
+    s.step(600, {});
+    return s;
+  };
+  const s = session(),
+    before = s.snapshot();
+  expect(s.world.control).toBe("foot");
+  s.configure({ color: "#34413b", kneeLimit: 120 });
+  expect(s.snapshot().world).toEqual(before.world);
+  expect(s.tick).toBe(630);
+  // Same commands under the new tuning, not the config-derived autopilot.
+  s.configure({ speed: 0.75 });
+  const expected = new Simulation({
+    ...defaultConfig,
+    animation: "idle",
+    speed: 0.75,
+  });
+  expected.step(30, { x: 1 });
+  expected.interact();
+  expected.step(600, {});
+  expect(s.tick).toBe(630);
+  expect(s.world.control).toBe("foot");
+  expect(s.snapshot().world).toEqual(expected.snapshot().world);
+  expect(s.recording().commands).toEqual(expected.recording().commands);
+});
+
+it("a blocked boarding approach recovers instead of owning input forever", () => {
+  const s = new Simulation(
+    { ...defaultConfig, actor: "pilot", heading: 0, animation: "idle" },
+    { mech: { x: 0, y: 0 }, pilot: { x: 60, y: 20 } },
+  );
+  s.world.pilot.tuning.speed = 0; // The pilot cannot walk the route.
+  expect(s.interact()).toBe(true);
+  s.step(1800, {});
+  expect(s.world.transition?.stage).toBe("approach");
+  // Approach snaps at 30 s; the walk to the ladder (step) snaps 30 s later.
+  s.step(3600, {});
+  expect(s.world.transition).toBeNull();
+  expect(s.world.control).toBe("mech");
+  expect(s.world.interactionFailure).toMatch(/"step".*snapped/);
+});
+
+it("production sessions can skip the unused command log", () => {
+  const s = new Simulation();
+  s.recordCommands = false;
+  s.step(120, { x: 1 });
+  expect(s.commands).toEqual([]);
+  expect(() => s.recording()).toThrow(/disabled/);
+});
+
+it("motion edits keep an interaction made at the current tick", () => {
+  const s = new Simulation({ ...defaultConfig, animation: "idle" });
+  s.step(30, { x: 1 });
+  s.interact(); // e.g. rigLab.interact() while paused
+  s.configure({ heading: 90 });
+  expect(s.tick).toBe(30);
+  expect(s.world.transition?.exiting).toBe(true);
+  expect(s.recording().commands.at(-1)).toEqual({ kind: "interact" });
 });

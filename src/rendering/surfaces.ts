@@ -1,4 +1,6 @@
 import type { Vec, Point, Shape } from "../animation/types";
+import { K, TILT, VIEW, project } from "./projection";
+export { VIEW };
 
 export interface DepthPlane {
   x: number;
@@ -27,7 +29,6 @@ export interface Surface {
 export interface Fragment extends Shape {
   source: string;
 }
-export const VIEW = { x: 0, y: 0.694, z: 0.72 };
 export const AREA_EPS = 1e-8;
 export const DEPTH_EPS = 1e-7;
 export function area(p: Point[]) {
@@ -41,7 +42,7 @@ export function area(p: Point[]) {
 export function depthAt(p: DepthPlane, q: Point) {
   return p.x * q.x + p.y * q.y + p.c;
 }
-// The projection is orthogonal up to k=.72²+.694²; do not assume k=1.
+// The projection is orthogonal only up to K=.72²+.694²; do not assume K=1.
 export function makeSurface(
   id: string,
   component: string,
@@ -50,11 +51,6 @@ export function makeSurface(
   alpha = 1,
   doubleSided = false,
 ): Surface {
-  const project = (p: Vec) => ({
-    x: p.x,
-    y: 0.72 * p.y - 0.694 * p.z,
-    d: 0.694 * p.y + 0.72 * p.z,
-  });
   const points = world.map(project);
   const a = world[0] ?? { x: 0, y: 0, z: 0 },
     b = world[1] ?? a,
@@ -73,13 +69,12 @@ export function makeSurface(
     z: n.z / (len || 1),
   };
   const facing = normal.y * VIEW.y + normal.z * VIEW.z;
-  const k = 0.72 ** 2 + 0.694 ** 2;
   const plane =
     Math.abs(facing) > 1e-12
       ? {
-          x: (-normal.x * k) / facing,
-          y: -(normal.y * 0.72 - normal.z * 0.694) / facing,
-          c: ((normal.x * a.x + normal.y * a.y + normal.z * a.z) * k) / facing,
+          x: (-normal.x * K) / facing,
+          y: -(normal.y * TILT.y - normal.z * TILT.z) / facing,
+          c: ((normal.x * a.x + normal.y * a.y + normal.z * a.z) * K) / facing,
         }
       : { x: 0, y: 0, c: 0 };
   const invalid =
