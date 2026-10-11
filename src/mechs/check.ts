@@ -256,15 +256,18 @@ export function checkMech(
   const legLength = legs.thigh + legs.shin;
   // Below |thigh − shin| the knee collapses onto the leg line (no lower clamp).
   const foldLength = Math.abs(legs.thigh - legs.shin);
-  let reachMargin = Infinity,
-    foldMargin = Infinity;
-  const reachOf = (s: Simulation) => {
-    let worst = Infinity;
+  // Margins are tracked on every simulated frame of every sweep (walking,
+  // running, turning, boarding) and reported once at the end; Rig Lab's
+  // maximum tuning is tracked separately and only warns.
+  type Margins = { reach: number; fold: number };
+  const nominal: Margins = { reach: Infinity, fold: Infinity },
+    tuned: Margins = { reach: Infinity, fold: Infinity };
+  const track = (s: Simulation, m: Margins) => {
     for (const l of s.world.mech.pose().legs) {
-      worst = Math.min(worst, legLength - (l.reach ?? 0));
-      foldMargin = Math.min(foldMargin, (l.reach ?? 0) - foldLength);
+      const d = l.reach ?? 0;
+      m.reach = Math.min(m.reach, legLength - d);
+      m.fold = Math.min(m.fold, d - foldLength);
     }
-    return worst;
   };
 
   // Locomotion sweeps: finite geometry, no diagnostics, planted feet stay put.
@@ -281,7 +284,7 @@ export function checkMech(
           p: { ...f.p },
         }));
         s.step(1);
-        reachMargin = Math.min(reachMargin, reachOf(s));
+        track(s, nominal);
         s.world.mech.feet.forEach((f, i) => {
           const b = before[i];
           if (
@@ -299,20 +302,7 @@ export function checkMech(
           inspect(s, `${animation} ${heading}°`);
       }
     }
-  if (foldMargin < 0.001)
-    report(
-      "error",
-      "legs.overfold",
-      `an ankle comes ${(-foldMargin).toFixed(1)} closer to the hip than the folded leg allows (|thigh − shin| = ${foldLength.toFixed(1)}); balance thigh and shin or reduce stepLift/ankleHeight`,
-    );
-  if (reachMargin < 0.001)
-    report(
-      "error",
-      "legs.overreach",
-      `a foot target lies ${(-reachMargin).toFixed(1)} beyond thigh + shin while walking or running; lengthen the legs, lower hipHeight or reduce walkSpeed/runSpeed`,
-    );
   // Rig Lab tuning goes up to speed and stride 1.25.
-  let tunedMargin = Infinity;
   for (const heading of options.quick ? [0] : [0, 90, 180, 270]) {
     const s = simulate({
       heading,
@@ -322,19 +312,14 @@ export function checkMech(
     });
     for (let frame = 1; frame <= 120; frame++) {
       s.step(1);
-      tunedMargin = Math.min(tunedMargin, reachOf(s));
+      track(s, tuned);
     }
   }
-  if (reachMargin >= 0.001 && tunedMargin < 0.001)
-    report(
-      "warning",
-      "legs.overreach",
-      `at Rig Lab's maximum speed/stride tuning a foot target lies ${(-tunedMargin).toFixed(1)} beyond thigh + shin`,
-    );
   const turning = simulate({ heading: 0, animation: "idle" });
   const turn: Input = { turn: 1 };
   for (let frame = 1; frame <= 90; frame++) {
     turning.step(1, turn);
+    track(turning, nominal);
     if (frame % (every * 2) === 0) inspect(turning, "turning in place");
   }
 
@@ -344,6 +329,7 @@ export function checkMech(
     let frames = 0;
     while (boarding.world.transition && frames < 1800) {
       boarding.step(1, {});
+      track(boarding, nominal);
       if (++frames % 20 === 0) inspect(boarding, label, false);
     }
     if (boarding.world.transition || boarding.world.control !== control)
@@ -359,6 +345,27 @@ export function checkMech(
     report("error", "boarding", "reboarding was refused");
   else finish("reboard", "mech");
 
+  if (nominal.fold < 0.001)
+    report(
+      "error",
+      "legs.overfold",
+      `an ankle comes ${(-nominal.fold).toFixed(1)} closer to the hip than the folded leg allows (|thigh − shin| = ${foldLength.toFixed(1)}); balance thigh and shin or reduce stepLift/ankleHeight`,
+    );
+  if (nominal.reach < 0.001)
+    report(
+      "error",
+      "legs.overreach",
+      `a foot target lies ${(-nominal.reach).toFixed(1)} beyond thigh + shin; lengthen the legs, lower hipHeight or reduce walkSpeed/runSpeed`,
+    );
+  if (
+    (nominal.reach >= 0.001 && tuned.reach < 0.001) ||
+    (nominal.fold >= 0.001 && tuned.fold < 0.001)
+  )
+    report(
+      "warning",
+      tuned.reach < 0.001 ? "legs.overreach" : "legs.overfold",
+      `only at Rig Lab's maximum speed/stride tuning do the legs leave their reach (margin ${Math.min(tuned.reach, tuned.fold).toFixed(1)})`,
+    );
   if (maxFragments > RENDER_BUDGET.fragments)
     report(
       "warning",
@@ -386,7 +393,7 @@ export function checkMech(
       standingHipHeight: base.z,
       footprintRadius: footprint,
       maxKneeFlexion,
-      reachMargin,
+      reachMargin: nominal.reach,
       maxFragments,
       maxComparisons,
       medianBuildMs: at(0.5),

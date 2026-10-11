@@ -288,6 +288,12 @@ export const mechSpecSchema = z
         });
       seen.add(p.id);
     });
+    if (spec.canopy.bottom >= spec.canopy.top)
+      ctx.addIssue({
+        code: "custom",
+        path: ["canopy", "bottom"],
+        message: "canopy.bottom must be below canopy.top",
+      });
     if (spec.gait.runSpeed < spec.gait.walkSpeed)
       ctx.addIssue({
         code: "custom",

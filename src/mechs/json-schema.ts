@@ -8,6 +8,6 @@ export function mechJsonSchema() {
     $id: "https://github.com/CigThePig/The-Wild-Above/schemas/mech-spec.schema.json",
     title: "The Wild Above Mech spec",
     description:
-      "A Mech design. Generated from src/mechs/schema.ts; see docs/mechs/authoring.md. Cross-field rules (unique part IDs, runSpeed >= walkSpeed) and design checks run in npm run mech:check.",
+      "A Mech design. Generated from src/mechs/schema.ts; see docs/mechs/authoring.md. Cross-field rules (unique part IDs, runSpeed >= walkSpeed, canopy bottom below top) and design checks run in npm run mech:check.",
   };
 }

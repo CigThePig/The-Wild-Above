@@ -104,6 +104,18 @@ describe("mech specs", () => {
     expect(() => parseMechSpec({ ...STANDARD, parts: [part, part] })).toThrow(
       /duplicate part id/,
     );
+    // An inverted canopy could otherwise pass the opening rule unopened.
+    expect(() =>
+      parseMechSpec({
+        ...STANDARD,
+        canopy: {
+          ...STANDARD.canopy,
+          top: -10,
+          bottom: 7,
+          open: { y: 0, z: 0 },
+        },
+      }),
+    ).toThrow(/canopy.bottom must be below canopy.top/);
   });
   it("selects registered Mechs through config and rejects unknown IDs", () => {
     expect(
